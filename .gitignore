@@ -157,3 +157,5 @@ pngprefix.h
 /pngunknown
 /pngvalid
 /timepng
+
+.cifuzz/

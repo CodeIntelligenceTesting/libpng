@@ -29,6 +29,11 @@ project(libpng
         VERSION ${PNGLIB_VERSION}
         LANGUAGES C ASM)
 
+enable_language(CXX)
+find_package(cifuzz NO_SYSTEM_ENVIRONMENT_PATH)
+enable_fuzz_testing()
+
+
 include(CheckCSourceCompiles)
 include(GNUInstallDirs)
 
@@ -1153,3 +1158,8 @@ endif()
 # TODO: Create MSVC import lib for MinGW-compiled shared lib.
 # pexports libpng.dll > libpng.def
 # lib /def:libpng.def /machine:x86
+
+add_fuzz_test(fuzz fuzz.cpp)
+target_link_libraries(fuzz PRIVATE "$<LINK_LIBRARY:WHOLE_ARCHIVE,png_static>")
+
+add_subdirectory(cifuzz-spark)
