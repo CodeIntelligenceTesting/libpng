@@ -158,4 +158,4 @@ pngprefix.h
 /pngvalid
 /timepng
 
-.cifuzz/
+.cifuzz*/
