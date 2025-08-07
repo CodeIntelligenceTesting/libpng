@@ -1,4 +1,4 @@
-# Project:   libpng
+# Project:   libci
 
 # Copyright (C) 2020 Cameron Cawley
 # Copyright (C) 1997 Tom Tanner
@@ -9,46 +9,46 @@ Linkflags = -aif -o $@
 LibFileflags = -c -l -o $@
 
 # Final targets:
-@.libpng-lib:   @.o.png @.o.pngerror @.o.pngrio @.o.pngwio @.o.pngmem \
-	@.o.pngpread @.o.pngset @.o.pngget @.o.pngread @.o.pngrtran \
-	@.o.pngrutil @.o.pngtrans @.o.pngwrite @.o.pngwtran @.o.pngwutil
-	LibFile $(LibFileflags) @.o.png @.o.pngerror @.o.pngrio @.o.pngrtran \
-	@.o.pngmem @.o.pngpread @.o.pngset @.o.pngget @.o.pngread @.o.pngwio \
-	@.o.pngrutil @.o.pngtrans  @.o.pngwrite @.o.pngwtran @.o.pngwutil
-@.mm-libpng-lib:   @.mm.png @.mm.pngerror @.mm.pngrio @.mm.pngwio @.mm.pngmem \
-	@.mm.pngpread @.mm.pngset @.mm.pngget @.mm.pngread @.mm.pngrtran \
-	@.mm.pngrutil @.mm.pngtrans @.mm.pngwrite @.mm.pngwtran @.mm.pngwutil
-	LibFile $(LibFileflags) @.mm.png @.mm.pngerror @.mm.pngrio \
-	@.mm.pngwio @.mm.pngmem @.mm.pngpread @.mm.pngset @.mm.pngget \
-	@.mm.pngread @.mm.pngrtran @.mm.pngrutil @.mm.pngtrans @.mm.pngwrite \
-	@.mm.pngwtran @.mm.pngwutil
+@.libci-lib:   @.o.ci @.o.cierror @.o.cirio @.o.ciwio @.o.cimem \
+	@.o.cipread @.o.ciset @.o.ciget @.o.ciread @.o.cirtran \
+	@.o.cirutil @.o.citrans @.o.ciwrite @.o.ciwtran @.o.ciwutil
+	LibFile $(LibFileflags) @.o.ci @.o.cierror @.o.cirio @.o.cirtran \
+	@.o.cimem @.o.cipread @.o.ciset @.o.ciget @.o.ciread @.o.ciwio \
+	@.o.cirutil @.o.citrans  @.o.ciwrite @.o.ciwtran @.o.ciwutil
+@.mm-libci-lib:   @.mm.ci @.mm.cierror @.mm.cirio @.mm.ciwio @.mm.cimem \
+	@.mm.cipread @.mm.ciset @.mm.ciget @.mm.ciread @.mm.cirtran \
+	@.mm.cirutil @.mm.citrans @.mm.ciwrite @.mm.ciwtran @.mm.ciwutil
+	LibFile $(LibFileflags) @.mm.ci @.mm.cierror @.mm.cirio \
+	@.mm.ciwio @.mm.cimem @.mm.cipread @.mm.ciset @.mm.ciget \
+	@.mm.ciread @.mm.cirtran @.mm.cirutil @.mm.citrans @.mm.ciwrite \
+	@.mm.ciwtran @.mm.ciwutil
 
 
 # User-editable dependencies:
-Test: @.pngtest
-	Run @.pngtest
-	@Remove @.pngtest
+Test: @.citest
+	Run @.citest
+	@Remove @.citest
 
 #It would be nice if you could stop "make" listing from here on!
-@.pngtest:   @.o.pngtest @.libpng-lib C:o.Stubs C:zlib.o.zlib
-	Link $(Linkflags) @.o.pngtest @.libpng-lib C:o.Stubs C:zlib.o.zlib
+@.citest:   @.o.citest @.libci-lib C:o.Stubs C:zlib.o.zlib
+	Link $(Linkflags) @.o.citest @.libci-lib C:o.Stubs C:zlib.o.zlib
 
 .SUFFIXES: .o .mm .c
 
 .c.mm:
-	MemCheck.CC cc $(ccflags) -o $@ LibPng:$<
+	MemCheck.CC cc $(ccflags) -o $@ LibCi:$<
 .c.o:
 	cc $(ccflags) -o $@ $<
 
-# See scripts.pnglibconf/mak for how to generate this:
-@.h.pnglibconf: @.scripts.pnglibconf/h/prebuilt
-	Copy @.scripts.pnglibconf/h/prebuilt $@ ~CF~V
+# See scripts.cilibconf/mak for how to generate this:
+@.h.cilibconf: @.scripts.cilibconf/h/prebuilt
+	Copy @.scripts.cilibconf/h/prebuilt $@ ~CF~V
 
 # Static dependencies:
-@.o.png @.o.pngerror @.o.pngrio @.o.pngwio @.o.pngmem \
-@.o.pngpread @.o.pngset @.o.pngget @.o.pngread @.o.pngrtran \
-@.o.pngrutil @.o.pngtrans @.o.pngwrite @.o.pngwtran @.o.pngwutil \
-@.o.pngtest: @.h.pnglibconf
+@.o.ci @.o.cierror @.o.cirio @.o.ciwio @.o.cimem \
+@.o.cipread @.o.ciset @.o.ciget @.o.ciread @.o.cirtran \
+@.o.cirutil @.o.citrans @.o.ciwrite @.o.ciwtran @.o.ciwutil \
+@.o.citest: @.h.cilibconf
 
 
 # Dynamic dependencies:

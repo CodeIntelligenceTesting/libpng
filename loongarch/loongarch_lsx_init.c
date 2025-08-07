@@ -4,20 +4,20 @@
  * All rights reserved.
  * Contributed by Jin Bo <jinbo@loongson.cn>
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#include "../pngpriv.h"
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
-#if PNG_LOONGARCH_LSX_IMPLEMENTATION == 1
+#ifdef CI_READ_SUPPORTED
+#if CI_LOONGARCH_LSX_IMPLEMENTATION == 1
 
 #include <sys/auxv.h>
 
 #define LA_HWCAP_LSX    (1<<4)
-static int png_has_lsx(void)
+static int ci_has_lsx(void)
 {
     int flags = 0;
     int flag  = (int)getauxval(AT_HWCAP);
@@ -29,37 +29,37 @@ static int png_has_lsx(void)
 }
 
 void
-png_init_filter_functions_lsx(png_structp pp, unsigned int bpp)
+ci_init_filter_functions_lsx(ci_structp pp, unsigned int bpp)
 {
    /* IMPORTANT: any new external functions used here must be declared using
-    * PNG_INTERNAL_FUNCTION in ../pngpriv.h.  This is required so that the
+    * CI_INTERNAL_FUNCTION in ../cipriv.h.  This is required so that the
     * 'prefix' option to configure works:
     *
-    *    ./configure --with-libpng-prefix=foobar_
+    *    ./configure --with-libci-prefix=foobar_
     *
     * Verify you have got this right by running the above command, doing a build
-    * and examining pngprefix.h; it must contain a #define for every external
+    * and examining ciprefix.h; it must contain a #define for every external
     * function you add.  (Notice that this happens automatically for the
     * initialization function.)
     */
 
-   if (png_has_lsx())
+   if (ci_has_lsx())
    {
-      pp->read_filter[PNG_FILTER_VALUE_UP-1] = png_read_filter_row_up_lsx;
+      pp->read_filter[CI_FILTER_VALUE_UP-1] = ci_read_filter_row_up_lsx;
       if (bpp == 3)
       {
-         pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub3_lsx;
-         pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg3_lsx;
-         pp->read_filter[PNG_FILTER_VALUE_PAETH-1] = png_read_filter_row_paeth3_lsx;
+         pp->read_filter[CI_FILTER_VALUE_SUB-1] = ci_read_filter_row_sub3_lsx;
+         pp->read_filter[CI_FILTER_VALUE_AVG-1] = ci_read_filter_row_avg3_lsx;
+         pp->read_filter[CI_FILTER_VALUE_PAETH-1] = ci_read_filter_row_paeth3_lsx;
       }
       else if (bpp == 4)
       {
-         pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub4_lsx;
-         pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg4_lsx;
-         pp->read_filter[PNG_FILTER_VALUE_PAETH-1] = png_read_filter_row_paeth4_lsx;
+         pp->read_filter[CI_FILTER_VALUE_SUB-1] = ci_read_filter_row_sub4_lsx;
+         pp->read_filter[CI_FILTER_VALUE_AVG-1] = ci_read_filter_row_avg4_lsx;
+         pp->read_filter[CI_FILTER_VALUE_PAETH-1] = ci_read_filter_row_paeth4_lsx;
       }
    }
 }
 
-#endif /* PNG_LOONGARCH_LSX_IMPLEMENTATION == 1 */
-#endif /* PNG_READ_SUPPORTED */
+#endif /* CI_LOONGARCH_LSX_IMPLEMENTATION == 1 */
+#endif /* CI_READ_SUPPORTED */

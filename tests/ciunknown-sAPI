@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciunknown --strict bKGD=save cHRM=save gAMA=save all=discard iCCP=save sBIT=save sRGB=save eXIf=save "${srcdir}/citest.ci"

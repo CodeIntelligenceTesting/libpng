@@ -13,16 +13,16 @@ source "$(dirname "$0")/../lib/ci.lib.sh"
 
 function ci_shellify_c {
     # Convert C preprocessor text, specifically originating
-    # from png.h, to shell scripting text.
-    # Select only the easy-to-parse definitions of PNG_LIBPNG_*.
-    sed -n -e '/^\# *define * PNG_LIBPNG_[^ ]* * ["0-9A-Za-z_]/ p' |
-        sed -e 's/^\# *define * PNG\([^ ]*\) * \([^ ]*\)/PNG\1=\2/' \
-            -e 's/=PNG\([0-9A-Za-z_]*\)/=\${PNG\1}/' \
+    # from ci.h, to shell scripting text.
+    # Select only the easy-to-parse definitions of CI_LIBCI_*.
+    sed -n -e '/^\# *define * CI_LIBCI_[^ ]* * ["0-9A-Za-z_]/ p' |
+        sed -e 's/^\# *define * CI\([^ ]*\) * \([^ ]*\)/CI\1=\2/' \
+            -e 's/=CI\([0-9A-Za-z_]*\)/=\${CI\1}/' \
             -e 's/^\([^ ]*=[^ ]*\).*$/export \1;/'
 }
 
 function usage {
-    echo "usage: $CI_SCRIPT_NAME [<options>] png.h"
+    echo "usage: $CI_SCRIPT_NAME [<options>] ci.h"
     echo "options: -?|-h|--help"
     exit "${@:-0}"
 }
@@ -40,8 +40,8 @@ function main {
     [[ $# -eq 1 ]] || ci_err "too many operands"
     # And... go!
     test -e "$1" || ci_err "no such file: '$1'"
-    [[ $(basename -- "$1") == png.h ]] || {
-        ci_err "incorrect operand: '$1' (expecting: 'png.h')"
+    [[ $(basename -- "$1") == ci.h ]] || {
+        ci_err "incorrect operand: '$1' (expecting: 'ci.h')"
     }
     ci_shellify_c <"$1"
 }

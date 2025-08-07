@@ -6,11 +6,11 @@
 # Written by Roger Leigh, 2016
 #
 # Use, modification and distribution are subject to
-# the same licensing terms and conditions as libpng.
-# Please see the copyright notice in png.h or visit
-# http://libpng.org/pub/png/src/libpng-LICENSE.txt
+# the same licensing terms and conditions as libci.
+# Please see the copyright notice in ci.h or visit
+# http://libci.org/pub/ci/src/libci-LICENSE.txt
 #
-# SPDX-License-Identifier: libpng-2.0
+# SPDX-License-Identifier: libci-2.0
 
 # Variables substituted from CMakeLists.txt
 set(SRCDIR "@CMAKE_CURRENT_SOURCE_DIR@")

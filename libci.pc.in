@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/libci@CILIB_MAJOR@@CILIB_MINOR@
+
+Name: libci
+Description: Loads and saves CI files
+Version: @CILIB_VERSION@
+Requires.private: zlib
+Libs: -L${libdir} -lci@CILIB_MAJOR@@CILIB_MINOR@
+Libs.private: @LIBS@
+Cflags: -I${includedir}

@@ -112,7 +112,7 @@ function ci_lint {
     ci_lint_ci_scripts || CI_LINT_STATUS=1
     ci_lint_text_files || CI_LINT_STATUS=1
     ci_lint_yaml_files || CI_LINT_STATUS=1
-    # TODO: ci_lint_png_files, etc.
+    # TODO: ci_lint_ci_files, etc.
     ci_finish_lint
 }
 

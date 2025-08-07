@@ -1,17 +1,17 @@
-$! make libpng under VMS
+$! make libci under VMS
 $!
 $!
 $! Check for MMK/MMS
 $!
 $! This procedure accepts one parameter (contrib), which causes it to build
-$! the programs from the contrib directory instead of libpng.
+$! the programs from the contrib directory instead of libci.
 $!
 $ p1 = f$edit(p1,"UPCASE")
 $ if p1 .eqs. "CONTRIB"
 $ then
 $   set def [.contrib.gregbook]
 $   @makevms
-$   set def [-.pngminus]
+$   set def [-.ciminus]
 $   @makevms
 $   set def [--]
 $   exit
@@ -49,55 +49,55 @@ $ endif
 $!
 $! Build the thing plain or with mms/mmk
 $!
-$ write sys$output "Compiling Libpng sources ..."
+$ write sys$output "Compiling Libci sources ..."
 $ if make.eqs.""
 $  then
-$   dele pngtest.obj;*
-$   CALL MAKE png.OBJ "cc ''CCOPT' png" -
-	png.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngset.OBJ "cc ''CCOPT' pngset" -
-	pngset.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngget.OBJ "cc ''CCOPT' pngget" -
-	pngget.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngread.OBJ "cc ''CCOPT' pngread" -
-	pngread.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngpread.OBJ "cc ''CCOPT' pngpread" -
-	pngpread.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngrtran.OBJ "cc ''CCOPT' pngrtran" -
-	pngrtran.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngrutil.OBJ "cc ''CCOPT' pngrutil" -
-	pngrutil.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngerror.OBJ "cc ''CCOPT' pngerror" -
-	pngerror.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngmem.OBJ "cc ''CCOPT' pngmem" -
-	pngmem.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngrio.OBJ "cc ''CCOPT' pngrio" -
-	pngrio.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngwio.OBJ "cc ''CCOPT' pngwio" -
-	pngwio.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngtrans.OBJ "cc ''CCOPT' pngtrans" -
-	pngtrans.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngwrite.OBJ "cc ''CCOPT' pngwrite" -
-	pngwrite.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngwtran.OBJ "cc ''CCOPT' pngwtran" -
-	pngwtran.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   CALL MAKE pngwutil.OBJ "cc ''CCOPT' pngwutil" -
-	pngwutil.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-$   write sys$output "Building Libpng ..."
-$   CALL MAKE libpng.OLB "lib/crea libpng.olb *.obj" *.OBJ
-$   write sys$output "Building pngtest..."
-$   CALL MAKE pngtest.OBJ "cc ''CCOPT' pngtest" -
-	pngtest.c png.h pngconf.h pnglibconf.h
-$   call make pngtest.exe -
-	"LINK pngtest,libpng.olb/lib,''zlibsrc'libz.olb/lib" -
-	pngtest.obj libpng.olb
-$   write sys$output "Testing Libpng..."
-$   run pngtest
+$   dele citest.obj;*
+$   CALL MAKE ci.OBJ "cc ''CCOPT' ci" -
+	ci.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciset.OBJ "cc ''CCOPT' ciset" -
+	ciset.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciget.OBJ "cc ''CCOPT' ciget" -
+	ciget.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciread.OBJ "cc ''CCOPT' ciread" -
+	ciread.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cipread.OBJ "cc ''CCOPT' cipread" -
+	cipread.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cirtran.OBJ "cc ''CCOPT' cirtran" -
+	cirtran.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cirutil.OBJ "cc ''CCOPT' cirutil" -
+	cirutil.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cierror.OBJ "cc ''CCOPT' cierror" -
+	cierror.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cimem.OBJ "cc ''CCOPT' cimem" -
+	cimem.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE cirio.OBJ "cc ''CCOPT' cirio" -
+	cirio.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciwio.OBJ "cc ''CCOPT' ciwio" -
+	ciwio.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE citrans.OBJ "cc ''CCOPT' citrans" -
+	citrans.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciwrite.OBJ "cc ''CCOPT' ciwrite" -
+	ciwrite.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciwtran.OBJ "cc ''CCOPT' ciwtran" -
+	ciwtran.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   CALL MAKE ciwutil.OBJ "cc ''CCOPT' ciwutil" -
+	ciwutil.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+$   write sys$output "Building Libci ..."
+$   CALL MAKE libci.OLB "lib/crea libci.olb *.obj" *.OBJ
+$   write sys$output "Building citest..."
+$   CALL MAKE citest.OBJ "cc ''CCOPT' citest" -
+	citest.c ci.h ciconf.h cilibconf.h
+$   call make citest.exe -
+	"LINK citest,libci.olb/lib,''zlibsrc'libz.olb/lib" -
+	citest.obj libci.olb
+$   write sys$output "Testing Libci..."
+$   run citest
 $  else
 $   if f$search("DESCRIP.MMS") .eqs. "" then copy/nolog [.SCRIPTS]DESCRIP.MMS []
 $   'make'/macro=('comp',zlibsrc='zlibsrc')
 $  endif
-$ write sys$output "Libpng build completed"
+$ write sys$output "Libci build completed"
 $ exit
 $!
 $!

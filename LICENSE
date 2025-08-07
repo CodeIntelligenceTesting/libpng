@@ -1,10 +1,10 @@
 COPYRIGHT NOTICE, DISCLAIMER, and LICENSE
 =========================================
 
-PNG Reference Library License version 2
+CI Reference Library License version 2
 ---------------------------------------
 
- * Copyright (c) 1995-2025 The PNG Reference Library Authors.
+ * Copyright (c) 1995-2025 The CI Reference Library Authors.
  * Copyright (c) 2018-2025 Cosmin Truta.
  * Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson.
  * Copyright (c) 1996-1997 Andreas Dilger.
@@ -36,13 +36,13 @@ subject to the following restrictions:
     source or altered source distribution.
 
 
-PNG Reference Library License version 1 (for libpng 0.5 through 1.6.35)
+CI Reference Library License version 1 (for libci 0.5 through 1.6.35)
 -----------------------------------------------------------------------
 
-libpng versions 1.0.7, July 1, 2000, through 1.6.35, July 15, 2018 are
+libci versions 1.0.7, July 1, 2000, through 1.6.35, July 15, 2018 are
 Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson, are
-derived from libpng-1.0.6, and are distributed according to the same
-disclaimer and license as libpng-1.0.6 with the following individuals
+derived from libci-1.0.6, and are distributed according to the same
+disclaimer and license as libci-1.0.6 with the following individuals
 added to the list of Contributing Authors:
 
     Simon-Pierre Cadieux
@@ -65,23 +65,23 @@ and with the following additions to the disclaimer:
     with the user.
 
 Some files in the "contrib" directory and some configure-generated
-files that are distributed with libpng have other copyright owners, and
+files that are distributed with libci have other copyright owners, and
 are released under other open source licenses.
 
-libpng versions 0.97, January 1998, through 1.0.6, March 20, 2000, are
+libci versions 0.97, January 1998, through 1.0.6, March 20, 2000, are
 Copyright (c) 1998-2000 Glenn Randers-Pehrson, are derived from
-libpng-0.96, and are distributed according to the same disclaimer and
-license as libpng-0.96, with the following individuals added to the
+libci-0.96, and are distributed according to the same disclaimer and
+license as libci-0.96, with the following individuals added to the
 list of Contributing Authors:
 
     Tom Lane
     Glenn Randers-Pehrson
     Willem van Schaik
 
-libpng versions 0.89, June 1996, through 0.96, May 1997, are
-Copyright (c) 1996-1997 Andreas Dilger, are derived from libpng-0.88,
+libci versions 0.89, June 1996, through 0.96, May 1997, are
+Copyright (c) 1996-1997 Andreas Dilger, are derived from libci-0.88,
 and are distributed according to the same disclaimer and license as
-libpng-0.88, with the following individuals added to the list of
+libci-0.88, with the following individuals added to the list of
 Contributing Authors:
 
     John Bowler
@@ -94,7 +94,7 @@ Contributing Authors:
 Some files in the "scripts" directory have other copyright owners,
 but are released under this license.
 
-libpng versions 0.5, May 1995, through 0.88, January 1996, are
+libci versions 0.5, May 1995, through 0.88, January 1996, are
 Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
 
 For the purposes of this copyright and license, "Contributing Authors"
@@ -106,13 +106,13 @@ is defined as the following set of individuals:
     Paul Schmidt
     Tim Wegner
 
-The PNG Reference Library is supplied "AS IS".  The Contributing
+The CI Reference Library is supplied "AS IS".  The Contributing
 Authors and Group 42, Inc. disclaim all warranties, expressed or
 implied, including, without limitation, the warranties of
 merchantability and of fitness for any purpose.  The Contributing
 Authors and Group 42, Inc. assume no liability for direct, indirect,
 incidental, special, exemplary, or consequential damages, which may
-result from the use of the PNG Reference Library, even if advised of
+result from the use of the CI Reference Library, even if advised of
 the possibility of such damage.
 
 Permission is hereby granted to use, copy, modify, and distribute this
@@ -129,6 +129,6 @@ to the following restrictions:
 
 The Contributing Authors and Group 42, Inc. specifically permit,
 without fee, and encourage the use of this source code as a component
-to supporting the PNG file format in commercial products.  If you use
+to supporting the CI file format in commercial products.  If you use
 this source code in a product, acknowledgment is not required but would
 be appreciated.

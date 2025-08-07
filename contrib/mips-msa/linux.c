@@ -5,17 +5,17 @@
  * Written by Mandar Sahastrabuddhe, 2016.
  * Updated by Sui Jingfeng, 2021.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
- * On Linux, png_have_msa is implemented by reading the pseudo-file
+ * On Linux, ci_have_msa is implemented by reading the pseudo-file
  * "/proc/self/auxv".
  *
  * See contrib/mips-msa/README before reporting bugs.
  *
  * STATUS: SUPPORTED
- * BUG REPORTS: png-mng-implement@sourceforge.net
+ * BUG REPORTS: ci-mng-implement@sourceforge.net
  */
 
 #include <elf.h>
@@ -24,7 +24,7 @@
 #include <unistd.h>
 
 static int
-png_have_msa(png_structp png_ptr)
+ci_have_msa(ci_structp ci_ptr)
 {
    Elf64_auxv_t aux;
    int fd;
@@ -45,9 +45,9 @@ png_have_msa(png_structp png_ptr)
       }
       close(fd);
    }
-#ifdef PNG_WARNINGS_SUPPORTED
+#ifdef CI_WARNINGS_SUPPORTED
    else
-      png_warning(png_ptr, "/proc/self/auxv open failed");
+      ci_warning(ci_ptr, "/proc/self/auxv open failed");
 #endif
 
    return has_msa;

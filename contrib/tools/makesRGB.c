@@ -18,23 +18,23 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* pngpriv.h includes the definition of 'PNG_sRGB_FROM_LINEAR' which is required
+/* cipriv.h includes the definition of 'CI_sRGB_FROM_LINEAR' which is required
  * to verify the actual code.
  */
-#include "../../pngpriv.h"
+#include "../../cipriv.h"
 
 #include "sRGB.h"
 
-/* The tables are declared 'const' in pngpriv.h, so this redefines the tables to
+/* The tables are declared 'const' in cipriv.h, so this redefines the tables to
  * be used.
  */
-#define png_sRGB_table sRGB_table
-#define png_sRGB_base sRGB_base
-#define png_sRGB_delta sRGB_delta
+#define ci_sRGB_table sRGB_table
+#define ci_sRGB_base sRGB_base
+#define ci_sRGB_delta sRGB_delta
 
-static png_uint_16 png_sRGB_table[256];
-static png_uint_16 png_sRGB_base[512];
-static png_byte png_sRGB_delta[512];
+static ci_uint_16 ci_sRGB_table[256];
+static ci_uint_16 ci_sRGB_base[512];
+static ci_byte ci_sRGB_delta[512];
 
 static const unsigned int max_input = 255*65535;
 
@@ -56,7 +56,7 @@ finvsRGB(unsigned int i)
    return 65535 * linear_from_sRGB(i/255.);
 }
 
-png_uint_16
+ci_uint_16
 invsRGB(unsigned int i)
 {
    unsigned int x = nearbyint(finvsRGB(i));
@@ -67,7 +67,7 @@ invsRGB(unsigned int i)
       exit(1);
    }
 
-   return (png_uint_16)x;
+   return (ci_uint_16)x;
 }
 
 int
@@ -91,7 +91,7 @@ main(int argc, char **argv)
    /* Initialize the encoding table first. */
    for (i=0; i<256; ++i)
    {
-      png_sRGB_table[i] = invsRGB(i);
+      ci_sRGB_table[i] = invsRGB(i);
    }
 
    /* Now work out the decoding tables (this is where the error comes in because
@@ -134,7 +134,7 @@ main(int argc, char **argv)
                calc);
             exit(1);
          }
-         png_sRGB_base[i] = calc;
+         ci_sRGB_base[i] = calc;
 
          calc = nearbyint((hi-lo) * 32);
          if (calc > 255)
@@ -143,7 +143,7 @@ main(int argc, char **argv)
                calc);
             exit(1);
          }
-         png_sRGB_delta[i] = calc;
+         ci_sRGB_delta[i] = calc;
       }
 
       /* Check the 16-bit linear values alone: */
@@ -152,7 +152,7 @@ main(int argc, char **argv)
       {
          unsigned int i = 255*i16;
          unsigned int iexact = nearbyint(255*sRGB(i));
-         unsigned int icalc = PNG_sRGB_FROM_LINEAR(i);
+         unsigned int icalc = CI_sRGB_FROM_LINEAR(i);
 
          if (icalc != iexact)
             ++error_count16;
@@ -209,14 +209,14 @@ main(int argc, char **argv)
     */
    for (ibase=0; ibase<65536; ibase+=128)
    {
-      png_uint_16 base = png_sRGB_base[ibase >> 7], trybase = base, ob=base;
-      png_byte delta = png_sRGB_delta[ibase >> 7], trydelta = delta, od=delta;
+      ci_uint_16 base = ci_sRGB_base[ibase >> 7], trybase = base, ob=base;
+      ci_byte delta = ci_sRGB_delta[ibase >> 7], trydelta = delta, od=delta;
       unsigned int ecbase = 0, eco;
 
       for (;;)
       {
-         png_sRGB_base[ibase >> 7] = trybase;
-         png_sRGB_delta[ibase >> 7] = trydelta;
+         ci_sRGB_base[ibase >> 7] = trybase;
+         ci_sRGB_delta[ibase >> 7] = trydelta;
 
          /* Check the 16-bit linear values alone: */
          error_count16 = 0;
@@ -224,7 +224,7 @@ main(int argc, char **argv)
          {
             unsigned int i = 255*i16;
             unsigned int iexact = nearbyint(255*sRGB(i));
-            unsigned int icalc = PNG_sRGB_FROM_LINEAR(i);
+            unsigned int icalc = CI_sRGB_FROM_LINEAR(i);
 
             if (icalc != iexact)
                ++error_count16;
@@ -285,8 +285,8 @@ main(int argc, char **argv)
          }
       }
 
-      png_sRGB_base[ibase >> 7] = base;
-      png_sRGB_delta[ibase >> 7] = delta;
+      ci_sRGB_base[ibase >> 7] = base;
+      ci_sRGB_delta[ibase >> 7] = delta;
       if (base != ob || delta != od)
       {
          printf("/* table[%u]={%u,%u} -> {%u,%u} %u -> %u errors */\n",
@@ -305,7 +305,7 @@ main(int argc, char **argv)
    for (i=0; i <= max_input; ++i)
    {
       unsigned int iexact = nearbyint(255*sRGB(i));
-      unsigned int icalc = PNG_sRGB_FROM_LINEAR(i);
+      unsigned int icalc = CI_sRGB_FROM_LINEAR(i);
 
       if (icalc != iexact)
       {
@@ -315,8 +315,8 @@ main(int argc, char **argv)
          {
             printf(
                "/* 0x%08x: exact: %3d, got: %3d [tables: %08x, %08x] (%f) */\n",
-               i, iexact, icalc, png_sRGB_base[i>>15],
-               png_sRGB_delta[i>>15], err);
+               i, iexact, icalc, ci_sRGB_base[i>>15],
+               ci_sRGB_delta[i>>15], err);
          }
 
          ++error_count;
@@ -337,7 +337,7 @@ main(int argc, char **argv)
    {
       unsigned int i = 255*i16;
       unsigned int iexact = nearbyint(255*sRGB(i));
-      unsigned int icalc = PNG_sRGB_FROM_LINEAR(i);
+      unsigned int icalc = CI_sRGB_FROM_LINEAR(i);
 
       if (icalc != iexact)
       {
@@ -352,17 +352,17 @@ main(int argc, char **argv)
          if (abs(icalc - iexact) > 1)
             printf(
                "/* 0x%04x: exact: %3d, got: %3d [tables: %08x, %08x] (%f) */\n",
-               i16, iexact, icalc, png_sRGB_base[i>>15],
-               png_sRGB_delta[i>>15], err);
+               i16, iexact, icalc, ci_sRGB_base[i>>15],
+               ci_sRGB_delta[i>>15], err);
       }
    }
 
    /* Check the round trip for each 8-bit sRGB value. */
    for (i16=0; i16 <= 255; ++i16)
    {
-      unsigned int i = 255 * png_sRGB_table[i16];
+      unsigned int i = 255 * ci_sRGB_table[i16];
       unsigned int iexact = nearbyint(255*sRGB(i));
-      unsigned int icalc = PNG_sRGB_FROM_LINEAR(i);
+      unsigned int icalc = CI_sRGB_FROM_LINEAR(i);
 
       if (i16 != iexact)
       {
@@ -387,42 +387,42 @@ main(int argc, char **argv)
 
    if (!test_only)
    {
-      printf("const png_uint_16 png_sRGB_table[256] =\n{\n   ");
+      printf("const ci_uint_16 ci_sRGB_table[256] =\n{\n   ");
       for (i=0; i<255; )
       {
          do
          {
-            printf("%d,", png_sRGB_table[i++]);
+            printf("%d,", ci_sRGB_table[i++]);
          }
          while ((i & 0x7) != 0 && i<255);
          if (i<255) printf("\n   ");
       }
-      printf("%d\n};\n\n", png_sRGB_table[i]);
+      printf("%d\n};\n\n", ci_sRGB_table[i]);
 
 
-      printf("const png_uint_16 png_sRGB_base[512] =\n{\n   ");
+      printf("const ci_uint_16 ci_sRGB_base[512] =\n{\n   ");
       for (i=0; i<511; )
       {
          do
          {
-            printf("%d,", png_sRGB_base[i++]);
+            printf("%d,", ci_sRGB_base[i++]);
          }
          while ((i & 0x7) != 0 && i<511);
          if (i<511) printf("\n   ");
       }
-      printf("%d\n};\n\n", png_sRGB_base[i]);
+      printf("%d\n};\n\n", ci_sRGB_base[i]);
 
-      printf("const png_byte png_sRGB_delta[512] =\n{\n   ");
+      printf("const ci_byte ci_sRGB_delta[512] =\n{\n   ");
       for (i=0; i<511; )
       {
          do
          {
-            printf("%d,", png_sRGB_delta[i++]);
+            printf("%d,", ci_sRGB_delta[i++]);
          }
          while ((i & 0xf) != 0 && i<511);
          if (i<511) printf("\n   ");
       }
-      printf("%d\n};\n\n", png_sRGB_delta[i]);
+      printf("%d\n};\n\n", ci_sRGB_delta[i]);
    }
 
    return 0;

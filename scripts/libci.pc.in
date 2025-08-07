@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/libci16
+
+Name: libci
+Description: Loads and saves CI files
+Version: 1.6.50.git
+Libs: -L${libdir} -lci16
+Cflags: -I${includedir}

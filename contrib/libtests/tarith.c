@@ -3,14 +3,14 @@
  * Copyright (c) 2021 Cosmin Truta
  * Copyright (c) 2011-2013 John Cunningham Bowler
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
- * Test internal arithmetic functions of libpng.
+ * Test internal arithmetic functions of libci.
  *
  * This code must be linked against a math library (-lm), but does not require
- * libpng or zlib to work.  Because it includes the complete source of 'png.c'
+ * libci or zlib to work.  Because it includes the complete source of 'ci.c'
  * it tests the code with whatever compiler options are used to build it.
  * Changing these options can substantially change the errors in the
  * calculations that the compiler chooses!
@@ -27,45 +27,45 @@
 #include <string.h>
 #include <assert.h>
 
-#include "../../pngpriv.h"
+#include "../../cipriv.h"
 
-#define png_error png_warning
+#define ci_error ci_warning
 
-void png_warning(png_const_structrp png_ptr, png_const_charp msg)
+void ci_warning(ci_const_structrp ci_ptr, ci_const_charp msg)
 {
    fprintf(stderr, "validation: %s\n", msg);
 }
 
-#define png_fixed_error png_fixed_warning
+#define ci_fixed_error ci_fixed_warning
 
-void png_fixed_warning(png_const_structrp png_ptr, png_const_charp msg)
+void ci_fixed_warning(ci_const_structrp ci_ptr, ci_const_charp msg)
 {
    fprintf(stderr, "overflow in: %s\n", msg);
 }
 
-#define png_set_error_fn(pp, ep, efp, wfp) ((void)0)
-#define png_malloc(pp, s) malloc(s)
-#define png_malloc_warn(pp, s) malloc(s)
-#define png_malloc_base(pp, s) malloc(s)
-#define png_calloc(pp, s) calloc(1, (s))
-#define png_free(pp, s) free(s)
+#define ci_set_error_fn(pp, ep, efp, wfp) ((void)0)
+#define ci_malloc(pp, s) malloc(s)
+#define ci_malloc_warn(pp, s) malloc(s)
+#define ci_malloc_base(pp, s) malloc(s)
+#define ci_calloc(pp, s) calloc(1, (s))
+#define ci_free(pp, s) free(s)
 
-#define png_safecat(b, sb, pos, str) (pos)
-#define png_format_number(start, end, format, number) (start)
+#define ci_safecat(b, sb, pos, str) (pos)
+#define ci_format_number(start, end, format, number) (start)
 
 #define crc32(crc, pp, s) (crc)
 #define inflateReset(zs) Z_OK
 
-#define png_create_struct(type) (0)
-#define png_destroy_struct(pp) ((void)0)
-#define png_create_struct_2(type, m, mm) (0)
-#define png_destroy_struct_2(pp, f, mm) ((void)0)
+#define ci_create_struct(type) (0)
+#define ci_destroy_struct(pp) ((void)0)
+#define ci_create_struct_2(type, m, mm) (0)
+#define ci_destroy_struct_2(pp, f, mm) ((void)0)
 
-#undef PNG_SIMPLIFIED_READ_SUPPORTED
-#undef PNG_SIMPLIFIED_WRITE_SUPPORTED
-#undef PNG_USER_MEM_SUPPORTED
+#undef CI_SIMPLIFIED_READ_SUPPORTED
+#undef CI_SIMPLIFIED_WRITE_SUPPORTED
+#undef CI_USER_MEM_SUPPORTED
 
-#include "../../png.c"
+#include "../../ci.c"
 
 /* Validate ASCII to fp routines. */
 static int verbose = 0;
@@ -123,7 +123,7 @@ int validation_ascii_to_fp(int count, int argc, char **argv)
       /* Check for overflow in the buffer by setting a marker. */
       memset(buffer, 71, sizeof buffer);
 
-      png_ascii_from_fp(0, buffer, precision+10, test, precision);
+      ci_ascii_from_fp(0, buffer, precision+10, test, precision);
 
       /* Allow for a three digit exponent, this stuff will fail if
        * the exponent is bigger than this!
@@ -151,36 +151,36 @@ int validation_ascii_to_fp(int count, int argc, char **argv)
             failed = 1;
          }
       }
-      else if (!png_check_fp_number(buffer, precision+10, &state, &index) ||
+      else if (!ci_check_fp_number(buffer, precision+10, &state, &index) ||
           buffer[index] != 0)
       {
          fprintf(stderr, "%g[%d] -> '%s' but has bad format ('%c')\n",
             test, precision, buffer, buffer[index]);
          failed = 1;
       }
-      else if (PNG_FP_IS_NEGATIVE(state) && !(test < 0))
+      else if (CI_FP_IS_NEGATIVE(state) && !(test < 0))
       {
          fprintf(stderr, "%g[%d] -> '%s' but negative value not so reported\n",
             test, precision, buffer);
          failed = 1;
-         assert(!PNG_FP_IS_ZERO(state));
-         assert(!PNG_FP_IS_POSITIVE(state));
+         assert(!CI_FP_IS_ZERO(state));
+         assert(!CI_FP_IS_POSITIVE(state));
       }
-      else if (PNG_FP_IS_ZERO(state) && !(test == 0))
+      else if (CI_FP_IS_ZERO(state) && !(test == 0))
       {
          fprintf(stderr, "%g[%d] -> '%s' but zero value not so reported\n",
             test, precision, buffer);
          failed = 1;
-         assert(!PNG_FP_IS_NEGATIVE(state));
-         assert(!PNG_FP_IS_POSITIVE(state));
+         assert(!CI_FP_IS_NEGATIVE(state));
+         assert(!CI_FP_IS_POSITIVE(state));
       }
-      else if (PNG_FP_IS_POSITIVE(state) && !(test > 0))
+      else if (CI_FP_IS_POSITIVE(state) && !(test > 0))
       {
          fprintf(stderr, "%g[%d] -> '%s' but positive value not so reported\n",
             test, precision, buffer);
          failed = 1;
-         assert(!PNG_FP_IS_NEGATIVE(state));
-         assert(!PNG_FP_IS_ZERO(state));
+         assert(!CI_FP_IS_NEGATIVE(state));
+         assert(!CI_FP_IS_ZERO(state));
       }
       else
       {
@@ -266,7 +266,7 @@ skip:
    return 0;
 }
 
-/* Observe that valid FP numbers have the forms listed in the PNG extensions
+/* Observe that valid FP numbers have the forms listed in the CI extensions
  * specification:
  *
  * [+,-]{integer,integer.fraction,.fraction}[{e,E}[+,-]integer]
@@ -332,7 +332,7 @@ static int check_one_character(checkfp_command *co, checkfp_control c, int ch)
     */
    size_t index = 0;
    const char test = (char)ch;
-   int number_is_valid = png_check_fp_number(&test, 1, &c.state, &index);
+   int number_is_valid = ci_check_fp_number(&test, 1, &c.state, &index);
    int character_accepted = (index == 1);
 
    if (c.check_state != exponent && isdigit(ch) && ch != '0')
@@ -377,23 +377,23 @@ static int check_one_character(checkfp_command *co, checkfp_control c, int ch)
       return 0;
    }
 
-   /* Validate the new state, note that the PNG_FP_IS_ macros all return
+   /* Validate the new state, note that the CI_FP_IS_ macros all return
     * false unless the number is valid.
     */
-   if (PNG_FP_IS_NEGATIVE(c.state) !=
+   if (CI_FP_IS_NEGATIVE(c.state) !=
       (number_is_valid && !c.is_zero && c.is_negative))
    {
       fprintf(stderr, "%s: negative when it is not\n", co->number);
       return 0;
    }
 
-   if (PNG_FP_IS_ZERO(c.state) != (number_is_valid && c.is_zero))
+   if (CI_FP_IS_ZERO(c.state) != (number_is_valid && c.is_zero))
    {
       fprintf(stderr, "%s: zero when it is not\n", co->number);
       return 0;
    }
 
-   if (PNG_FP_IS_POSITIVE(c.state) !=
+   if (CI_FP_IS_POSITIVE(c.state) !=
       (number_is_valid && !c.is_zero && !c.is_negative))
    {
       fprintf(stderr, "%s: positive when it is not\n", co->number);
@@ -618,9 +618,9 @@ int validation_muldiv(int count, int argc, char **argv)
    int error64 = 0;
    int passed = 0;
    int randbits = 0;
-   png_uint_32 randbuffer;
-   png_fixed_point a;
-   png_int_32 times, div;
+   ci_uint_32 randbuffer;
+   ci_fixed_point a;
+   ci_int_32 times, div;
 
    while (--argc > 0)
    {
@@ -639,7 +639,7 @@ int validation_muldiv(int count, int argc, char **argv)
    times = div = 0;
    do
    {
-      png_fixed_point result;
+      ci_fixed_point result;
       /* NOTE: your mileage may vary, a type is required below that can
        * hold 64 bits or more, if floating point is used a 64-bit or
        * better mantissa is required.
@@ -648,7 +648,7 @@ int validation_muldiv(int count, int argc, char **argv)
       unsigned long hi, lo;
       int ok;
 
-      /* Check the values, png_64bit_product can only handle positive
+      /* Check the values, ci_64bit_product can only handle positive
        * numbers, so correct for that here.
        */
       {
@@ -656,7 +656,7 @@ int validation_muldiv(int count, int argc, char **argv)
          int n = 0;
          if (a < 0) u1 = -a, n = 1; else u1 = a;
          if (times < 0) u2 = -times, n = !n; else u2 = times;
-         png_64bit_product(u1, u2, &hi, &lo);
+         ci_64bit_product(u1, u2, &hi, &lo);
          if (n)
          {
             /* -x = ~x+1 */
@@ -670,7 +670,7 @@ int validation_muldiv(int count, int argc, char **argv)
       fp *= times;
       if ((fp & 0xffffffff) != lo || ((fp >> 32) & 0xffffffff) != hi)
       {
-         fprintf(stderr, "png_64bit_product %d * %d -> %lx|%.8lx not %llx\n",
+         fprintf(stderr, "ci_64bit_product %d * %d -> %lx|%.8lx not %llx\n",
             a, times, hi, lo, fp);
          ++error64;
       }
@@ -686,8 +686,8 @@ int validation_muldiv(int count, int argc, char **argv)
          fp /= div;
          fpround = fp;
          /* Assume 2's complement here: */
-         ok = fpround <= PNG_UINT_31_MAX &&
-              fpround >= -1-(long long int)PNG_UINT_31_MAX;
+         ok = fpround <= CI_UINT_31_MAX &&
+              fpround >= -1-(long long int)CI_UINT_31_MAX;
          if (!ok) ++overflow;
       }
       else
@@ -698,7 +698,7 @@ int validation_muldiv(int count, int argc, char **argv)
             a, times, div, fp, ok ? "ok" : "overflow");
 
       ++tested;
-      if (png_muldiv(&result, a, times, div) != ok)
+      if (ci_muldiv(&result, a, times, div) != ok)
       {
          ++error;
          if (ok)
@@ -736,40 +736,40 @@ int validation_muldiv(int count, int argc, char **argv)
 /* When FP is on this just becomes a speed test - compile without FP to get real
  * validation.
  */
-#ifdef PNG_FLOATING_ARITHMETIC_SUPPORTED
+#ifdef CI_FLOATING_ARITHMETIC_SUPPORTED
 #define LN2 .000010576586617430806112933839 /* log(2)/65536 */
 #define L2INV 94548.46219969910586572651    /* 65536/log(2) */
 
 /* For speed testing, need the internal functions too: */
-static png_uint_32 png_log8bit(unsigned x)
+static ci_uint_32 ci_log8bit(unsigned x)
 {
    if (x > 0)
-      return (png_uint_32)floor(.5-log(x/255.)*L2INV);
+      return (ci_uint_32)floor(.5-log(x/255.)*L2INV);
 
    return 0xffffffff;
 }
 
-static png_uint_32 png_log16bit(png_uint_32 x)
+static ci_uint_32 ci_log16bit(ci_uint_32 x)
 {
    if (x > 0)
-      return (png_uint_32)floor(.5-log(x/65535.)*L2INV);
+      return (ci_uint_32)floor(.5-log(x/65535.)*L2INV);
 
    return 0xffffffff;
 }
 
-static png_uint_32 png_exp(png_uint_32 x)
+static ci_uint_32 ci_exp(ci_uint_32 x)
 {
-   return (png_uint_32)floor(.5 + exp(x * -LN2) * 0xffffffffU);
+   return (ci_uint_32)floor(.5 + exp(x * -LN2) * 0xffffffffU);
 }
 
-static png_byte png_exp8bit(png_uint_32 log)
+static ci_byte ci_exp8bit(ci_uint_32 log)
 {
-   return (png_byte)floor(.5 + exp(log * -LN2) * 255);
+   return (ci_byte)floor(.5 + exp(log * -LN2) * 255);
 }
 
-static png_uint_16 png_exp16bit(png_uint_32 log)
+static ci_uint_16 ci_exp16bit(ci_uint_32 log)
 {
-   return (png_uint_16)floor(.5 + exp(log * -LN2) * 65535);
+   return (ci_uint_16)floor(.5 + exp(log * -LN2) * 65535);
 }
 #endif /* FLOATING_ARITHMETIC */
 
@@ -798,16 +798,16 @@ int validation_gamma(int argc, char **argv)
       for (i=0; i<256; ++i)
       {
          double correct = -log(i/255.)/log(2.)*65536;
-         double error = png_log8bit(i) - correct;
+         double error = ci_log8bit(i) - correct;
 
          if (i != 0 && fabs(error) > maxerr)
             maxerr = fabs(error);
 
-         if (i == 0 && png_log8bit(i) != 0xffffffff ||
-             i != 0 && png_log8bit(i) != floor(correct+.5))
+         if (i == 0 && ci_log8bit(i) != 0xffffffff ||
+             i != 0 && ci_log8bit(i) != floor(correct+.5))
          {
             fprintf(stderr, "8-bit log error: %d: got %u, expected %f\n",
-               i, png_log8bit(i), correct);
+               i, ci_log8bit(i), correct);
          }
       }
 
@@ -818,19 +818,19 @@ int validation_gamma(int argc, char **argv)
       for (i=0; i<65536; ++i)
       {
          double correct = -log(i/65535.)/log(2.)*65536;
-         double error = png_log16bit(i) - correct;
+         double error = ci_log16bit(i) - correct;
 
          if (i != 0 && fabs(error) > maxerr)
             maxerr = fabs(error);
 
-         if (i == 0 && png_log16bit(i) != 0xffffffff ||
-             i != 0 && png_log16bit(i) != floor(correct+.5))
+         if (i == 0 && ci_log16bit(i) != 0xffffffff ||
+             i != 0 && ci_log16bit(i) != floor(correct+.5))
          {
             if (error > .68) /* By experiment error is less than .68 */
             {
                fprintf(stderr,
                   "16-bit log error: %d: got %u, expected %f error: %f\n",
-                  i, png_log16bit(i), correct, error);
+                  i, ci_log16bit(i), correct, error);
             }
          }
       }
@@ -843,7 +843,7 @@ int validation_gamma(int argc, char **argv)
       for (i=0; i<=0xfffff; ++i)
       {
          double correct = exp(-i/65536. * log(2.)) * (65536. * 65536);
-         double error = png_exp(i) - correct;
+         double error = ci_exp(i) - correct;
 
          if (fabs(error) > maxerr)
             maxerr = fabs(error);
@@ -851,7 +851,7 @@ int validation_gamma(int argc, char **argv)
          {
             fprintf(stderr,
                "32-bit exp error: %d: got %u, expected %f error: %f\n",
-               i, png_exp(i), correct, error);
+               i, ci_exp(i), correct, error);
          }
       }
 
@@ -862,7 +862,7 @@ int validation_gamma(int argc, char **argv)
       for (i=0; i<=0xfffff; ++i)
       {
          double correct = exp(-i/65536. * log(2.)) * 255;
-         double error = png_exp8bit(i) - correct;
+         double error = ci_exp8bit(i) - correct;
 
          if (fabs(error) > maxerr)
             maxerr = fabs(error);
@@ -870,7 +870,7 @@ int validation_gamma(int argc, char **argv)
          {
             fprintf(stderr,
                "8-bit exp error: %d: got %u, expected %f error: %f\n",
-               i, png_exp8bit(i), correct, error);
+               i, ci_exp8bit(i), correct, error);
          }
       }
 
@@ -881,7 +881,7 @@ int validation_gamma(int argc, char **argv)
       for (i=0; i<=0xfffff; ++i)
       {
          double correct = exp(-i/65536. * log(2.)) * 65535;
-         double error = png_exp16bit(i) - correct;
+         double error = ci_exp16bit(i) - correct;
 
          if (fabs(error) > maxerr)
             maxerr = fabs(error);
@@ -889,7 +889,7 @@ int validation_gamma(int argc, char **argv)
          {
             fprintf(stderr,
                "16-bit exp error: %d: got %u, expected %f error: %f\n",
-               i, png_exp16bit(i), correct, error);
+               i, ci_exp16bit(i), correct, error);
          }
       }
 
@@ -902,7 +902,7 @@ int validation_gamma(int argc, char **argv)
    {
       unsigned j;
       double g = gamma[i];
-      png_fixed_point gfp = floor(g * PNG_FP_1 + .5);
+      ci_fixed_point gfp = floor(g * CI_FP_1 + .5);
 
       if (!silent)
          printf("Test gamma %f\n", g);
@@ -911,7 +911,7 @@ int validation_gamma(int argc, char **argv)
       for (j=0; j<256; ++j)
       {
          double correct = pow(j/255., g) * 255;
-         png_byte out = png_gamma_8bit_correct(j, gfp);
+         ci_byte out = ci_gamma_8bit_correct(j, gfp);
          double error = out - correct;
 
          if (fabs(error) > maxerr)
@@ -930,7 +930,7 @@ int validation_gamma(int argc, char **argv)
       for (j=0; j<65536; ++j)
       {
          double correct = pow(j/65535., g) * 65535;
-         png_uint_16 out = png_gamma_16bit_correct(j, gfp);
+         ci_uint_16 out = ci_gamma_16bit_correct(j, gfp);
          double error = out - correct;
 
          if (fabs(error) > maxerr)
@@ -951,10 +951,10 @@ int validation_gamma(int argc, char **argv)
 
 /**************************** VALIDATION TESTS ********************************/
 /* Various validation routines are included herein, they require some
- * definition for png_warning and png_error, settings of VALIDATION:
+ * definition for ci_warning and ci_error, settings of VALIDATION:
  *
  * 1: validates the ASCII to floating point conversions
- * 2: validates png_muldiv
+ * 2: validates ci_muldiv
  * 3: accuracy test of fixed point gamma tables
  */
 

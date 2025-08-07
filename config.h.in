@@ -67,55 +67,55 @@
 #undef PACKAGE_VERSION
 
 /* Turn on ARM Neon optimizations at run-time */
-#undef PNG_ARM_NEON_API_SUPPORTED
+#undef CI_ARM_NEON_API_SUPPORTED
 
 /* Check for ARM Neon support at run-time */
-#undef PNG_ARM_NEON_CHECK_SUPPORTED
+#undef CI_ARM_NEON_CHECK_SUPPORTED
 
 /* Enable ARM Neon optimizations */
-#undef PNG_ARM_NEON_OPT
+#undef CI_ARM_NEON_OPT
 
 /* Enable Intel SSE optimizations */
-#undef PNG_INTEL_SSE_OPT
+#undef CI_INTEL_SSE_OPT
 
 /* Enable LOONGARCH LSX optimizations */
-#undef PNG_LOONGARCH_LSX_OPT
+#undef CI_LOONGARCH_LSX_OPT
 
 /* Turn on MIPS MMI optimizations at run-time */
-#undef PNG_MIPS_MMI_API_SUPPORTED
+#undef CI_MIPS_MMI_API_SUPPORTED
 
 /* Check for MIPS MMI support at run-time */
-#undef PNG_MIPS_MMI_CHECK_SUPPORTED
+#undef CI_MIPS_MMI_CHECK_SUPPORTED
 
 /* Enable MIPS MMI optimizations */
-#undef PNG_MIPS_MMI_OPT
+#undef CI_MIPS_MMI_OPT
 
 /* Turn on MIPS MSA optimizations at run-time */
-#undef PNG_MIPS_MSA_API_SUPPORTED
+#undef CI_MIPS_MSA_API_SUPPORTED
 
 /* Check for MIPS MSA support at run-time */
-#undef PNG_MIPS_MSA_CHECK_SUPPORTED
+#undef CI_MIPS_MSA_CHECK_SUPPORTED
 
 /* Enable MIPS MSA optimizations */
-#undef PNG_MIPS_MSA_OPT
+#undef CI_MIPS_MSA_OPT
 
 /* Turn on POWERPC VSX optimizations at run-time */
-#undef PNG_POWERPC_VSX_API_SUPPORTED
+#undef CI_POWERPC_VSX_API_SUPPORTED
 
 /* Check for POWERPC VSX support at run-time */
-#undef PNG_POWERPC_VSX_CHECK_SUPPORTED
+#undef CI_POWERPC_VSX_CHECK_SUPPORTED
 
 /* Enable POWERPC VSX optimizations */
-#undef PNG_POWERPC_VSX_OPT
+#undef CI_POWERPC_VSX_OPT
 
 /* Turn on RISC-V Vector optimizations at run-time */
-#undef PNG_RISCV_RVV_API_SUPPORTED
+#undef CI_RISCV_RVV_API_SUPPORTED
 
 /* Check for RISC-V Vector support at run-time */
-#undef PNG_RISCV_RVV_CHECK_SUPPORTED
+#undef CI_RISCV_RVV_CHECK_SUPPORTED
 
 /* Enable RISCV RVV optimizations */
-#undef PNG_RISCV_RVV_OPT
+#undef CI_RISCV_RVV_OPT
 
 /* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

@@ -8,15 +8,15 @@ HOW TO USE THIS
 ---------------
 
 This directory contains C code fragments that can be included in mips/mips_init.c
-by setting the macro PNG_MIPS_MSA_FILE to the file name in "" or <> at build
-time.  This setting is not recorded in pnglibconf.h and can be changed simply by
+by setting the macro CI_MIPS_MSA_FILE to the file name in "" or <> at build
+time.  This setting is not recorded in cilibconf.h and can be changed simply by
 rebuilding mips/msa_init.o with the required macro definition.
 
 For any of this code to be used the MIPS MSA code must be enabled and run time
 checks must be supported.  I.e.:
 
-#if PNG_MIPS_MSA_OPT > 0
-#ifdef PNG_MIPS_MSA_CHECK_SUPPORTED
+#if CI_MIPS_MSA_OPT > 0
+#ifdef CI_MIPS_MSA_CHECK_SUPPORTED
 
 This is done in a 'configure' build by passing configure the argument:
 
@@ -38,7 +38,7 @@ STATUS: one of:
    COMPILED: This indicates that the code did compile at least once.  See the
          more detailed description for the extent to which the result was
          successful.
-   TESTED: This means the code was fully compiled into the libpng test programs
+   TESTED: This means the code was fully compiled into the libci test programs
          and these were run at least once.
 
 BUG REPORTS: an email address to which to send reports of problems
@@ -46,11 +46,11 @@ BUG REPORTS: an email address to which to send reports of problems
 The file is a fragment of C code. It should not define any 'extern' symbols;
 everything should be static.  It must define the function:
 
-static int png_have_msa(png_structp png_ptr);
+static int ci_have_msa(ci_structp ci_ptr);
 
 That function must return 1 if MIPS MSA instructions are supported, 0 if not.
-It must not execute png_error unless it detects a bug.  A png_error will prevent
-the reading of the PNG and in the future, writing too.
+It must not execute ci_error unless it detects a bug.  A ci_error will prevent
+the reading of the CI and in the future, writing too.
 
 BUG REPORTS
 -----------
@@ -63,7 +63,7 @@ CONTRIBUTIONS
 -------------
 
 You may send contributions of new implementations to
-png-mng-implement@sourceforge.net.  Please write code in strict C90 C where
+ci-mng-implement@sourceforge.net.  Please write code in strict C90 C where
 possible.  Obviously OS dependencies are to be expected.  If you submit code you
 must have the authors permission and it must have a license that is acceptable
 to the current maintainer; in particular that license must permit modification
@@ -74,7 +74,7 @@ unambiguous name that identifies the target OS.  If multiple files really are
 required put them all in a sub-directory.
 
 You must also be prepared to handle bug reports from users of the code, either
-by joining the png-mng-implement mailing list or by providing an email for the
+by joining the ci-mng-implement mailing list or by providing an email for the
 "BUG REPORTS" entry or both.  Please make sure that the header of the file
 contains the STATUS and BUG REPORTS fields as above.
 

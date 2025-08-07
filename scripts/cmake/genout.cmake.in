@@ -6,11 +6,11 @@
 # Written by Roger Leigh, 2016
 #
 # Use, modification and distribution are subject to
-# the same licensing terms and conditions as libpng.
-# Please see the copyright notice in png.h or visit
-# http://libpng.org/pub/png/src/libpng-LICENSE.txt
+# the same licensing terms and conditions as libci.
+# Please see the copyright notice in ci.h or visit
+# http://libci.org/pub/ci/src/libci-LICENSE.txt
 #
-# SPDX-License-Identifier: libpng-2.0
+# SPDX-License-Identifier: libci-2.0
 
 # Variables substituted from CMakeLists.txt
 set(SRCDIR "@CMAKE_CURRENT_SOURCE_DIR@")
@@ -22,10 +22,10 @@ set(CMAKE_C_COMPILER "@CMAKE_C_COMPILER@")
 set(CMAKE_C_FLAGS @CMAKE_C_FLAGS@)
 set(CMAKE_SYSROOT @CMAKE_SYSROOT@)
 set(INCDIR "@CMAKE_CURRENT_BINARY_DIR@")
-set(PNG_PREFIX "@PNG_PREFIX@")
-set(PNGLIB_MAJOR "@PNGLIB_MAJOR@")
-set(PNGLIB_MINOR "@PNGLIB_MINOR@")
-set(PNGLIB_VERSION "@PNGLIB_VERSION@")
+set(CI_PREFIX "@CI_PREFIX@")
+set(CILIB_MAJOR "@CILIB_MAJOR@")
+set(CILIB_MINOR "@CILIB_MINOR@")
+set(CILIB_VERSION "@CILIB_VERSION@")
 set(ZLIBINCDIR "@ZLIB_INCLUDE_DIRS@")
 
 set(PLATFORM_C_FLAGS)
@@ -64,8 +64,8 @@ if(INPUTEXT STREQUAL ".c" AND OUTPUTEXT STREQUAL ".out")
     endforeach()
   endif()
 
-  if(PNG_PREFIX)
-    set(PNG_PREFIX_DEF "-DPNG_PREFIX=${PNG_PREFIX}")
+  if(CI_PREFIX)
+    set(CI_PREFIX_DEF "-DCI_PREFIX=${CI_PREFIX}")
   endif()
 
   execute_process(COMMAND "${CMAKE_C_COMPILER}" "-E"
@@ -74,12 +74,12 @@ if(INPUTEXT STREQUAL ".c" AND OUTPUTEXT STREQUAL ".out")
                           "-I${SRCDIR}"
                           "-I${BINDIR}"
                           ${INCLUDES}
-                          "-DPNGLIB_LIBNAME=PNG${PNGLIB_MAJOR}${PNGLIB_MINOR}_0"
-                          "-DPNGLIB_VERSION=${PNGLIB_VERSION}"
+                          "-DCILIB_LIBNAME=CI${CILIB_MAJOR}${CILIB_MINOR}_0"
+                          "-DCILIB_VERSION=${CILIB_VERSION}"
                           "-DSYMBOL_PREFIX=${SYMBOL_PREFIX}"
-                          "-DPNG_NO_USE_READ_MACROS"
-                          "-DPNG_BUILDING_SYMBOL_TABLE"
-                          ${PNG_PREFIX_DEF}
+                          "-DCI_NO_USE_READ_MACROS"
+                          "-DCI_BUILDING_SYMBOL_TABLE"
+                          ${CI_PREFIX_DEF}
                           "${INPUT}"
                   OUTPUT_FILE "${OUTPUT}.tf1"
                   WORKING_DIRECTORY "${BINDIR}"

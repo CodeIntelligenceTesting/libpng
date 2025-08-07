@@ -1,5 +1,5 @@
 # s_read.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2013
@@ -8,8 +8,8 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng with simplified read support (only).  This builds a minimal
-# libpng able to read all PNG formats and convert them into a small number of
+# Build libci with simplified read support (only).  This builds a minimal
+# libci able to read all CI formats and convert them into a small number of
 # well understood memory formats.
 #
 

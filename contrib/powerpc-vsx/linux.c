@@ -3,14 +3,14 @@
  * Copyright (c) 2017 Glenn Randers-Pehrson
  * Written by Vadim Barkov, 2017.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
  * STATUS: TESTED
- * BUG REPORTS: png-mng-implement@sourceforge.net
+ * BUG REPORTS: ci-mng-implement@sourceforge.net
  *
- * png_have_vsx implemented for Linux by reading the widely available
+ * ci_have_vsx implemented for Linux by reading the widely available
  * pseudo-file /proc/cpuinfo.
  *
  * This code is strict ANSI-C and is probably moderately portable; it does
@@ -20,14 +20,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "png.h"
+#include "ci.h"
 
 #ifndef MAXLINE
 #  define MAXLINE 1024
 #endif
 
 static int
-png_have_vsx(png_structp png_ptr)
+ci_have_vsx(ci_structp ci_ptr)
 {
    FILE *f;
 
@@ -35,7 +35,7 @@ png_have_vsx(png_structp png_ptr)
    char input[MAXLINE];
    char *token = NULL;
 
-   PNG_UNUSED(png_ptr)
+   CI_UNUSED(ci_ptr)
 
    f = fopen("/proc/cpuinfo", "r");
    if (f != NULL)
@@ -48,9 +48,9 @@ png_have_vsx(png_structp png_ptr)
             return 1;
       }
    }
-#ifdef PNG_WARNINGS_SUPPORTED
+#ifdef CI_WARNINGS_SUPPORTED
    else
-      png_warning(png_ptr, "/proc/cpuinfo open failed");
+      ci_warning(ci_ptr, "/proc/cpuinfo open failed");
 #endif
    return 0;
 }

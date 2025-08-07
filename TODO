@@ -1,4 +1,4 @@
-TODO list for libpng
+TODO list for libci
 --------------------
 
  * Fix all defects (duh!)
@@ -19,4 +19,4 @@ TODO list for libpng
    background, and in doing rgb-to-gray transformations.
  * Investigate pre-incremented loop counters and other loop constructions.
  * Interpolated method of handling interlacing.
- * More validations for libpng transformations.
+ * More validations for libci transformations.

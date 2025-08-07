@@ -5,42 +5,42 @@ c_deb =
 pref = /prefix=all
 .endif
 
-OBJS = png.obj, pngerror.obj, pngget.obj, pngmem.obj, pngpread.obj,\
-       pngread.obj, pngrio.obj, pngrtran.obj, pngrutil.obj, pngset.obj,\
-       pngtrans.obj, pngwio.obj, pngwrite.obj, pngwtran.obj, pngwutil.obj
+OBJS = ci.obj, cierror.obj, ciget.obj, cimem.obj, cipread.obj,\
+       ciread.obj, cirio.obj, cirtran.obj, cirutil.obj, ciset.obj,\
+       citrans.obj, ciwio.obj, ciwrite.obj, ciwtran.obj, ciwutil.obj
 
 CFLAGS = $(C_DEB) $(CC_DEFS) $(PREF)
 
-all : pngtest.exe libpng.olb
-	@ write sys$output " pngtest available"
+all : citest.exe libci.olb
+	@ write sys$output " citest available"
 
-libpng.olb : libpng.olb($(OBJS))
-	@ write sys$output " libpng available"
+libci.olb : libci.olb($(OBJS))
+	@ write sys$output " libci available"
 
-pngtest.exe : pngtest.obj libpng.olb
-	link pngtest,libpng.olb/lib,$(ZLIBSRC)libz.olb/lib
+citest.exe : citest.obj libci.olb
+	link citest,libci.olb/lib,$(ZLIBSRC)libz.olb/lib
 
-test : pngtest.exe
-	run pngtest
+test : citest.exe
+	run citest
 
 clean :
 	delete *.obj;*,*.exe;
 
 # Other dependencies.
-png.obj :      png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngerror.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngget.obj :   png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngmem.obj :   png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngpread.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngread.obj :  png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngrio.obj :   png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngrtran.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngrutil.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngset.obj :   png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngtrans.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngwio.obj :   png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngwrite.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngwtran.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
-pngwutil.obj : png.h, pngconf.h, pnglibconf.h, pngpriv.h, pngstruct.h,pnginfo.h, pngdebug.h
+ci.obj :      ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cierror.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciget.obj :   ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cimem.obj :   ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cipread.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciread.obj :  ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cirio.obj :   ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cirtran.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+cirutil.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciset.obj :   ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+citrans.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciwio.obj :   ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciwrite.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciwtran.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
+ciwutil.obj : ci.h, ciconf.h, cilibconf.h, cipriv.h, cistruct.h,ciinfo.h, cidebug.h
 
-pngtest.obj :  png.h, pngconf.h, pnglibconf.h
+citest.obj :  ci.h, ciconf.h, cilibconf.h

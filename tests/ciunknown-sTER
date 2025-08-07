@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciunknown --strict sTER=if-safe "${srcdir}/citest.ci"

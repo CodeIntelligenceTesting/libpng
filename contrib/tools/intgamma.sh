@@ -7,8 +7,8 @@
 # related or neighboring rights to this work.  The author published this work
 # from the United States.
 #
-# Shell script to generate png.c 8-bit and 16-bit log tables (see the code in
-# png.c for details).
+# Shell script to generate ci.c 8-bit and 16-bit log tables (see the code in
+# ci.c for details).
 #
 # This script uses the "bc" arbitrary precision calculator to calculate 32-bit
 # fixed point values of logarithms appropriate to finding the log of an 8-bit
@@ -46,13 +46,13 @@ print(){
 #
 # The logarithm table.
 cat <<END
-/* 8-bit log table: png_8bit_l2[128]
+/* 8-bit log table: ci_8bit_l2[128]
  * This is a table of -log(value/255)/log(2) for 'value' in the range 128 to
  * 255, so it's the base 2 logarithm of a normalized 8-bit floating point
  * mantissa.  The numbers are 32-bit fractions.
  */
-static const png_uint_32
-png_8bit_l2[128] =
+static const ci_uint_32
+ci_8bit_l2[128] =
 {
 END
 #
@@ -79,8 +79,8 @@ cat <<END
  * frational part of the logarithm by using an accurate 32-bit value from the
  * top four fractional bits then multiplying in the remaining bits.
  */
-static const png_uint_32
-png_32bit_exp[16] =
+static const ci_uint_32
+ci_32bit_exp[16] =
 {
 END
 #

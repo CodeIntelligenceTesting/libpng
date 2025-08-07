@@ -1,9 +1,9 @@
-# Sample makefile for rpng-x / rpng2-x / wpng for SGI using cc and make.
+# Sample makefile for rci-x / rci2-x / wci for SGI using cc and make.
 # Greg Roelofs
 # Last modified:  7 March 2002
 #
 #	The programs built by this makefile are described in the book,
-#	"PNG:  The Definitive Guide," by Greg Roelofs (O'Reilly and
+#	"CI:  The Definitive Guide," by Greg Roelofs (O'Reilly and
 #	Associates, 1999).  Go buy a copy, eh?  Buy some for friends
 #	and family, too.  (Not that this is a blatant plug or anything.)
 #
@@ -11,25 +11,25 @@
 #
 #	make -f Makefile.sgi
 #
-# This makefile assumes libpng and zlib have already been built or downloaded
+# This makefile assumes libci and zlib have already been built or downloaded
 # and are both installed in /usr/local/{include,lib} (as indicated by the
-# PNG* and Z* macros below).  Edit as appropriate--choose only ONE each of
-# the PNGINC, PNGLIB, ZINC and ZLIB lines.
+# CI* and Z* macros below).  Edit as appropriate--choose only ONE each of
+# the CIINC, CILIB, ZINC and ZLIB lines.
 #
-# This makefile builds dynamically linked executables (against libpng and zlib,
-# that is), but that can be changed by uncommenting the appropriate PNGLIB and
+# This makefile builds dynamically linked executables (against libci and zlib,
+# that is), but that can be changed by uncommenting the appropriate CILIB and
 # ZLIB lines.
 
 
 # macros --------------------------------------------------------------------
 
-PNGINC = -I/usr/local/include/libpng16
-PNGLIB = -L/usr/local/lib -lpng16	  # dynamically linked against libpng
-#PNGLIB = /usr/local/lib/libpng16.a # statically linked against libpng
+CIINC = -I/usr/local/include/libci16
+CILIB = -L/usr/local/lib -lci16	  # dynamically linked against libci
+#CILIB = /usr/local/lib/libci16.a # statically linked against libci
 # or:
-#PNGINC = -I../..
-#PNGLIB = -L../.. -lpng
-#PNGLIB = ../../libpng.a
+#CIINC = -I../..
+#CILIB = -L../.. -lci
+#CILIB = ../../libci.a
 
 ZINC = -I/usr/local/include
 ZLIB = -L/usr/local/lib -lz		# dynamically linked against zlib
@@ -45,14 +45,14 @@ XLIB = -L/usr/lib/X11 -lX11
 #XINC = -I/usr/X11R6/include		# new X distributions (XFree86, etc.)
 #XLIB = -L/usr/X11R6/lib -lX11
 
-INCS = $(PNGINC) $(ZINC) $(XINC)
-RLIBS = $(PNGLIB) $(ZLIB) $(XLIB) -lm
-WLIBS = $(PNGLIB) $(ZLIB)
+INCS = $(CIINC) $(ZINC) $(XINC)
+RLIBS = $(CILIB) $(ZLIB) $(XLIB) -lm
+WLIBS = $(CILIB) $(ZLIB)
 
 CC = cc
 LD = cc
 RM = rm -f
-# ABI must be the same as that used to build libpng.
+# ABI must be the same as that used to build libci.
 ABI =
 CPPFLAGS =
 CFLAGS = $(ABI) -O -fullwarn $(INCS)
@@ -60,15 +60,15 @@ LDFLAGS = $(ABI)
 O = .o
 E =
 
-RPNG  = rpng-x
-RPNG2 = rpng2-x
-WPNG  = wpng
+RCI  = rci-x
+RCI2 = rci2-x
+WCI  = wci
 
-ROBJS  = $(RPNG)$(O) readpng$(O)
-ROBJS2 = $(RPNG2)$(O) readpng2$(O)
-WOBJS  = $(WPNG)$(O) writepng$(O)
+ROBJS  = $(RCI)$(O) readci$(O)
+ROBJS2 = $(RCI2)$(O) readci2$(O)
+WOBJS  = $(WCI)$(O) writeci$(O)
 
-EXES = $(RPNG)$(E) $(RPNG2)$(E) $(WPNG)$(E)
+EXES = $(RCI)$(E) $(RCI2)$(E) $(WCI)$(E)
 
 
 # implicit make rules -------------------------------------------------------
@@ -81,22 +81,22 @@ EXES = $(RPNG)$(E) $(RPNG2)$(E) $(WPNG)$(E)
 
 all:  $(EXES)
 
-$(RPNG)$(E): $(ROBJS)
+$(RCI)$(E): $(ROBJS)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJS) $(RLIBS)
 
-$(RPNG2)$(E): $(ROBJS2)
+$(RCI2)$(E): $(ROBJS2)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJS2) $(RLIBS)
 
-$(WPNG)$(E): $(WOBJS)
+$(WCI)$(E): $(WOBJS)
 	$(LD) $(LDFLAGS) -o $@ $(WOBJS) $(WLIBS)
 
-$(RPNG)$(O):	$(RPNG).c readpng.h
-$(RPNG2)$(O):	$(RPNG2).c readpng2.h
-$(WPNG)$(O):	$(WPNG).c writepng.h
+$(RCI)$(O):	$(RCI).c readci.h
+$(RCI2)$(O):	$(RCI2).c readci2.h
+$(WCI)$(O):	$(WCI).c writeci.h
 
-readpng$(O):	readpng.c readpng.h
-readpng2$(O):	readpng2.c readpng2.h
-writepng$(O):	writepng.c writepng.h
+readci$(O):	readci.c readci.h
+readci2$(O):	readci2.c readci2.h
+writeci$(O):	writeci.c writeci.h
 
 
 # maintenance ---------------------------------------------------------------

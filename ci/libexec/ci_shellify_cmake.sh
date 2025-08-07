@@ -14,9 +14,9 @@ source "$(dirname "$0")/../lib/ci.lib.sh"
 function ci_shellify_cmake {
     # Convert CMake lists text, specifically originating
     # from CMakeLists.txt, to shell scripting text.
-    # Select only the easy-to-parse definitions of PNGLIB_*.
-    sed -n -e '/^ *set *(PNGLIB_[^ ]* * [$"0-9A-Za-z_].*)/ p' |
-        sed -e 's/^ *set *(PNG\([^ ]*\) * \([^() ]*\)).*$/PNG\1=\2/' \
+    # Select only the easy-to-parse definitions of CILIB_*.
+    sed -n -e '/^ *set *(CILIB_[^ ]* * [$"0-9A-Za-z_].*)/ p' |
+        sed -e 's/^ *set *(CI\([^ ]*\) * \([^() ]*\)).*$/CI\1=\2/' \
             -e 's/^\([^ ]*=[^ ]*\).*$/export \1;/'
 }
 

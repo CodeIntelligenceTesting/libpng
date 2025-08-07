@@ -1,44 +1,44 @@
-# makefile for libpng
+# makefile for libci
 # Copyright (C) 2022-2025 Cosmin Truta
 # Copyright (C) 2002, 2014 Glenn Randers-Pehrson
 # Copyright (C) 1995 Guy Eric Schalnat, Group 42, Inc.
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 #
 # Modified for LC56/ATARI assumes libz.lib is in same dir and uses default
 # rules for library management
 #
 CPPFLAGS = -I../zlib
 CFLAGS = -O
-LBR = png.lib
-LDFLAGS = -L. -L../zlib -lpng -lz -lm
+LBR = ci.lib
+LDFLAGS = -L. -L../zlib -lci -lz -lm
 
 # Pre-built configuration
-# See scripts/pnglibconf.mak for more options
-PNGLIBCONF_H_PREBUILT = scripts/pnglibconf.h.prebuilt
+# See scripts/cilibconf.mak for more options
+CILIBCONF_H_PREBUILT = scripts/cilibconf.h.prebuilt
 
-OBJS = $(LBR)(png.o) $(LBR)(pngerror.o) $(LBR)(pngget.o) $(LBR)(pngmem.o) \
-       $(LBR)(pngpread.o) $(LBR)(pngread.o) $(LBR)(pngrio.o) \
-       $(LBR)(pngrtran.o) $(LBR)(pngrutil.o) $(LBR)(pngset.o) \
-       $(LBR)(pngtrans.o) $(LBR)(pngwio.o) $(LBR)(pngwrite.o) \
-       $(LBR)(pngwtran.o) $(LBR)(pngwutil.o)
+OBJS = $(LBR)(ci.o) $(LBR)(cierror.o) $(LBR)(ciget.o) $(LBR)(cimem.o) \
+       $(LBR)(cipread.o) $(LBR)(ciread.o) $(LBR)(cirio.o) \
+       $(LBR)(cirtran.o) $(LBR)(cirutil.o) $(LBR)(ciset.o) \
+       $(LBR)(citrans.o) $(LBR)(ciwio.o) $(LBR)(ciwrite.o) \
+       $(LBR)(ciwtran.o) $(LBR)(ciwutil.o)
 
-all: $(LBR) pngtest.ttp
+all: $(LBR) citest.ttp
 
 .c.o:
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $*.c
 
 $(LBR): $(OBJS)
 
-$(OBJS): pngpriv.h png.h pngconf.h pnglibconf.h pnginfo.h pngstruct.h pngdebug.h
+$(OBJS): cipriv.h ci.h ciconf.h cilibconf.h ciinfo.h cistruct.h cidebug.h
 
-pnglibconf.h: $(PNGLIBCONF_H_PREBUILT)
-	cp $(PNGLIBCONF_H_PREBUILT) $@
+cilibconf.h: $(CILIBCONF_H_PREBUILT)
+	cp $(CILIBCONF_H_PREBUILT) $@
 
-pngtest.ttp: pngtest.o $(LBR)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o$@ pngtest.o
+citest.ttp: citest.o $(LBR)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o$@ citest.o
 
 install:
 	@echo "The $@ target is no longer supported by this makefile."

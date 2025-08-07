@@ -5,29 +5,29 @@
  * related or neighboring rights to this work.  This work is published from:
  * United States.
  *
- * Read several PNG files, which should have an alpha channel or transparency
+ * Read several CI files, which should have an alpha channel or transparency
  * information, and composite them together to produce one or more 16-bit
  * linear RGBA intermediates.  This involves doing the 'over' compositing
  * operation to combine the alpha channels and corresponding data.
  *
- * Finally read an output (background) PNG using the 24-bit RGB format (the
- * PNG will be composited on green (#00ff00) by default if it has an alpha
+ * Finally read an output (background) CI using the 24-bit RGB format (the
+ * CI will be composited on green (#00ff00) by default if it has an alpha
  * channel), and apply the intermediate image generated above to specified
  * locations in the image.
  *
  * The command line has the general format:
  *
- *    simpleover <background.png> [output.png]
- *        {--sprite=width,height,name {[--at=x,y] {sprite.png}}}
+ *    simpleover <background.ci> [output.ci]
+ *        {--sprite=width,height,name {[--at=x,y] {sprite.ci}}}
  *        {--add=name {x,y}}
  *
  * The --sprite and --add options may occur multiple times. They are executed
  * in order.  --add may refer to any sprite already read.
  *
  * This code is intended to show how to composite multiple images together
- * correctly.  Apart from the libpng Simplified API the only work done in here
- * is to combine multiple input PNG images into a single sprite; this involves
- * a Porter-Duff 'over' operation and the input PNG images may, as a result,
+ * correctly.  Apart from the libci Simplified API the only work done in here
+ * is to combine multiple input CI images into a single sprite; this involves
+ * a Porter-Duff 'over' operation and the input CI images may, as a result,
  * be regarded as being layered one on top of the other with the first
  * (leftmost on the command line) being at the bottom and the last on the top.
  */
@@ -37,22 +37,22 @@
 #include <stdio.h>
 #include <errno.h>
 
-/* Normally use <png.h> here to get the installed libpng, but this is done to
- * ensure the code picks up the local libpng implementation, so long as this
- * file is linked against a sufficiently recent libpng (1.6+) it is ok to
- * change this to <png.h>:
+/* Normally use <ci.h> here to get the installed libci, but this is done to
+ * ensure the code picks up the local libci implementation, so long as this
+ * file is linked against a sufficiently recent libci (1.6+) it is ok to
+ * change this to <ci.h>:
  */
-#include "../../png.h"
+#include "../../ci.h"
 
-#if !defined(PNG_SIMPLIFIED_READ_SUPPORTED)
-#error This program requires libpng supporting the simplified read API
+#if !defined(CI_SIMPLIFIED_READ_SUPPORTED)
+#error This program requires libci supporting the simplified read API
 #endif
 
 #define sprite_name_chars 15
 struct sprite
 {
    FILE *file;
-   png_uint_16p buffer;
+   ci_uint_16p buffer;
    unsigned int width;
    unsigned int height;
    char name[sprite_name_chars + 1];
@@ -108,7 +108,7 @@ main(void)
 
 static void
 sprite_op(const struct sprite *sprite, int x_offset, int y_offset,
-          png_imagep image, const png_uint_16 *buffer)
+          ci_imagep image, const ci_uint_16 *buffer)
 {
    /* This is where the Porter-Duff 'Over' operator is evaluated; change this
     * code to change the operator (this could be parameterized).  Any other
@@ -137,15 +137,15 @@ sprite_op(const struct sprite *sprite, int x_offset, int y_offset,
          do
          {
             /* In and out are RGBA values, so: */
-            const png_uint_16 *in_pixel = buffer + (y * image->width + x) * 4;
-            png_uint_32 in_alpha = in_pixel[3];
+            const ci_uint_16 *in_pixel = buffer + (y * image->width + x) * 4;
+            ci_uint_32 in_alpha = in_pixel[3];
 
             /* This is the optimized Porter-Duff 'Over' operation, when the
              * input alpha is 0 the output is not changed.
              */
             if (in_alpha > 0)
             {
-               png_uint_16 *out_pixel = sprite->buffer +
+               ci_uint_16 *out_pixel = sprite->buffer +
                   ((y + y_offset) * sprite->width + (x + x_offset)) * 4;
 
                /* This is the weight to apply to the output: */
@@ -164,7 +164,7 @@ sprite_op(const struct sprite *sprite, int x_offset, int y_offset,
                    * x in the range 0..65535*65535.  (Note that the calculation
                    * produces the closest integer; the maximum error is <0.5).
                    */
-                  png_uint_32 tmp;
+                  ci_uint_32 tmp;
 
 #                 define compose(c) \
                      tmp = out_pixel[c] * in_alpha; \
@@ -195,9 +195,9 @@ static int
 create_sprite(struct sprite *sprite, int *argc, const char ***argv)
 {
    /* Read the arguments and create this sprite. The sprite buffer has already
-    * been allocated. This reads the input PNGs one by one in linear format,
+    * been allocated. This reads the input CIs one by one in linear format,
     * composes them onto the sprite buffer (the code in the function above)
-    * then saves the result, converting it on the fly to PNG RGBA 8-bit format.
+    * then saves the result, converting it on the fly to CI RGBA 8-bit format.
     */
    while (*argc > 0)
    {
@@ -216,22 +216,22 @@ create_sprite(struct sprite *sprite, int *argc, const char ***argv)
       else
       {
          /* The argument has to be a file name */
-         png_image image;
+         ci_image image;
 
-         image.version = PNG_IMAGE_VERSION;
+         image.version = CI_IMAGE_VERSION;
          image.opaque = NULL;
 
-         if (png_image_begin_read_from_file(&image, (*argv)[0]))
+         if (ci_image_begin_read_from_file(&image, (*argv)[0]))
          {
-            png_uint_16p buffer;
+            ci_uint_16p buffer;
 
-            image.format = PNG_FORMAT_LINEAR_RGB_ALPHA;
+            image.format = CI_FORMAT_LINEAR_RGB_ALPHA;
 
-            buffer = malloc(PNG_IMAGE_SIZE(image));
+            buffer = malloc(CI_IMAGE_SIZE(image));
 
             if (buffer != NULL)
             {
-               if (png_image_finish_read(&image, NULL /*background*/, buffer,
+               if (ci_image_finish_read(&image, NULL /*background*/, buffer,
                                          0 /*row_stride*/, NULL /*colormap*/))
                {
                   /* This is the place where the Porter-Duff 'Over' operator
@@ -258,13 +258,13 @@ create_sprite(struct sprite *sprite, int *argc, const char ***argv)
             else
             {
                fprintf(stderr, "simpleover: out of memory: %lu bytes\n",
-                       (unsigned long)PNG_IMAGE_SIZE(image));
+                       (unsigned long)CI_IMAGE_SIZE(image));
 
-               /* png_image_free must be called if we abort the Simplified API
+               /* ci_image_free must be called if we abort the Simplified API
                 * read because of a problem detected in this code.  If problems
                 * are detected in the Simplified API it cleans up itself.
                 */
-               png_image_free(&image);
+               ci_image_free(&image);
             }
          }
 
@@ -279,24 +279,24 @@ create_sprite(struct sprite *sprite, int *argc, const char ***argv)
    }
 
    /* All the sprite operations have completed successfully. Save the RGBA
-    * buffer as a PNG using the simplified write API.
+    * buffer as a CI using the simplified write API.
     */
    sprite->file = tmpfile();
 
    if (sprite->file != NULL)
    {
-      png_image save;
+      ci_image save;
 
       memset(&save, 0, sizeof save);
-      save.version = PNG_IMAGE_VERSION;
+      save.version = CI_IMAGE_VERSION;
       save.opaque = NULL;
       save.width = sprite->width;
       save.height = sprite->height;
-      save.format = PNG_FORMAT_LINEAR_RGB_ALPHA;
-      save.flags = PNG_IMAGE_FLAG_FAST;
+      save.format = CI_FORMAT_LINEAR_RGB_ALPHA;
+      save.flags = CI_IMAGE_FLAG_FAST;
       save.colormap_entries = 0;
 
-      if (png_image_write_to_stdio(&save, sprite->file, 1 /*convert_to_8_bit*/,
+      if (ci_image_write_to_stdio(&save, sprite->file, 1 /*convert_to_8_bit*/,
                                    sprite->buffer, 0 /*row_stride*/,
                                    NULL /*colormap*/))
       {
@@ -320,7 +320,7 @@ create_sprite(struct sprite *sprite, int *argc, const char ***argv)
 }
 
 static int
-add_sprite(png_imagep output, png_bytep out_buf, struct sprite *sprite,
+add_sprite(ci_imagep output, ci_bytep out_buf, struct sprite *sprite,
            int *argc, const char ***argv)
 {
    /* Given a --add argument naming this sprite, perform the operations listed
@@ -358,16 +358,16 @@ add_sprite(png_imagep output, png_bytep out_buf, struct sprite *sprite,
             /* Since we know the sprite fits we can just read it into the
              * output using the simplified API.
              */
-            png_image in;
+            ci_image in;
 
-            in.version = PNG_IMAGE_VERSION;
+            in.version = CI_IMAGE_VERSION;
             rewind(sprite->file);
 
-            if (png_image_begin_read_from_stdio(&in, sprite->file))
+            if (ci_image_begin_read_from_stdio(&in, sprite->file))
             {
-               in.format = PNG_FORMAT_RGB; /* force compose */
+               in.format = CI_FORMAT_RGB; /* force compose */
 
-               if (png_image_finish_read(
+               if (ci_image_finish_read(
                       &in, NULL /*background*/,
                       out_buf + (y * output->width + x) * 3 /*RGB*/,
                       output->width * 3 /*row_stride*/, NULL /*colormap*/))
@@ -396,7 +396,7 @@ add_sprite(png_imagep output, png_bytep out_buf, struct sprite *sprite,
 }
 
 static int
-simpleover_process(png_imagep output, png_bytep out_buf, int argc,
+simpleover_process(ci_imagep output, ci_bytep out_buf, int argc,
                    const char **argv)
 {
    int result = 1; /* success */
@@ -438,7 +438,7 @@ simpleover_process(png_imagep output, png_bytep out_buf, int argc,
                /* Allocate a buffer for the sprite and calculate the buffer
                 * size:
                 */
-               buf_size = sizeof(png_uint_16[4]);
+               buf_size = sizeof(ci_uint_16[4]);
                buf_size *= sprites[nsprites].width;
                buf_size *= sprites[nsprites].height;
 
@@ -447,7 +447,7 @@ simpleover_process(png_imagep output, png_bytep out_buf, int argc,
                tmp /= sprites[nsprites].width;
                tmp /= sprites[nsprites].height;
 
-               if (tmp == sizeof(png_uint_16[4]))
+               if (tmp == sizeof(ci_uint_16[4]))
                {
                   sprites[nsprites].buffer = malloc(buf_size);
                   /* This buffer must be initialized to transparent: */
@@ -548,7 +548,7 @@ main(int argc, const char **argv)
    {
       int argi = 2;
       const char *output = NULL;
-      png_image image;
+      ci_image image;
 
       if (argc > 2 && argv[2][0] != '-' /*an operation*/)
       {
@@ -556,26 +556,26 @@ main(int argc, const char **argv)
          argi = 3;
       }
 
-      image.version = PNG_IMAGE_VERSION;
+      image.version = CI_IMAGE_VERSION;
       image.opaque = NULL;
 
-      if (png_image_begin_read_from_file(&image, argv[1]))
+      if (ci_image_begin_read_from_file(&image, argv[1]))
       {
-         png_bytep buffer;
+         ci_bytep buffer;
 
-         image.format = PNG_FORMAT_RGB; /* 24-bit RGB */
+         image.format = CI_FORMAT_RGB; /* 24-bit RGB */
 
-         buffer = malloc(PNG_IMAGE_SIZE(image));
+         buffer = malloc(CI_IMAGE_SIZE(image));
 
          if (buffer != NULL)
          {
-            png_color background = {0, 0xff, 0}; /* fully saturated green */
+            ci_color background = {0, 0xff, 0}; /* fully saturated green */
 
-            if (png_image_finish_read(&image, &background, buffer,
+            if (ci_image_finish_read(&image, &background, buffer,
                                       0 /*row_stride*/, NULL /*colormap*/))
             {
-               /* At this point png_image_finish_read has cleaned up the
-                * allocated data in png_image, and only the buffer needs to be
+               /* At this point ci_image_finish_read has cleaned up the
+                * allocated data in ci_image, and only the buffer needs to be
                 * freed.
                 *
                 * Perform the remaining operations:
@@ -585,11 +585,11 @@ main(int argc, const char **argv)
                {
                   /* Write the output: */
                   if ((output != NULL &&
-                       png_image_write_to_file(
+                       ci_image_write_to_file(
                           &image, output, 0 /*convert_to_8bit*/, buffer,
                           0 /*row_stride*/, NULL /*colormap*/)) ||
                       (output == NULL &&
-                       png_image_write_to_stdio(
+                       ci_image_write_to_stdio(
                           &image, stdout, 0 /*convert_to_8bit*/, buffer,
                           0 /*row_stride*/, NULL /*colormap*/)))
                      result = 0;
@@ -613,13 +613,13 @@ main(int argc, const char **argv)
          else
          {
             fprintf(stderr, "simpleover: out of memory: %lu bytes\n",
-                    (unsigned long)PNG_IMAGE_SIZE(image));
+                    (unsigned long)CI_IMAGE_SIZE(image));
 
-            /* This is the only place where a 'free' is required; libpng does
+            /* This is the only place where a 'free' is required; libci does
              * the cleanup on error and success, but in this case we couldn't
              * complete the read because of running out of memory.
              */
-            png_image_free(&image);
+            ci_image_free(&image);
          }
       }
 
@@ -635,19 +635,19 @@ main(int argc, const char **argv)
       /* Usage message */
       fprintf(
          stderr,
-         "simpleover: usage: simpleover background.png [output.png]\n"
-         "  Output 'background.png' as a 24-bit RGB PNG file in 'output.png'\n"
-         "   or, if not given, stdout.  'background.png' will be composited\n"
+         "simpleover: usage: simpleover background.ci [output.ci]\n"
+         "  Output 'background.ci' as a 24-bit RGB CI file in 'output.ci'\n"
+         "   or, if not given, stdout.  'background.ci' will be composited\n"
          "   on fully saturated green.\n"
          "\n"
-         "  Optionally, before output, process additional PNG files:\n"
+         "  Optionally, before output, process additional CI files:\n"
          "\n"
-         "   --sprite=width,height,name {[--at=x,y] {sprite.png}}\n"
+         "   --sprite=width,height,name {[--at=x,y] {sprite.ci}}\n"
          "    Produce a transparent sprite of size (width,height) and with\n"
          "     name 'name'.\n"
-         "    For each sprite.png composite it is using a Porter-Duff 'Over'\n"
+         "    For each sprite.ci composite it is using a Porter-Duff 'Over'\n"
          "     operation at offset (x,y) in the sprite, defaulting to (0,0).\n"
-         "     Input PNGs will be truncated to the area of the sprite.\n"
+         "     Input CIs will be truncated to the area of the sprite.\n"
          "\n"
          "   --add='name' {x,y}\n"
          "    Optionally, before output, composite a sprite, 'name', which\n"
@@ -655,8 +655,8 @@ main(int argc, const char **argv)
          "     offset (x,y) in the output image.  Each sprite must fit\n"
          "     completely within the output image.\n"
          "\n"
-         "  PNG files are processed in the order they occur on the command\n"
-         "  line and thus the first PNG processed appears as the bottommost\n"
+         "  CI files are processed in the order they occur on the command\n"
+         "  line and thus the first CI processed appears as the bottommost\n"
          "  in the output image.\n");
    }
 

@@ -5,9 +5,9 @@
  * Copyright (c) 2018-2024 Cosmin Truta
  * Copyright (c) 1998-2011 Glenn Randers-Pehrson
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
 
  * You may need to edit this file in order to update the location
  * of the zlib source code.
@@ -27,7 +27,7 @@
          the directories containing this file.
 
          If the version of zlib you use does not match that used when the
-         distribution was built you will get warnings from pngtest that the
+         distribution was built you will get warnings from citest that the
          zlib versions do not match.  The zlib version used in this build is
          recorded below:
      -->

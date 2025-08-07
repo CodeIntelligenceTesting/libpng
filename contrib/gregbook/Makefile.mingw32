@@ -1,23 +1,23 @@
-# Sample makefile for rpng-win / rpng2-win / wpng using mingw32-gcc and make.
+# Sample makefile for rci-win / rci2-win / wci using mingw32-gcc and make.
 # Greg Roelofs
 # Last modified:  2 June 2007
 #
 #	The programs built by this makefile are described in the book,
-#	"PNG:  The Definitive Guide," by Greg Roelofs (O'Reilly and
+#	"CI:  The Definitive Guide," by Greg Roelofs (O'Reilly and
 #	Associates, 1999).  Go buy a copy, eh?  Well, OK, it's not
 #	generally for sale anymore, but it's the thought that counts,
-#	right?  (Hint:  http://www.libpng.org/pub/png/book/ )
+#	right?  (Hint:  http://www.libci.org/pub/ci/book/ )
 #
 # Invoke this makefile from a DOS-prompt window via:
 #
 #	make -f Makefile.mingw32
 #
-# This makefile assumes libpng and zlib have already been built or downloaded
+# This makefile assumes libci and zlib have already been built or downloaded
 # and are in subdirectories at the same level as the current subdirectory
-# (as indicated by the PNGDIR and ZDIR macros below).  It makes no assumptions
+# (as indicated by the CIDIR and ZDIR macros below).  It makes no assumptions
 # at all about the mingw32 installation tree (W32DIR).  Edit as appropriate.
 #
-# Note that the names of the dynamic and static libpng and zlib libraries
+# Note that the names of the dynamic and static libci and zlib libraries
 # used below may change in later releases of the libraries.  This makefile
 # builds both statically and dynamically linked executables by default.
 # (You need only one set, but for testing it can be handy to have both.)
@@ -25,13 +25,13 @@
 
 # macros --------------------------------------------------------------------
 
-#PNGDIR = ../..#		for libpng-x.y.z/contrib/gregbook builds
-PNGDIR = ../libpng-win32
-PNGINC = -I$(PNGDIR)
-PNGLIBd = $(PNGDIR)/libpng.dll.a	# dynamically linked
-PNGLIBs = $(PNGDIR)/libpng.a		# statically linked, local libpng
+#CIDIR = ../..#		for libci-x.y.z/contrib/gregbook builds
+CIDIR = ../libci-win32
+CIINC = -I$(CIDIR)
+CILIBd = $(CIDIR)/libci.dll.a	# dynamically linked
+CILIBs = $(CIDIR)/libci.a		# statically linked, local libci
 
-#ZDIR = ../../../zlib-win32#	for libpng-x.y.z/contrib/gregbook builds
+#ZDIR = ../../../zlib-win32#	for libci-x.y.z/contrib/gregbook builds
 ZDIR = ../zlib-win32
 ZINC = -I$(ZDIR)
 ZLIBd = $(ZDIR)/libzdll.a
@@ -55,30 +55,30 @@ LDFLAGS = $(MINGW_LDFLAGS)
 O = .o
 E = .exe
 
-INCS = $(PNGINC) $(ZINC) $(W32INC)
-RLIBSd = $(PNGLIBd) $(ZLIBd) $(W32LIB) -lm
-RLIBSs = $(PNGLIBs) $(ZLIBs) $(W32LIB) -lm
-WLIBSd = $(PNGLIBd) $(ZLIBd)
-WLIBSs = $(PNGLIBs) $(ZLIBs)
+INCS = $(CIINC) $(ZINC) $(W32INC)
+RLIBSd = $(CILIBd) $(ZLIBd) $(W32LIB) -lm
+RLIBSs = $(CILIBs) $(ZLIBs) $(W32LIB) -lm
+WLIBSd = $(CILIBd) $(ZLIBd)
+WLIBSs = $(CILIBs) $(ZLIBs)
 
-RPNG   = rpng-win
-RPNG2  = rpng2-win
-WPNG   = wpng
+RCI   = rci-win
+RCI2  = rci2-win
+WCI   = wci
 
-ROBJSd  = $(RPNG)$(O) readpng.pic$(O)
-ROBJS2d = $(RPNG2)$(O) readpng2.pic$(O)
-WOBJSd  = $(WPNG)$(O) writepng.pic$(O)
+ROBJSd  = $(RCI)$(O) readci.pic$(O)
+ROBJS2d = $(RCI2)$(O) readci2.pic$(O)
+WOBJSd  = $(WCI)$(O) writeci.pic$(O)
 
-RPNGs  = $(RPNG)-static
-RPNG2s = $(RPNG2)-static
-WPNGs  = $(WPNG)-static
+RCIs  = $(RCI)-static
+RCI2s = $(RCI2)-static
+WCIs  = $(WCI)-static
 
-ROBJSs  = $(RPNG)$(O) readpng$(O)
-ROBJS2s = $(RPNG2)$(O) readpng2$(O)
-WOBJSs  = $(WPNG)$(O) writepng$(O)
+ROBJSs  = $(RCI)$(O) readci$(O)
+ROBJS2s = $(RCI2)$(O) readci2$(O)
+WOBJSs  = $(WCI)$(O) writeci$(O)
 
-STATIC_EXES  = $(RPNGs)$(E) $(RPNG2s)$(E) $(WPNGs)$(E)
-DYNAMIC_EXES = $(RPNG)$(E) $(RPNG2)$(E) $(WPNG)$(E)
+STATIC_EXES  = $(RCIs)$(E) $(RCI2s)$(E) $(WCIs)$(E)
+DYNAMIC_EXES = $(RCI)$(E) $(RCI2)$(E) $(WCI)$(E)
 
 EXES = $(STATIC_EXES) $(DYNAMIC_EXES)
 
@@ -89,38 +89,38 @@ EXES = $(STATIC_EXES) $(DYNAMIC_EXES)
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
 
 %.pic$(O): %.c
-	$(CC) -c $(CPPFLAGS) $(CFLAGS) -DPNG_BUILD_DLL -o $@ $<
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) -DCI_BUILD_DLL -o $@ $<
 
 
 # dependencies --------------------------------------------------------------
 
 all:  $(EXES)
 
-$(RPNGs)$(E): $(ROBJSs)
+$(RCIs)$(E): $(ROBJSs)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJSs) $(RLIBSs)
 
-$(RPNG)$(E): $(ROBJSd)
+$(RCI)$(E): $(ROBJSd)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJSd) $(RLIBSd)
 
-$(RPNG2s)$(E): $(ROBJS2s)
+$(RCI2s)$(E): $(ROBJS2s)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJS2s) $(RLIBSs)
 
-$(RPNG2)$(E): $(ROBJS2d)
+$(RCI2)$(E): $(ROBJS2d)
 	$(LD) $(LDFLAGS) -o $@ $(ROBJS2d) $(RLIBSd)
 
-$(WPNGs)$(E): $(WOBJSs)
+$(WCIs)$(E): $(WOBJSs)
 	$(LD) $(LDFLAGS) -o $@ $(WOBJSs) $(WLIBSs)
 
-$(WPNG)$(E): $(WOBJSd)
+$(WCI)$(E): $(WOBJSd)
 	$(LD) $(LDFLAGS) -o $@ $(WOBJSd) $(WLIBSd)
 
-$(RPNG)$(O):	$(RPNG).c readpng.h
-$(RPNG2)$(O):	$(RPNG2).c readpng2.h
-$(WPNG)$(O):	$(WPNG).c writepng.h
+$(RCI)$(O):	$(RCI).c readci.h
+$(RCI2)$(O):	$(RCI2).c readci2.h
+$(WCI)$(O):	$(WCI).c writeci.h
 
-readpng$(O) readpng.pic$(O):	readpng.c readpng.h
-readpng2$(O) readpng2.pic$(O):	readpng2.c readpng2.h
-writepng$(O) writepng.pic$(O):	writepng.c writepng.h
+readci$(O) readci.pic$(O):	readci.c readci.h
+readci2$(O) readci2.pic$(O):	readci2.c readci2.h
+writeci$(O) writeci.pic$(O):	writeci.c writeci.h
 
 
 # maintenance ---------------------------------------------------------------

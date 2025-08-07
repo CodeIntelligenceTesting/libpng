@@ -1,4 +1,4 @@
-Scripts for the Continuous Integration of the PNG Reference Library
+Scripts for the Continuous Integration of the CI Reference Library
 ===================================================================
 
 Copyright Notice

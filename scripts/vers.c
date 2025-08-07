@@ -1,17 +1,17 @@
-/* vers.c - define format of libpng.vers
+/* vers.c - define format of libci.vers
  *
  * Copyright (c) 2011-2014 Glenn Randers-Pehrson
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#define PNG_EXPORTA(ordinal, type, name, args, attributes)\
-        PNG_DFN " @" SYMBOL_PREFIX "@@" name "@;"
+#define CI_EXPORTA(ordinal, type, name, args, attributes)\
+        CI_DFN " @" SYMBOL_PREFIX "@@" name "@;"
 
-PNG_DFN "@" PNGLIB_LIBNAME "@ {global:"
+CI_DFN "@" CILIB_LIBNAME "@ {global:"
 
-#include "../png.h"
+#include "../ci.h"
 
-PNG_DFN "local: *; };"
+CI_DFN "local: *; };"

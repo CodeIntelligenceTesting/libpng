@@ -17,34 +17,34 @@
 #
 # Revisions by Glenn Randers-Pehrson, 2017:
 # 1. Build only the library, not the tools (changed "make -j$(nproc) all" to
-#     "make -j$(nproc) libpng16.la").
-# 2. Disabled WARNING and WRITE options in pnglibconf.dfa.
-# 3. Build zlib alongside libpng
+#     "make -j$(nproc) libci16.la").
+# 2. Disabled WARNING and WRITE options in cilibconf.dfa.
+# 3. Build zlib alongside libci
 ################################################################################
 
 # Disable logging via library build configuration control.
-cat scripts/pnglibconf.dfa | \
+cat scripts/cilibconf.dfa | \
   sed -e "s/option STDIO/option STDIO disabled/" \
       -e "s/option WARNING /option WARNING disabled/" \
       -e "s/option WRITE enables WRITE_INT_FUNCTIONS/option WRITE disabled/" \
-> scripts/pnglibconf.dfa.temp
-mv scripts/pnglibconf.dfa.temp scripts/pnglibconf.dfa
+> scripts/cilibconf.dfa.temp
+mv scripts/cilibconf.dfa.temp scripts/cilibconf.dfa
 
-# build the libpng library.
+# build the libci library.
 autoreconf -f -i
-./configure --with-libpng-prefix=OSS_FUZZ_
+./configure --with-libci-prefix=OSS_FUZZ_
 make -j$(nproc) clean
-make -j$(nproc) libpng16.la
+make -j$(nproc) libci16.la
 
-# build libpng_read_fuzzer.
+# build libci_read_fuzzer.
 $CXX $CXXFLAGS -std=c++11 -I. \
-     $SRC/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc \
-     -o $OUT/libpng_read_fuzzer \
-     -lFuzzingEngine .libs/libpng16.a -lz
+     $SRC/libci/contrib/oss-fuzz/libci_read_fuzzer.cc \
+     -o $OUT/libci_read_fuzzer \
+     -lFuzzingEngine .libs/libci16.a -lz
 
 # add seed corpus.
-find $SRC/libpng -name "*.png" | grep -v crashers | \
-     xargs zip $OUT/libpng_read_fuzzer_seed_corpus.zip
+find $SRC/libci -name "*.ci" | grep -v crashers | \
+     xargs zip $OUT/libci_read_fuzzer_seed_corpus.zip
 
-cp $SRC/libpng/contrib/oss-fuzz/*.dict \
-     $SRC/libpng/contrib/oss-fuzz/*.options $OUT/
+cp $SRC/libci/contrib/oss-fuzz/*.dict \
+     $SRC/libci/contrib/oss-fuzz/*.options $OUT/

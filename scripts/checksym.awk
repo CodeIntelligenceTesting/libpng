@@ -17,11 +17,11 @@ BEGIN{
    err=0
    master=""        # master file
    official[1] = "" # defined symbols from master file
-   symbol[1] = ""   # defined symbols from png.h
-   removed[1] = ""  # removed symbols from png.h
-   lasto = 0        # last ordinal value from png.h
+   symbol[1] = ""   # defined symbols from ci.h
+   removed[1] = ""  # removed symbols from ci.h
+   lasto = 0        # last ordinal value from ci.h
    mastero = 0      # highest ordinal in master file
-   symbolo = 0      # highest ordinal in png.h
+   symbolo = 0      # highest ordinal in ci.h
    missing = "error"# log an error on missing symbols
    of="symbols.new" # default to a fixed name
 }
@@ -61,8 +61,8 @@ FILENAME==master {
 
 # Read new definitions, these are free form but the lines must
 # just be symbol definitions.  Lines will be commented out for
-# 'removed' symbols, introduced in png.h using PNG_REMOVED rather
-# than PNG_EXPORT.  Use symbols.dfn or pngwin.dfn to generate the
+# 'removed' symbols, introduced in ci.h using CI_REMOVED rather
+# than CI_EXPORT.  Use symbols.dfn or ciwin.dfn to generate the
 # input file.
 #
 #  symbol @ordinal   # two fields, exported symbol
@@ -73,7 +73,7 @@ NF==2 && $1 == ";" && $2 ~ /^@[1-9][0-9]*$/ { # last ordinal
    if (lasto == 0 || lasto == o)
       lasto=o
    else {
-      print "png.h: duplicated last ordinal:", lasto, o
+      print "ci.h: duplicated last ordinal:", lasto, o
       err = 1
    }
    next
@@ -84,7 +84,7 @@ NF==3 && $1 == ";" && $3 ~ /^@[1-9][0-9]*$/ { # removed symbol
       removed[o] = $2
       if (o > symbolo) symbolo = o
    } else {
-      print "png.h: duplicated removed symbol", o ": '" removed[o] "' != '" $2 "'"
+      print "ci.h: duplicated removed symbol", o ": '" removed[o] "' != '" $2 "'"
       err = 1
    }
    next
@@ -95,7 +95,7 @@ NF==2 && $2 ~ /^@[1-9][0-9]*$/ { # exported symbol
       symbol[o] = $1
       if (o > symbolo) symbolo = o
    } else {
-      print "png.h: duplicated symbol", o ": '" symbol[o] "' != '" $1 "'"
+      print "ci.h: duplicated symbol", o ": '" symbol[o] "' != '" $1 "'"
       err = 1
    }
 }
@@ -106,21 +106,21 @@ NF==2 && $2 ~ /^@[1-9][0-9]*$/ { # exported symbol
 # At the end check for symbols marked as both duplicated and removed
 END{
    if (symbolo > lasto) {
-      print "highest symbol ordinal in png.h,",
-            symbolo ", exceeds last ordinal from png.h", lasto
+      print "highest symbol ordinal in ci.h,",
+            symbolo ", exceeds last ordinal from ci.h", lasto
       err = 1
    }
    if (mastero > lasto) {
       print "highest symbol ordinal in", master ",",
-            mastero ", exceeds last ordinal from png.h", lasto
+            mastero ", exceeds last ordinal from ci.h", lasto
       err = 1
    }
    unexported=0
    # Add a standard header to symbols.new:
    print ";Version INSERT-VERSION-HERE" >of
    print ";--------------------------------------------------------------" >of
-   print "; LIBPNG symbol list as a Win32 DEF file" >of
-   print "; Contains all the symbols that can be exported from libpng" >of
+   print "; LIBCI symbol list as a Win32 DEF file" >of
+   print "; Contains all the symbols that can be exported from libci" >of
    print ";--------------------------------------------------------------" >of
    print "LIBRARY" >of
    print "" >of
@@ -142,29 +142,29 @@ END{
          # file - see the comments above.
          if (missing != "ignore") {
             if (o-1 > unexported)
-               print "png.h:", missing ": missing symbols:", unexported "-" o-1
+               print "ci.h:", missing ": missing symbols:", unexported "-" o-1
             else
-               print "png.h:", missing ": missing symbol:", unexported
+               print "ci.h:", missing ": missing symbol:", unexported
             if (missing != "warning")
                err = 1
          }
          unexported = 0
       }
       if (symbol[o] != "" && removed[o] != "") {
-         print "png.h: symbol", o,
+         print "ci.h: symbol", o,
                "both exported as '" symbol[o] "' and removed as '" removed[o] "'"
          err = 1
       } else if (symbol[o] != official[o]) {
          # either the symbol is missing somewhere or it changed
          err = 1
          if (symbol[o] == "")
-            print "png.h: symbol", o,
+            print "ci.h: symbol", o,
                   "is exported as '" official[o] "' in", master
          else if (official[o] == "")
-            print "png.h: exported symbol", o,
+            print "ci.h: exported symbol", o,
                   "'" symbol[o] "' not present in", master
          else
-            print "png.h: exported symbol", o,
+            print "ci.h: exported symbol", o,
                   "'" symbol[o] "' exists as '" official[o] "' in", master
       }
 

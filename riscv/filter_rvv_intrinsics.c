@@ -5,22 +5,22 @@
  *            Dragoș Tiselice <dtiselice@google.com>, May 2023.
  *            Filip Wasil     <f.wasil@samsung.com>, March 2025.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#include "../pngpriv.h"
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
+#ifdef CI_READ_SUPPORTED
 
-#if PNG_RISCV_RVV_IMPLEMENTATION == 1 /* intrinsics code from pngpriv.h */
+#if CI_RISCV_RVV_IMPLEMENTATION == 1 /* intrinsics code from cipriv.h */
 
 #include <riscv_vector.h>
 
 void
-png_read_filter_row_up_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_up_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
@@ -38,9 +38,9 @@ png_read_filter_row_up_rvv(png_row_infop row_info, png_bytep row,
 }
 
 static inline void
-png_read_filter_row_sub_rvv(size_t len, size_t bpp, unsigned char* row)
+ci_read_filter_row_sub_rvv(size_t len, size_t bpp, unsigned char* row)
 {
-   png_bytep rp_end = row + len;
+   ci_bytep rp_end = row + len;
 
    /*
     * row:      | a | x |
@@ -71,32 +71,32 @@ png_read_filter_row_sub_rvv(size_t len, size_t bpp, unsigned char* row)
 }
 
 void
-png_read_filter_row_sub3_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_sub3_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_sub_rvv(len, 3, row);
+   ci_read_filter_row_sub_rvv(len, 3, row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
 void
-png_read_filter_row_sub4_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_sub4_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_sub_rvv(len, 4, row);
+   ci_read_filter_row_sub_rvv(len, 4, row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
 static inline void
-png_read_filter_row_avg_rvv(size_t len, size_t bpp, unsigned char* row,
+ci_read_filter_row_avg_rvv(size_t len, size_t bpp, unsigned char* row,
     const unsigned char* prev_row)
 {
-   png_bytep rp_end = row + len;
+   ci_bytep rp_end = row + len;
 
    /*
     * row:      | a | x |
@@ -153,25 +153,25 @@ png_read_filter_row_avg_rvv(size_t len, size_t bpp, unsigned char* row,
 }
 
 void
-png_read_filter_row_avg3_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_avg3_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_avg_rvv(len, 3, row, prev_row);
+   ci_read_filter_row_avg_rvv(len, 3, row, prev_row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
 void
-png_read_filter_row_avg4_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_avg4_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_avg_rvv(len, 4, row, prev_row);
+   ci_read_filter_row_avg_rvv(len, 4, row, prev_row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
 #define MIN_CHUNK_LEN 256
@@ -220,10 +220,10 @@ abs_sum(vint16m1_t a, vint16m1_t b, size_t vl)
 }
 
 static inline void
-png_read_filter_row_paeth_rvv(size_t len, size_t bpp, unsigned char* row,
+ci_read_filter_row_paeth_rvv(size_t len, size_t bpp, unsigned char* row,
     const unsigned char* prev)
 {
-   png_bytep rp_end = row + len;
+   ci_bytep rp_end = row + len;
 
    /*
     * row:      | a | x |
@@ -343,26 +343,26 @@ png_read_filter_row_paeth_rvv(size_t len, size_t bpp, unsigned char* row,
 }
 
 void
-png_read_filter_row_paeth3_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_paeth3_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_paeth_rvv(len, 3, row, prev_row);
+   ci_read_filter_row_paeth_rvv(len, 3, row, prev_row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
 void
-png_read_filter_row_paeth4_rvv(png_row_infop row_info, png_bytep row,
-    png_const_bytep prev_row)
+ci_read_filter_row_paeth4_rvv(ci_row_infop row_info, ci_bytep row,
+    ci_const_bytep prev_row)
 {
    size_t len = row_info->rowbytes;
 
-   png_read_filter_row_paeth_rvv(len, 4, row, prev_row);
+   ci_read_filter_row_paeth_rvv(len, 4, row, prev_row);
 
-   PNG_UNUSED(prev_row)
+   CI_UNUSED(prev_row)
 }
 
-#endif /* PNG_RISCV_RVV_IMPLEMENTATION */
+#endif /* CI_RISCV_RVV_IMPLEMENTATION */
 #endif /* READ */

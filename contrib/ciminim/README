@@ -1,0 +1,4 @@
+This demonstrates the use of CI_USER_CONFIG, ciusr.h and ciusr.dfa
+to build minimal decoder, encoder, and progressive reader applications.
+
+See the individual README and ciusr.dfa files for more explanation.

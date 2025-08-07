@@ -6,11 +6,11 @@
 # Written by Roger Leigh, 2016
 #
 # Use, modification and distribution are subject to
-# the same licensing terms and conditions as libpng.
-# Please see the copyright notice in png.h or visit
-# http://libpng.org/pub/png/src/libpng-LICENSE.txt
+# the same licensing terms and conditions as libci.
+# Please see the copyright notice in ci.h or visit
+# http://libci.org/pub/ci/src/libci-LICENSE.txt
 #
-# SPDX-License-Identifier: libpng-2.0
+# SPDX-License-Identifier: libci-2.0
 
 # Variables substituted from CMakeLists.txt
 set(SRCDIR "@CMAKE_CURRENT_SOURCE_DIR@")
@@ -18,124 +18,124 @@ set(BINDIR "@CMAKE_CURRENT_BINARY_DIR@")
 
 set(AWK "@AWK@")
 set(DFA_XTRA "@DFA_XTRA@")
-set(PNG_PREFIX "@PNG_PREFIX@")
-set(PNGLIB_VERSION "@PNGLIB_VERSION@")
+set(CI_PREFIX "@CI_PREFIX@")
+set(CILIB_VERSION "@CILIB_VERSION@")
 
-if(OUTPUT MATCHES "(scripts/pnglibconf\\.c)\$")
-  # Generate "${BINDIR}/scripts/pnglibconf.c"
+if(OUTPUT MATCHES "(scripts/cilibconf\\.c)\$")
+  # Generate "${BINDIR}/scripts/cilibconf.c"
 
-  file(REMOVE "${BINDIR}/pnglibconf.tf6" "${BINDIR}/pnglibconf.tf7")
+  file(REMOVE "${BINDIR}/cilibconf.tf6" "${BINDIR}/cilibconf.tf7")
 
-  execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "com ${PNGLIB_VERSION} STANDARD API DEFINITION"
+  execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "com ${CILIB_VERSION} STANDARD API DEFINITION"
                   COMMAND "${AWK}" -f "${SRCDIR}/scripts/options.awk"
-                          "out=pnglibconf.tf6" "logunsupported=1" "version=search"
-                          "${SRCDIR}/pngconf.h" "-"
-                          "${SRCDIR}/scripts/pnglibconf.dfa"
+                          "out=cilibconf.tf6" "logunsupported=1" "version=search"
+                          "${SRCDIR}/ciconf.h" "-"
+                          "${SRCDIR}/scripts/cilibconf.dfa"
                   WORKING_DIRECTORY "${BINDIR}"
                   RESULT_VARIABLE AWK_FAIL)
   if(AWK_FAIL)
-    message(FATAL_ERROR "Failed to generate pnglibconf.tf6")
+    message(FATAL_ERROR "Failed to generate cilibconf.tf6")
   endif()
 
   execute_process(COMMAND "${AWK}" -f "${SRCDIR}/scripts/options.awk"
-                  "out=pnglibconf.tf7" "pnglibconf.tf6"
+                  "out=cilibconf.tf7" "cilibconf.tf6"
                   WORKING_DIRECTORY "${BINDIR}"
                   RESULT_VARIABLE AWK_FAIL)
   if(AWK_FAIL)
-    message(FATAL_ERROR "Failed to generate pnglibconf.tf7")
+    message(FATAL_ERROR "Failed to generate cilibconf.tf7")
   endif()
 
-  file(REMOVE "pnglibconf.tf6")
+  file(REMOVE "cilibconf.tf6")
   file(MAKE_DIRECTORY "${BINDIR}/scripts")
-  file(RENAME "pnglibconf.tf7" "${BINDIR}/scripts/pnglibconf.c")
+  file(RENAME "cilibconf.tf7" "${BINDIR}/scripts/cilibconf.c")
 
-elseif(OUTPUT MATCHES "(pnglibconf\\.c)\$")
-  # Generate "${BINDIR}/pnglibconf.c"
+elseif(OUTPUT MATCHES "(cilibconf\\.c)\$")
+  # Generate "${BINDIR}/cilibconf.c"
 
-  file(REMOVE "${BINDIR}/pnglibconf.tf4" "${BINDIR}/pnglibconf.tf5")
+  file(REMOVE "${BINDIR}/cilibconf.tf4" "${BINDIR}/cilibconf.tf5")
 
   execute_process(COMMAND "${AWK}" -f "${SRCDIR}/scripts/options.awk"
-                  out=pnglibconf.tf4 version=search
-                  ${SRCDIR}/pngconf.h ${SRCDIR}/scripts/pnglibconf.dfa
-                  ${SRCDIR}/pngusr.dfa ${DFA_XTRA}
+                  out=cilibconf.tf4 version=search
+                  ${SRCDIR}/ciconf.h ${SRCDIR}/scripts/cilibconf.dfa
+                  ${SRCDIR}/ciusr.dfa ${DFA_XTRA}
                   WORKING_DIRECTORY "${BINDIR}"
                   RESULT_VARIABLE AWK_FAIL)
   if(AWK_FAIL)
-    message(FATAL_ERROR "Failed to generate pnglibconf.tf4")
+    message(FATAL_ERROR "Failed to generate cilibconf.tf4")
   endif()
 
   execute_process(COMMAND "${AWK}" -f "${SRCDIR}/scripts/options.awk"
-                  out=pnglibconf.tf5 pnglibconf.tf4
+                  out=cilibconf.tf5 cilibconf.tf4
                   WORKING_DIRECTORY "${BINDIR}"
                   RESULT_VARIABLE AWK_FAIL)
   if(AWK_FAIL)
-    message(FATAL_ERROR "Failed to generate pnglibconf.tf5")
+    message(FATAL_ERROR "Failed to generate cilibconf.tf5")
   endif()
 
-  file(REMOVE "pnglibconf.tf4")
+  file(REMOVE "cilibconf.tf4")
   file(MAKE_DIRECTORY "${BINDIR}/scripts")
-  file(RENAME "pnglibconf.tf5" "${BINDIR}/pnglibconf.c")
+  file(RENAME "cilibconf.tf5" "${BINDIR}/cilibconf.c")
 
-elseif(OUTPUT MATCHES "(pnglibconf\\.h)\$")
-  # Generate "${BINDIR}/pnglibconf.h"
+elseif(OUTPUT MATCHES "(cilibconf\\.h)\$")
+  # Generate "${BINDIR}/cilibconf.h"
 
   file(REMOVE "${OUTPUT}")
-  if(PNG_PREFIX)
-    file(REMOVE "pnglibconf.tf8")
+  if(CI_PREFIX)
+    file(REMOVE "cilibconf.tf8")
 
     execute_process(COMMAND "${AWK}" "s==0 && NR>1{print prev}
                              s==0{prev=\$0}
-                             s==1{print \"#define\", \$1, \"${PNG_PREFIX}\" \$1}
-                             s==2{print \"#define ${PNG_PREFIX}png_\" \$1, \"PNG_\" \$1}
-                             END{print prev}" s=0 pnglibconf.out s=1 "${BINDIR}/scripts/prefix.out"
+                             s==1{print \"#define\", \$1, \"${CI_PREFIX}\" \$1}
+                             s==2{print \"#define ${CI_PREFIX}ci_\" \$1, \"CI_\" \$1}
+                             END{print prev}" s=0 cilibconf.out s=1 "${BINDIR}/scripts/prefix.out"
                              s=2 "${SRCDIR}/scripts/macro.lst"
-                    OUTPUT_FILE pnglibconf.tf8
+                    OUTPUT_FILE cilibconf.tf8
                     RESULT_VARIABLE AWK_FAIL)
     if(AWK_FAIL)
-      message(FATAL_ERROR "Failed to generate pnglibconf.tf8")
+      message(FATAL_ERROR "Failed to generate cilibconf.tf8")
     endif()
 
-    file(RENAME "pnglibconf.tf8" "${OUTPUT}")
+    file(RENAME "cilibconf.tf8" "${OUTPUT}")
   else()
-    execute_process(COMMAND "${CMAKE_COMMAND}" -E copy "pnglibconf.out"
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E copy "cilibconf.out"
                                                        "${OUTPUT}"
                     WORKING_DIRECTORY "${BINDIR}"
                     RESULT_VARIABLE COPY_FAIL)
     if(COPY_FAIL)
-      message(FATAL_ERROR "Failed to create pnglibconf.h")
+      message(FATAL_ERROR "Failed to create cilibconf.h")
     endif()
   endif()
 
-elseif(OUTPUT MATCHES "(pngprefix\\.h)\$")
-  # Generate "${BINDIR}/pngprefix.h"
+elseif(OUTPUT MATCHES "(ciprefix\\.h)\$")
+  # Generate "${BINDIR}/ciprefix.h"
 
   file(REMOVE "${OUTPUT}")
 
-  if(PNG_PREFIX)
-    file(REMOVE "pngprefix.tf1")
+  if(CI_PREFIX)
+    file(REMOVE "ciprefix.tf1")
 
     execute_process(COMMAND "${AWK}"
-                            "{print \"#define\", \$1, \"${PNG_PREFIX}\" \$1}"
+                            "{print \"#define\", \$1, \"${CI_PREFIX}\" \$1}"
                             "${BINDIR}/scripts/intprefix.out"
-                    OUTPUT_FILE "pngprefix.tf1"
+                    OUTPUT_FILE "ciprefix.tf1"
                     RESULT_VARIABLE AWK_FAIL)
     if(AWK_FAIL)
-      message(FATAL_ERROR "Failed to generate pngprefix.tf1")
+      message(FATAL_ERROR "Failed to generate ciprefix.tf1")
     endif()
 
-    file(RENAME "pngprefix.tf1" "${OUTPUT}")
+    file(RENAME "ciprefix.tf1" "${OUTPUT}")
   else()
-    file(WRITE "${OUTPUT}" "/* No libpng symbol prefix configured. */")
+    file(WRITE "${OUTPUT}" "/* No libci symbol prefix configured. */")
   endif()
 
-elseif(OUTPUT MATCHES "(scripts/pnglibconf\\.h\\.prebuilt)\$")
-  # Generate scripts/pnglibconf.h.prebuilt (fails build)
+elseif(OUTPUT MATCHES "(scripts/cilibconf\\.h\\.prebuilt)\$")
+  # Generate scripts/cilibconf.h.prebuilt (fails build)
 
-  message(STATUS "Attempting to build scripts/pnglibconf.h.prebuilt")
+  message(STATUS "Attempting to build scripts/cilibconf.h.prebuilt")
   message(STATUS "This is a machine generated file, but if you want to make")
-  message(STATUS "a new one simply build the 'png_genfiles' target, and copy")
-  message(STATUS "scripts/pnglibconf.out to scripts/pnglibconf.h.prebuilt")
-  message(STATUS "AND set PNG_ZLIB_VERNUM to 0 (you MUST do this)")
+  message(STATUS "a new one simply build the 'ci_genfiles' target, and copy")
+  message(STATUS "scripts/cilibconf.out to scripts/cilibconf.h.prebuilt")
+  message(STATUS "AND set CI_ZLIB_VERNUM to 0 (you MUST do this)")
   message(FATAL_ERROR "Stopping build")
 
 else()

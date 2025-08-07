@@ -1,11 +1,11 @@
 /*---------------------------------------------------------------------------
 
-   rpng - simple PNG display program                              readppm.c
+   rci - simple CI display program                              readppm.c
 
   ---------------------------------------------------------------------------
 
-   This is a special-purpose replacement for readpng.c that allows binary
-   PPM files to be used in place of PNG images.
+   This is a special-purpose replacement for readci.c that allows binary
+   PPM files to be used in place of CI images.
 
   ---------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@
          software must display the following acknowledgment:
 
             This product includes software developed by Greg Roelofs
-            and contributors for the book, "PNG: The Definitive Guide,"
+            and contributors for the book, "CI: The Definitive Guide,"
             published by O'Reilly and Associates.
 
 
@@ -61,7 +61,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "readpng.h"    /* typedefs, common macros, public prototypes */
+#include "readci.h"    /* typedefs, common macros, public prototypes */
 
 
 ulg  width, height;
@@ -70,15 +70,15 @@ uch  *image_data = NULL;
 FILE *saved_infile;
 
 
-void readpng_version_info()
+void readci_version_info()
 {
-    fprintf(stderr, "   Compiled without libpng, zlib or PBMPLUS/NetPBM.\n");
+    fprintf(stderr, "   Compiled without libci, zlib or PBMPLUS/NetPBM.\n");
 }
 
 
 /* return value = 0 for success, 1 for bad sig, 2 for bad IHDR, 4 for no mem */
 
-int readpng_init(FILE *infile, ulg *pWidth, ulg *pHeight)
+int readci_init(FILE *infile, ulg *pWidth, ulg *pHeight)
 {
     static uch ppmline[256];
     int maxval;
@@ -127,10 +127,10 @@ int readpng_init(FILE *infile, ulg *pWidth, ulg *pHeight)
 
 
 
-/* returns 0 if succeeds, 1 if fails due to no bKGD chunk, 2 if libpng error;
+/* returns 0 if succeeds, 1 if fails due to no bKGD chunk, 2 if libci error;
  * scales values to 8-bit if necessary */
 
-int readpng_get_bgcolor(uch *red, uch *green, uch *blue)
+int readci_get_bgcolor(uch *red, uch *green, uch *blue)
 {
     return 1;
 }
@@ -140,7 +140,7 @@ int readpng_get_bgcolor(uch *red, uch *green, uch *blue)
 
 /* display_exponent == LUT_exponent * CRT_exponent */
 
-uch *readpng_get_image(double display_exponent, int *pChannels, ulg *pRowbytes)
+uch *readci_get_image(double display_exponent, int *pChannels, ulg *pRowbytes)
 {
     ulg  rowbytes;
 
@@ -154,7 +154,7 @@ uch *readpng_get_image(double display_exponent, int *pChannels, ulg *pRowbytes)
     *pRowbytes = rowbytes = channels*width;
     *pChannels = channels;
 
-    Trace((stderr, "readpng_get_image:  rowbytes = %ld, height = %ld\n", rowbytes, height));
+    Trace((stderr, "readci_get_image:  rowbytes = %ld, height = %ld\n", rowbytes, height));
 
     /* Guard against integer overflow */
     if (height > ((size_t)(-1))/rowbytes) {
@@ -179,7 +179,7 @@ uch *readpng_get_image(double display_exponent, int *pChannels, ulg *pRowbytes)
 }
 
 
-void readpng_cleanup(int free_image_data)
+void readci_cleanup(int free_image_data)
 {
     if (free_image_data && image_data) {
         free(image_data);

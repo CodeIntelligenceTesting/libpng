@@ -1,4 +1,4 @@
-CMake Files, Lists and Scripts for the PNG Reference Library
+CMake Files, Lists and Scripts for the CI Reference Library
 ============================================================
 
 Author List

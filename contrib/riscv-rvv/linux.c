@@ -3,16 +3,16 @@
  * Copyright (c) 2023 Google LLC
  * Written by Dragoș Tiselice <dtiselice@google.com>, May 2023.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
  * SEE contrib/riscv-rvv/README before reporting bugs
  *
  * STATUS: SUPPORTED
- * BUG REPORTS: png-mng-implement@sourceforge.net
+ * BUG REPORTS: ci-mng-implement@sourceforge.net
  *
- * png_have_rvv implemented for Linux by looking for COMPAT_HWCAP_ISA_V
+ * ci_have_rvv implemented for Linux by looking for COMPAT_HWCAP_ISA_V
  * via hardware capabilites API.
  *
  * This code is strict ANSI-C and is probably moderately portable; it does
@@ -25,7 +25,7 @@
 #endif
 
 static int
-png_have_rvv(png_structp png_ptr) {
+ci_have_rvv(ci_structp ci_ptr) {
 #if defined(__linux__)
    return getauxval (AT_HWCAP) & COMPAT_HWCAP_ISA_V ? 1 : 0;
 #else

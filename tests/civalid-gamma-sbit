@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./civalid --strict --gamma-sbit

@@ -2,19 +2,19 @@
  *
  * Copyright (c) 2013-2014 Glenn Randers-Pehrson
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#define PNG_INTERNAL_DATA(type, name, array)\
-        PNG_DFN "@" name "@"
+#define CI_INTERNAL_DATA(type, name, array)\
+        CI_DFN "@" name "@"
 
-#define PNG_INTERNAL_FUNCTION(type, name, args, attributes)\
-        PNG_DFN "@" name "@"
+#define CI_INTERNAL_FUNCTION(type, name, args, attributes)\
+        CI_DFN "@" name "@"
 
-#define PNG_INTERNAL_CALLBACK(type, name, args, attributes)\
-        PNG_DFN "@" name "@"
+#define CI_INTERNAL_CALLBACK(type, name, args, attributes)\
+        CI_DFN "@" name "@"
 
-#define PNGPREFIX_H /* self generation */
-#include "../pngpriv.h"
+#define CIPREFIX_H /* self generation */
+#include "../cipriv.h"

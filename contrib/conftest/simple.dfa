@@ -1,5 +1,5 @@
 # simple.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2013
@@ -8,7 +8,7 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng with just the simplified APIs (read and write).
+# Build libci with just the simplified APIs (read and write).
 #
 
 everything = off

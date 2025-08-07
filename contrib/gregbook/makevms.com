@@ -1,20 +1,20 @@
 $!------------------------------------------------------------------------------
-$! make "PNG: The Definitive Guide" demo programs (for X) under OpenVMS
+$! make "CI: The Definitive Guide" demo programs (for X) under OpenVMS
 $!
-$! Script created by Martin Zinser for libpng; modified by Greg Roelofs
-$! for standalone pngbook source distribution.
+$! Script created by Martin Zinser for libci; modified by Greg Roelofs
+$! for standalone cibook source distribution.
 $!
 $!
-$!    Set locations where zlib and libpng sources live.
+$!    Set locations where zlib and libci sources live.
 $!
 $ zpath   = ""
-$ pngpath = ""
+$ cipath = ""
 $!
 $ if f$search("[---.zlib]zlib.h").nes."" then zpath = "[---.zlib]"
-$ if f$search("[--]png.h").nes."" then pngpath = "[--]"
+$ if f$search("[--]ci.h").nes."" then cipath = "[--]"
 $!
 $ if f$search("[-.zlib]zlib.h").nes."" then zpath = "[-.zlib]"
-$ if f$search("[-.libpng]png.h").nes."" then pngpath = "[-.libpng]"
+$ if f$search("[-.libci]ci.h").nes."" then cipath = "[-.libci]"
 $!
 $ if zpath .eqs. ""
 $ then
@@ -22,15 +22,15 @@ $   write sys$output "zlib include not found. Exiting..."
 $   exit 2
 $ endif
 $!
-$ if pngpath .eqs. ""
+$ if cipath .eqs. ""
 $ then
-$   write sys$output "libpng include not found. Exiting..."
+$   write sys$output "libci include not found. Exiting..."
 $   exit 2
 $ endif
 $!
 $!    Look for the compiler used.
 $!
-$ ccopt="/include=(''zpath',''pngpath')"
+$ ccopt="/include=(''zpath',''cipath')"
 $ if f$getsyi("HW_MODEL").ge.1024
 $ then
 $  ccopt = "/prefix=all"+ccopt
@@ -54,7 +54,7 @@ $    comp  = "__decc__=1"
 $  endif
 $ endif
 $ open/write lopt lib.opt
-$ write lopt "''pngpath'libpng.olb/lib"
+$ write lopt "''cipath'libci.olb/lib"
 $ write lopt "''zpath'libz.olb/lib"
 $ close lopt
 $ open/write xopt x11.opt
@@ -63,31 +63,31 @@ $ close xopt
 $!
 $!    Build 'em.
 $!
-$ write sys$output "Compiling PNG book programs ..."
-$   CALL MAKE readpng.OBJ "cc ''CCOPT' readpng" -
-	readpng.c readpng.h
-$   CALL MAKE readpng2.OBJ "cc ''CCOPT' readpng2" -
-	readpng2.c readpng2.h
-$   CALL MAKE writepng.OBJ "cc ''CCOPT' writepng" -
-	writepng.c writepng.h
-$   write sys$output "Building rpng-x..."
-$   CALL MAKE rpng-x.OBJ "cc ''CCOPT' rpng-x" -
-	rpng-x.c readpng.h
-$   call make rpng-x.exe -
-	"LINK rpng-x,readpng,lib.opt/opt,x11.opt/opt" -
-	rpng-x.obj readpng.obj
-$   write sys$output "Building rpng2-x..."
-$   CALL MAKE rpng2-x.OBJ "cc ''CCOPT' rpng2-x" -
-	rpng2-x.c readpng2.h
-$   call make rpng2-x.exe -
-	"LINK rpng2-x,readpng2,lib.opt/opt,x11.opt/opt" -
-	rpng2-x.obj readpng2.obj
-$   write sys$output "Building wpng..."
-$   CALL MAKE wpng.OBJ "cc ''CCOPT' wpng" -
-	wpng.c writepng.h
-$   call make wpng.exe -
-	"LINK wpng,writepng,lib.opt/opt" -
-	wpng.obj writepng.obj
+$ write sys$output "Compiling CI book programs ..."
+$   CALL MAKE readci.OBJ "cc ''CCOPT' readci" -
+	readci.c readci.h
+$   CALL MAKE readci2.OBJ "cc ''CCOPT' readci2" -
+	readci2.c readci2.h
+$   CALL MAKE writeci.OBJ "cc ''CCOPT' writeci" -
+	writeci.c writeci.h
+$   write sys$output "Building rci-x..."
+$   CALL MAKE rci-x.OBJ "cc ''CCOPT' rci-x" -
+	rci-x.c readci.h
+$   call make rci-x.exe -
+	"LINK rci-x,readci,lib.opt/opt,x11.opt/opt" -
+	rci-x.obj readci.obj
+$   write sys$output "Building rci2-x..."
+$   CALL MAKE rci2-x.OBJ "cc ''CCOPT' rci2-x" -
+	rci2-x.c readci2.h
+$   call make rci2-x.exe -
+	"LINK rci2-x,readci2,lib.opt/opt,x11.opt/opt" -
+	rci2-x.obj readci2.obj
+$   write sys$output "Building wci..."
+$   CALL MAKE wci.OBJ "cc ''CCOPT' wci" -
+	wci.c writeci.h
+$   call make wci.exe -
+	"LINK wci,writeci,lib.opt/opt" -
+	wci.obj writeci.obj
 $ exit
 $!
 $!

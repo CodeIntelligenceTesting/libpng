@@ -2,26 +2,26 @@
 #
 # Copyright (c) 2013 John Cunningham Bowler
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 #
-# Generate a set of PNG test images.  The images are generated in a
+# Generate a set of CI test images.  The images are generated in a
 # sub-directory called 'tests' by default, however a command line argument will
-# change that name.  The generation requires a built version of makepng in the
+# change that name.  The generation requires a built version of makeci in the
 # current directory.
 #
 usage(){
    exec >&2
    echo "$0 [<directory>]"
-   echo '  Generate a set of PNG test files in "directory" ("tests" by default)'
+   echo '  Generate a set of CI test files in "directory" ("tests" by default)'
    exit 1
 }
 
-mp="$PWD/makepng"
+mp="$PWD/makeci"
 test -x "$mp" || {
    exec >&2
-   echo "$0: the 'makepng' program must exist"
+   echo "$0: the 'makeci' program must exist"
    echo "  in the directory within which this program:"
    echo "    $mp"
    echo "  is executed"
@@ -47,20 +47,20 @@ fi
 
 # This fails in a very satisfactory way if it's not accessible
 cd "$testdir"
-:>"test$$.png" || {
+:>"test$$.ci" || {
    exec >&2
    echo "$testdir: directory not writable"
    usage
 }
-rm "test$$.png" || {
+rm "test$$.ci" || {
    exec >&2
    echo "$testdir: you have create but not write privileges here."
-   echo "  This is unexpected.  You have a spurion; "'"'"test$$.png"'"'"."
+   echo "  This is unexpected.  You have a spurion; "'"'"test$$.ci"'"'"."
    echo "  You need to remove this yourself.  Try a different directory."
    exit 1
 }
 
-# Now call makepng ($mp) to create every file we can think of with a
+# Now call makeci ($mp) to create every file we can think of with a
 # reasonable name
 doit(){
    for gamma in "" --sRGB --linear --1.8
@@ -77,7 +77,7 @@ doit(){
          *)
             gname="-$gamma";;
       esac
-      "$mp" $gamma "$1" "$2" "test-$1-$2$gname.png"
+      "$mp" $gamma "$1" "$2" "test-$1-$2$gname.ci"
    done
 }
 #

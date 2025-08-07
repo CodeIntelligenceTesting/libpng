@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciunknown --strict vpAg=if-safe "${srcdir}/citest.ci"

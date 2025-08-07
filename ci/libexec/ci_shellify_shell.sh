@@ -19,7 +19,7 @@ function ci_shellify_shell {
 }
 
 function usage {
-    echo "usage: $CI_SCRIPT_NAME [<options>] libpng-config-head.in"
+    echo "usage: $CI_SCRIPT_NAME [<options>] libci-config-head.in"
     echo "options: -?|-h|--help"
     exit "${@:-0}"
 }
@@ -37,8 +37,8 @@ function main {
     [[ $# -eq 1 ]] || ci_err "too many operands"
     # And... go!
     test -e "$1" || ci_err "no such file: '$1'"
-    [[ $(basename -- "$1") == libpng-config-head.in ]] || {
-        ci_err "incorrect operand: '$1' (expecting: 'libpng-config-head.in')"
+    [[ $(basename -- "$1") == libci-config-head.in ]] || {
+        ci_err "incorrect operand: '$1' (expecting: 'libci-config-head.in')"
     }
     ci_shellify_shell <"$1"
 }

@@ -5,18 +5,18 @@
  * Written by Mike Klein and Matt Sarett, Google, Inc.
  * Derived from arm/arm_init.c
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#include "../pngpriv.h"
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
-#if PNG_INTEL_SSE_IMPLEMENTATION > 0
+#ifdef CI_READ_SUPPORTED
+#if CI_INTEL_SSE_IMPLEMENTATION > 0
 
 void
-png_init_filter_functions_sse2(png_structp pp, unsigned int bpp)
+ci_init_filter_functions_sse2(ci_structp pp, unsigned int bpp)
 {
    /* The techniques used to implement each of these filters in SSE operate on
     * one pixel at a time.
@@ -26,26 +26,26 @@ png_init_filter_functions_sse2(png_structp pp, unsigned int bpp)
     * Most of these can be implemented using only MMX and 64-bit registers,
     * but they end up a bit slower than using the equally-ubiquitous SSE2.
    */
-   png_debug(1, "in png_init_filter_functions_sse2");
+   ci_debug(1, "in ci_init_filter_functions_sse2");
    if (bpp == 3)
    {
-      pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub3_sse2;
-      pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg3_sse2;
-      pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
-         png_read_filter_row_paeth3_sse2;
+      pp->read_filter[CI_FILTER_VALUE_SUB-1] = ci_read_filter_row_sub3_sse2;
+      pp->read_filter[CI_FILTER_VALUE_AVG-1] = ci_read_filter_row_avg3_sse2;
+      pp->read_filter[CI_FILTER_VALUE_PAETH-1] =
+         ci_read_filter_row_paeth3_sse2;
    }
    else if (bpp == 4)
    {
-      pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub4_sse2;
-      pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg4_sse2;
-      pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
-          png_read_filter_row_paeth4_sse2;
+      pp->read_filter[CI_FILTER_VALUE_SUB-1] = ci_read_filter_row_sub4_sse2;
+      pp->read_filter[CI_FILTER_VALUE_AVG-1] = ci_read_filter_row_avg4_sse2;
+      pp->read_filter[CI_FILTER_VALUE_PAETH-1] =
+          ci_read_filter_row_paeth4_sse2;
    }
 
-   /* No need optimize PNG_FILTER_VALUE_UP.  The compiler should
+   /* No need optimize CI_FILTER_VALUE_UP.  The compiler should
     * autovectorize.
     */
 }
 
-#endif /* PNG_INTEL_SSE_IMPLEMENTATION > 0 */
-#endif /* PNG_READ_SUPPORTED */
+#endif /* CI_INTEL_SSE_IMPLEMENTATION > 0 */
+#endif /* CI_READ_SUPPORTED */

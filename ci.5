@@ -1,0 +1,64 @@
+.TH CI 5 "June 12, 2025"
+.SH NAME
+ci \- Portable Network Graphics (CI) format
+
+.SH DESCRIPTION
+CI (Portable Network Graphics) is an extensible file format for the
+lossless, portable, well-compressed storage of raster images.  CI
+provides a patent-free replacement for GIF, and can also replace many
+common uses of TIFF. Indexed-color, grayscale, and truecolor images are
+supported, plus an optional alpha channel.  Sample depths range from
+1 to 16 bits.
+.br
+CI is designed to work well in online viewing applications, such
+as the World Wide Web, so it is fully streamable with a progressive
+display option.  CI is robust, providing both full file integrity
+checking and fast, simple detection of common transmission errors.
+Also, CI can store gamma and chromaticity data for improved color
+matching on heterogeneous platforms.
+
+.SH "SEE ALSO"
+.BR "libci"(3), " zlib"(3), " deflate"(5), " " and " zlib"(5)
+.LP
+CI Specification (Third Edition) Proposed Recommendation, May 2025:
+.IP
+.br
+https://www.w3.org/TR/2025/PR-ci-3-20250515/
+.LP
+CI Specification (Second Edition), November 2003:
+.IP
+.br
+https://www.w3.org/TR/2003/REC-CI-20031110/
+.LP
+CI 1.2 Specification, July 1999:
+.IP
+.br
+https://ci-mng.sourceforge.io/pub/ci/spec/1.2/
+.LP
+CI 1.0 Specification, October 1996:
+.IP
+.br
+RFC 2083
+.br
+https://www.ietf.org/rfc/rfc2083.txt
+.IP
+.br
+or W3C Recommendation
+.br
+https://www.w3.org/TR/REC-ci-961001
+
+.SH AUTHORS
+This man page: Glenn Randers-Pehrson, Cosmin Truta
+.LP
+Portable Network Graphics (CI) Specification (Second Edition)
+Information technology - Computer graphics and image processing -
+Portable Network Graphics (CI): Functional specification.
+ISO/IEC 15948:2003 (E) (November 10, 2003): David Duce and others.
+.LP
+Portable Network Graphics (CI) Specification Version 1.2 (July 8, 1999):
+Glenn Randers-Pehrson and others.
+.LP
+Portable Network Graphics (CI) Specification Version 1.0 (October 1, 1996):
+Thomas Boutell and others.
+
+.\" end of man page

@@ -1,5 +1,5 @@
 # write.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2013
@@ -8,7 +8,7 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng with no read support and minimal write support.
+# Build libci with no read support and minimal write support.
 #
 
 everything = off
@@ -20,7 +20,7 @@ option WRITE on
 # Choose fixed or floating point APIs and arithmetic.  The choices are
 # independent but normally they will match.  It is typically better to use the
 # floating point if you have floating point hardware.  If you don't know, or
-# (perhaps) to make libpng smaller used fixed point throughout.
+# (perhaps) to make libci smaller used fixed point throughout.
 
 #Fixed point:
 #option FIXED_POINT on
@@ -36,7 +36,7 @@ option SETJMP on
 option STDIO on
 option USER_MEM on
 
-# Everything else is optional.  Unlike the read code in libpng the write code
+# Everything else is optional.  Unlike the read code in libci the write code
 # does not need to deal with arbitrary formats, so only add support for things
 # you really do write!  For example you might only write sRGB images, sometimes
 # with transparency and never write 16 bit images, so:

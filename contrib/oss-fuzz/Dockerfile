@@ -20,6 +20,6 @@ RUN apt-get update && \
     apt-get install -y make autoconf automake libtool
 
 RUN git clone --depth 1 https://github.com/madler/zlib.git
-RUN git clone --depth 1 https://github.com/glennrp/libpng.git
-RUN cp libpng/contrib/oss-fuzz/build.sh $SRC
-WORKDIR libpng
+RUN git clone --depth 1 https://github.com/glennrp/libci.git
+RUN cp libci/contrib/oss-fuzz/build.sh $SRC
+WORKDIR libci

@@ -1,4 +1,4 @@
-/* WARNING: This file was put in the LibPNG distribution for convenience only.
+/* WARNING: This file was put in the LibCI distribution for convenience only.
             It is expected to be part of the next zlib release under
             "projects\visualc71\README.txt." */
 
@@ -7,10 +7,10 @@ Microsoft Developer Studio Project File, Format Version 7.10 for zlib.
 Copyright (C) 2004 Simon-Pierre Cadieux.
 Copyright (C) 2004 Cosmin Truta.
 
-This code is released under the libpng license.
+This code is released under the libci license.
 For conditions of distribution and use, see copyright notice in zlib.h.
 
-NOTE: This project will be removed from libpng-1.5.0.  It has
+NOTE: This project will be removed from libci-1.5.0.  It has
 been replaced with the "vstudio" project.
 
 To use:

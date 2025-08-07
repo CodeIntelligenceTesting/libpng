@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciimage --list-combos --log "${srcdir}/contrib/cisuite/"*.ci

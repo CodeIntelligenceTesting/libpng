@@ -4,23 +4,23 @@
  * Copyright (c) 2017 Glenn Randers-Pehrson
  * Written by Vadim Barkov, 2017.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
 #include <stdio.h>
 #include <stdint.h>
-#include "../pngpriv.h"
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
+#ifdef CI_READ_SUPPORTED
 
 /* This code requires -maltivec and -mvsx on the command line: */
-#if PNG_POWERPC_VSX_IMPLEMENTATION == 1 /* intrinsics code from pngpriv.h */
+#if CI_POWERPC_VSX_IMPLEMENTATION == 1 /* intrinsics code from cipriv.h */
 
 #include <altivec.h>
 
-#if PNG_POWERPC_VSX_OPT > 0
+#if CI_POWERPC_VSX_OPT > 0
 
 #ifndef __VSX__
 #  error This code requires VSX support (POWER7 and later); please compile with -mvsx
@@ -40,9 +40,9 @@
  */
 
 #define vsx_declare_common_vars(row_info,row,prev_row,offset) \
-   png_byte i;\
-   png_bytep rp = row + offset;\
-   png_const_bytep pp = prev_row;\
+   ci_byte i;\
+   ci_bytep rp = row + offset;\
+   ci_const_bytep pp = prev_row;\
    size_t unaligned_top = 16 - (((size_t)rp % 16));\
    size_t istop;\
    if(unaligned_top == 16)\
@@ -55,8 +55,8 @@
       istop = 0;\
    }
 
-void png_read_filter_row_up_vsx(png_row_infop row_info, png_bytep row,
-                                png_const_bytep prev_row)
+void ci_read_filter_row_up_vsx(ci_row_infop row_info, ci_bytep row,
+                                ci_const_bytep prev_row)
 {
    vector unsigned char rp_vec;
    vector unsigned char pp_vec;
@@ -68,7 +68,7 @@ void png_read_filter_row_up_vsx(png_row_infop row_info, png_bytep row,
     */
    for (i = 0; i < unaligned_top; i++)
    {
-      *rp = (png_byte)(((int)(*rp) + (int)(*pp++)) & 0xff);
+      *rp = (ci_byte)(((int)(*rp) + (int)(*pp++)) & 0xff);
       rp++;
    }
 
@@ -94,7 +94,7 @@ void png_read_filter_row_up_vsx(png_row_infop row_info, png_bytep row,
        */
       for (i = 0; i < istop; i++)
       {
-         *rp = (png_byte)(((int)(*rp) + (int)(*pp++)) & 0xff);
+         *rp = (ci_byte)(((int)(*rp) + (int)(*pp++)) & 0xff);
          rp++;
       }
 }
@@ -165,23 +165,23 @@ static const vector unsigned char VSX_SHORT_TO_CHAR4_3 = {16,16,16,16,16,16,16,1
 #define vsx_char_to_short(vec,offset,bpp) (vector unsigned short)vec_perm((vec),VSX_CHAR_ZERO,VSX_CHAR_TO_SHORT##offset##_##bpp)
 #define vsx_short_to_char(vec,offset,bpp) vec_perm(((vector unsigned char)(vec)),VSX_CHAR_ZERO,VSX_SHORT_TO_CHAR##offset##_##bpp)
 
-#ifdef PNG_USE_ABS
+#ifdef CI_USE_ABS
 #  define vsx_abs(number) abs(number)
 #else
 #  define vsx_abs(number) (number > 0) ? (number) : -(number)
 #endif
 
-void png_read_filter_row_sub4_vsx(png_row_infop row_info, png_bytep row,
-                                  png_const_bytep prev_row)
+void ci_read_filter_row_sub4_vsx(ci_row_infop row_info, ci_bytep row,
+                                  ci_const_bytep prev_row)
 {
-   png_byte bpp = 4;
+   ci_byte bpp = 4;
 
    vector unsigned char rp_vec;
    vector unsigned char part_vec;
 
    vsx_declare_common_vars(row_info,row,prev_row,bpp)
 
-   PNG_UNUSED(pp)
+   CI_UNUSED(pp)
 
    /* Altivec operations require 16-byte aligned data
     * but input can be unaligned. So we calculate
@@ -189,7 +189,7 @@ void png_read_filter_row_sub4_vsx(png_row_infop row_info, png_bytep row,
     */
    for (i = 0; i < unaligned_top; i++)
    {
-      *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+      *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
       rp++;
    }
 
@@ -198,7 +198,7 @@ void png_read_filter_row_sub4_vsx(png_row_infop row_info, png_bytep row,
    {
       for(i=0;i < bpp ; i++)
       {
-         *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+         *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
          rp++;
       }
       rp -= bpp;
@@ -222,23 +222,23 @@ void png_read_filter_row_sub4_vsx(png_row_infop row_info, png_bytep row,
    if(istop > 0)
       for (i = 0; i < istop % 16; i++)
       {
-         *rp = (png_byte)(((int)(*rp) + (int)(*(rp - bpp))) & 0xff);
+         *rp = (ci_byte)(((int)(*rp) + (int)(*(rp - bpp))) & 0xff);
          rp++;
       }
 
 }
 
-void png_read_filter_row_sub3_vsx(png_row_infop row_info, png_bytep row,
-                                  png_const_bytep prev_row)
+void ci_read_filter_row_sub3_vsx(ci_row_infop row_info, ci_bytep row,
+                                  ci_const_bytep prev_row)
 {
-   png_byte bpp = 3;
+   ci_byte bpp = 3;
 
    vector unsigned char rp_vec;
    vector unsigned char part_vec;
 
    vsx_declare_common_vars(row_info,row,prev_row,bpp)
 
-   PNG_UNUSED(pp)
+   CI_UNUSED(pp)
 
    /* Altivec operations require 16-byte aligned data
     * but input can be unaligned. So we calculate
@@ -246,7 +246,7 @@ void png_read_filter_row_sub3_vsx(png_row_infop row_info, png_bytep row,
     */
    for (i = 0; i < unaligned_top; i++)
    {
-      *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+      *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
       rp++;
    }
 
@@ -255,7 +255,7 @@ void png_read_filter_row_sub3_vsx(png_row_infop row_info, png_bytep row,
    {
       for(i=0;i < bpp ; i++)
       {
-         *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+         *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
          rp++;
       }
       rp -= bpp;
@@ -280,22 +280,22 @@ void png_read_filter_row_sub3_vsx(png_row_infop row_info, png_bytep row,
       /* Since 16 % bpp = 16 % 3 = 1, last element of array must
        * be proceeded manually
        */
-      *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+      *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
       rp++;
    }
 
    if(istop > 0)
       for (i = 0; i < istop % 16; i++)
       {
-         *rp = (png_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
+         *rp = (ci_byte)(((int)(*rp) + (int)(*(rp-bpp))) & 0xff);
          rp++;
       }
 }
 
-void png_read_filter_row_avg4_vsx(png_row_infop row_info, png_bytep row,
-                                  png_const_bytep prev_row)
+void ci_read_filter_row_avg4_vsx(ci_row_infop row_info, ci_bytep row,
+                                  ci_const_bytep prev_row)
 {
-   png_byte bpp = 4;
+   ci_byte bpp = 4;
 
    vector unsigned char rp_vec;
    vector unsigned char pp_vec;
@@ -310,7 +310,7 @@ void png_read_filter_row_avg4_vsx(png_row_infop row_info, png_bytep row,
 
    for (i = 0; i < bpp; i++)
    {
-      *rp = (png_byte)(((int)(*rp) +
+      *rp = (ci_byte)(((int)(*rp) +
          ((int)(*pp++) / 2 )) & 0xff);
 
       rp++;
@@ -322,7 +322,7 @@ void png_read_filter_row_avg4_vsx(png_row_infop row_info, png_bytep row,
     */
    for (i = 0; i < unaligned_top; i++)
    {
-      *rp = (png_byte)(((int)(*rp) +
+      *rp = (ci_byte)(((int)(*rp) +
          (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
       rp++;
@@ -333,7 +333,7 @@ void png_read_filter_row_avg4_vsx(png_row_infop row_info, png_bytep row,
    {
       for(i=0;i < bpp ; i++)
       {
-         *rp = (png_byte)(((int)(*rp) +
+         *rp = (ci_byte)(((int)(*rp) +
             (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
          rp++;
@@ -372,17 +372,17 @@ void png_read_filter_row_avg4_vsx(png_row_infop row_info, png_bytep row,
    if(istop  > 0)
       for (i = 0; i < istop % 16; i++)
       {
-         *rp = (png_byte)(((int)(*rp) +
+         *rp = (ci_byte)(((int)(*rp) +
             (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
          rp++;
       }
 }
 
-void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
-                                  png_const_bytep prev_row)
+void ci_read_filter_row_avg3_vsx(ci_row_infop row_info, ci_bytep row,
+                                  ci_const_bytep prev_row)
 {
-  png_byte bpp = 3;
+  ci_byte bpp = 3;
 
   vector unsigned char rp_vec;
   vector unsigned char pp_vec;
@@ -397,7 +397,7 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
 
   for (i = 0; i < bpp; i++)
   {
-     *rp = (png_byte)(((int)(*rp) +
+     *rp = (ci_byte)(((int)(*rp) +
         ((int)(*pp++) / 2 )) & 0xff);
 
      rp++;
@@ -409,7 +409,7 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
    */
   for (i = 0; i < unaligned_top; i++)
   {
-     *rp = (png_byte)(((int)(*rp) +
+     *rp = (ci_byte)(((int)(*rp) +
         (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
      rp++;
@@ -420,7 +420,7 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
   {
      for(i=0;i < bpp ; i++)
      {
-        *rp = (png_byte)(((int)(*rp) +
+        *rp = (ci_byte)(((int)(*rp) +
            (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
         rp++;
@@ -464,7 +464,7 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
      /* Since 16 % bpp = 16 % 3 = 1, last element of array must
       * be proceeded manually
       */
-     *rp = (png_byte)(((int)(*rp) +
+     *rp = (ci_byte)(((int)(*rp) +
         (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
      rp++;
   }
@@ -472,7 +472,7 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
   if(istop  > 0)
      for (i = 0; i < istop % 16; i++)
      {
-        *rp = (png_byte)(((int)(*rp) +
+        *rp = (ci_byte)(((int)(*rp) +
            (int)(*pp++ + *(rp-bpp)) / 2 ) & 0xff);
 
         rp++;
@@ -494,13 +494,13 @@ void png_read_filter_row_avg3_vsx(png_row_infop row_info, png_bytep row,
       if (pb < pa) pa = pb, a = b;\
       if (pc < pa) a = c;\
       a += *rp;\
-      *rp++ = (png_byte)a;\
+      *rp++ = (ci_byte)a;\
       }
 
-void png_read_filter_row_paeth4_vsx(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev_row)
+void ci_read_filter_row_paeth4_vsx(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev_row)
 {
-   png_byte bpp = 4;
+   ci_byte bpp = 4;
 
    int a, b, c, pa, pb, pc, p;
    vector unsigned char rp_vec;
@@ -518,7 +518,7 @@ void png_read_filter_row_paeth4_vsx(png_row_infop row_info, png_bytep row,
     */
    for(i = 0; i < bpp ; i++)
    {
-      *rp = (png_byte)( *rp + *pp);
+      *rp = (ci_byte)( *rp + *pp);
       rp++;
       pp++;
    }
@@ -617,10 +617,10 @@ void png_read_filter_row_paeth4_vsx(png_row_infop row_info, png_bytep row,
       }
 }
 
-void png_read_filter_row_paeth3_vsx(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev_row)
+void ci_read_filter_row_paeth3_vsx(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev_row)
 {
-  png_byte bpp = 3;
+  ci_byte bpp = 3;
 
   int a, b, c, pa, pb, pc, p;
   vector unsigned char rp_vec;
@@ -638,7 +638,7 @@ void png_read_filter_row_paeth3_vsx(png_row_infop row_info, png_bytep row,
    */
   for(i = 0; i < bpp ; i++)
   {
-     *rp = (png_byte)( *rp + *pp);
+     *rp = (ci_byte)( *rp + *pp);
      rp++;
      pp++;
   }
@@ -763,6 +763,6 @@ void png_read_filter_row_paeth3_vsx(png_row_infop row_info, png_bytep row,
      }
 }
 
-#endif /* PNG_POWERPC_VSX_OPT > 0 */
-#endif /* PNG_POWERPC_VSX_IMPLEMENTATION == 1 (intrinsics) */
+#endif /* CI_POWERPC_VSX_OPT > 0 */
+#endif /* CI_POWERPC_VSX_IMPLEMENTATION == 1 (intrinsics) */
 #endif /* READ */

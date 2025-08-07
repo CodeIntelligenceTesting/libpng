@@ -2,9 +2,9 @@
  *
  * Copyright (c) 2024 Cosmin Truta
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
 /* IMPORTANT NOTE:
@@ -20,21 +20,21 @@
  * have been removed.
  *
  * For the external projects that might still expect this module to be present,
- * we leave this stub in place, for the remaining lifetime of libpng-1.6.x.
+ * we leave this stub in place, for the remaining lifetime of libci-1.6.x.
  * Everything should continue to function normally, as long as there are no
  * deliberate attempts to use the old hand-made assembler code. A build error
  * will be raised otherwise.
  */
 
 /* This is required to get the symbol renames, which are #defines, and the
- * definitions (or not) of PNG_ARM_NEON_OPT and PNG_ARM_NEON_IMPLEMENTATION.
+ * definitions (or not) of CI_ARM_NEON_OPT and CI_ARM_NEON_IMPLEMENTATION.
  */
-#define PNG_VERSION_INFO_ONLY
-#include "../pngpriv.h"
+#define CI_VERSION_INFO_ONLY
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
-#if PNG_ARM_NEON_IMPLEMENTATION == 2 /* hand-coded assembler */
-#if PNG_ARM_NEON_OPT > 0
+#ifdef CI_READ_SUPPORTED
+#if CI_ARM_NEON_IMPLEMENTATION == 2 /* hand-coded assembler */
+#if CI_ARM_NEON_OPT > 0
 
 #if defined(__clang__)
 #define GNUC_VERSION 0 /* not gcc, although it might pretend to be */
@@ -48,13 +48,13 @@
 #endif
 
 #if (GNUC_VERSION > 0) && (GNUC_VERSION < 40300)
-#error "PNG_ARM_NEON is not supported with gcc versions earlier than 4.3.0"
+#error "CI_ARM_NEON is not supported with gcc versions earlier than 4.3.0"
 #elif GNUC_VERSION == 40504
-#error "PNG_ARM_NEON is not supported with gcc version 4.5.4"
+#error "CI_ARM_NEON is not supported with gcc version 4.5.4"
 #else
-#error "Please use 'arm/*_neon_intrinsics.c' for PNG_ARM_NEON support"
+#error "Please use 'arm/*_neon_intrinsics.c' for CI_ARM_NEON support"
 #endif
 
-#endif /* PNG_ARM_NEON_OPT > 0 */
-#endif /* PNG_ARM_NEON_IMPLEMENTATION == 2 */
+#endif /* CI_ARM_NEON_OPT > 0 */
+#endif /* CI_ARM_NEON_IMPLEMENTATION == 2 */
 #endif /* READ */

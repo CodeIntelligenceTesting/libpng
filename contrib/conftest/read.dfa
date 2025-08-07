@@ -1,5 +1,5 @@
 # read.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2013
@@ -8,7 +8,7 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng with basic read support.  This enables the lowest level libpng
+# Build libci with basic read support.  This enables the lowest level libci
 # read API - the one where the calling code has to use a loop to read each row.
 # At present this is the API used by most programs.
 #
@@ -40,7 +40,7 @@ option SETJMP on
 option STDIO on
 option USER_MEM on
 
-# To read the full set of PNG images correctly interlace, transparency and
+# To read the full set of CI images correctly interlace, transparency and
 # 16-bit support is required.  The application can implement interlace itself,
 # but very few do and it's no longer possible to disable it when READ is
 # enabled.
@@ -48,11 +48,11 @@ option READ_tRNS on
 option READ_16BIT on
 
 # Everything else is application dependent.  This file assumes the app handles
-# all the native PNG bit layouts, so it doesn't need any of layout change
-# transforms, but needs libpng to perform gamma correction.  It doesn't do any
+# all the native CI bit layouts, so it doesn't need any of layout change
+# transforms, but needs libci to perform gamma correction.  It doesn't do any
 # colorspace stuff and ignores the 'significant bit' information.
 #
 # If your app always expands the image to a limited set of bit layouts you
 # probably want to consider using the simplified API instead of the low level
-# one - see png.h and s_read.dfa.
+# one - see ci.h and s_read.dfa.
 option READ_GAMMA on

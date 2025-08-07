@@ -1,0 +1,10 @@
+This demonstrates the use of CI_USER_CONFIG and ciusr.h
+
+The makefile builds a minimal write-only encoder with embedded libci
+and zlib.
+
+Specify the location of the zlib source (1.2.1 or later) as ZLIBSRC
+on the make command line.
+
+If you prefer to use the shared libraries, go to contrib/ciminus
+and build the pnm2ci application there.

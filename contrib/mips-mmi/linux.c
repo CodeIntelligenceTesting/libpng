@@ -3,9 +3,9 @@
  * Copyright (c) 2024 Cosmin Truta
  * Written by guxiwei, 2023
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
 #include <stdint.h>
@@ -131,7 +131,7 @@ static int cpu_flags_cpuinfo(void)
     return flags;
 }
 
-static int png_have_mmi()
+static int ci_have_mmi()
 {
     if (cpucfg_available())
         return cpu_flags_cpucfg();

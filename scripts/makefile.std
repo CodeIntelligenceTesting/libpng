@@ -1,11 +1,11 @@
-# makefile for libpng
+# makefile for libci
 # Copyright (C) 2015, 2018-2025 Cosmin Truta
 # Copyright (C) 2002, 2006, 2014 Glenn Randers-Pehrson
 # Copyright (C) 1995 Guy Eric Schalnat, Group 42, Inc.
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 
 # Where the zlib library and include files are located
 #ZLIBLIB=/usr/local/lib
@@ -22,84 +22,84 @@ MV_F = mv -f
 RM_F = rm -f
 AWK = awk
 
-NOHWOPT = -DPNG_ARM_NEON_OPT=0 -DPNG_MIPS_MSA_OPT=0 \
-          -DPNG_POWERPC_VSX_OPT=0 -DPNG_INTEL_SSE_OPT=0 \
-          -DPNG_RISCV_RVV_OPT=0
-DFNFLAGS = # DFNFLAGS contains -D options to use in the libpng build
+NOHWOPT = -DCI_ARM_NEON_OPT=0 -DCI_MIPS_MSA_OPT=0 \
+          -DCI_POWERPC_VSX_OPT=0 -DCI_INTEL_SSE_OPT=0 \
+          -DCI_RISCV_RVV_OPT=0
+DFNFLAGS = # DFNFLAGS contains -D options to use in the libci build
 DFA_EXTRA = # extra files that can be used to control configuration
-CPPFLAGS = -I$(ZLIBINC) $(NOHWOPT) # -DPNG_DEBUG=5
+CPPFLAGS = -I$(ZLIBINC) $(NOHWOPT) # -DCI_DEBUG=5
 CFLAGS = -O # -g
 ARFLAGS = rc
 LDFLAGS = -L$(ZLIBLIB) # -g
 LIBS = -lz -lm
 
 # Pre-built configuration
-# See scripts/pnglibconf.mak for more options
-PNGLIBCONF_H_PREBUILT = scripts/pnglibconf.h.prebuilt
+# See scripts/cilibconf.mak for more options
+CILIBCONF_H_PREBUILT = scripts/cilibconf.h.prebuilt
 
-OBJS = png.o pngerror.o pngget.o pngmem.o pngpread.o \
-       pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o \
-       pngtrans.o pngwio.o pngwrite.o pngwtran.o pngwutil.o
+OBJS = ci.o cierror.o ciget.o cimem.o cipread.o \
+       ciread.o cirio.o cirtran.o cirutil.o ciset.o \
+       citrans.o ciwio.o ciwrite.o ciwtran.o ciwutil.o
 
 .c.o:
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $*.c
 
-all: libpng.a pngtest
+all: libci.a citest
 
-# The standard pnglibconf.h exists as scripts/pnglibconf.h.prebuilt,
+# The standard cilibconf.h exists as scripts/cilibconf.h.prebuilt,
 # copy this if the following doesn't work.
-pnglibconf.h: pnglibconf.dfn
-	$(RM_F) $@ pnglibconf.c pnglibconf.out pnglibconf.tmp
-	echo '#include "pnglibconf.dfn"' >pnglibconf.c
+cilibconf.h: cilibconf.dfn
+	$(RM_F) $@ cilibconf.c cilibconf.out cilibconf.tmp
+	echo '#include "cilibconf.dfn"' >cilibconf.c
 	@echo "## If '$(CC) -E' fails, try /lib/cpp (e.g. CPP='/lib/cpp')" >&2
-	$(CPP) $(DFNFLAGS) pnglibconf.c >pnglibconf.out
-	$(AWK) -f scripts/dfn.awk out=pnglibconf.tmp pnglibconf.out >&2
-	$(MV_F) pnglibconf.tmp $@
+	$(CPP) $(DFNFLAGS) cilibconf.c >cilibconf.out
+	$(AWK) -f scripts/dfn.awk out=cilibconf.tmp cilibconf.out >&2
+	$(MV_F) cilibconf.tmp $@
 
-pnglibconf.dfn: scripts/pnglibconf.dfa scripts/options.awk pngconf.h pngusr.dfa $(DFA_XTRA)
-	$(RM_F) $@ pnglibconf.pre pnglibconf.tmp
-	@echo "## Calling $(AWK) from scripts/pnglibconf.mak" >&2
+cilibconf.dfn: scripts/cilibconf.dfa scripts/options.awk ciconf.h ciusr.dfa $(DFA_XTRA)
+	$(RM_F) $@ cilibconf.pre cilibconf.tmp
+	@echo "## Calling $(AWK) from scripts/cilibconf.mak" >&2
 	@echo "## If 'awk' fails, try a better awk (e.g. AWK='nawk')" >&2
-	$(AWK) -f scripts/options.awk out=pnglibconf.pre\
-	    version=search pngconf.h scripts/pnglibconf.dfa\
-	    pngusr.dfa $(DFA_XTRA) >&2
-	$(AWK) -f scripts/options.awk out=pnglibconf.tmp pnglibconf.pre >&2
-	$(MV_F) pnglibconf.tmp $@
+	$(AWK) -f scripts/options.awk out=cilibconf.pre\
+	    version=search ciconf.h scripts/cilibconf.dfa\
+	    ciusr.dfa $(DFA_XTRA) >&2
+	$(AWK) -f scripts/options.awk out=cilibconf.tmp cilibconf.pre >&2
+	$(MV_F) cilibconf.tmp $@
 
-libpng.a: $(OBJS)
+libci.a: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $(OBJS)
 	$(RANLIB) $@
 
-pngtest: pngtest.o libpng.a
-	$(LD) $(LDFLAGS) -o $@ pngtest.o libpng.a $(LIBS)
+citest: citest.o libci.a
+	$(LD) $(LDFLAGS) -o $@ citest.o libci.a $(LIBS)
 
-test: pngtest
-	./pngtest
+test: citest
+	./citest
 
 install:
 	@echo "The $@ target is no longer supported by this makefile."
 	@false
 
 clean:
-	$(RM_F) *.o libpng.a pngtest pngout.png pnglibconf.h
-	$(RM_F) pnglibconf.c pnglibconf.dfn pnglibconf.out pnglibconf.pre
+	$(RM_F) *.o libci.a citest ciout.ci cilibconf.h
+	$(RM_F) cilibconf.c cilibconf.dfn cilibconf.out cilibconf.pre
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
-png.o:      png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngerror.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngget.o:   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngmem.o:   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngpread.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngread.o:  png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrio.o:   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrtran.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrutil.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngset.o:   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngtrans.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwio.o:   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwrite.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwtran.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwutil.o: png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
+ci.o:      ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cierror.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciget.o:   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cimem.o:   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cipread.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciread.o:  ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirio.o:   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirtran.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirutil.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciset.o:   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+citrans.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwio.o:   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwrite.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwtran.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwutil.o: ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
 
-pngtest.o:  png.h pngconf.h pnglibconf.h
+citest.o:  ci.h ciconf.h cilibconf.h

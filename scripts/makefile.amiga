@@ -1,10 +1,10 @@
 # Commodore Amiga Makefile
-# makefile for libpng and SAS C V6.5x compiler
+# makefile for libci and SAS C V6.5x compiler
 # Copyright (C) 1995-2000 Wolf Faust
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 #
 # Location/path of zlib include files
 ZLIB=/zlib
@@ -15,11 +15,11 @@ CC=sc
 #          So use V6.55 or set NOOPTGO!!!!!!!!!
 CFLAGS= NOSTKCHK PARMS=REG OPTIMIZE OPTGO OPTPEEP OPTINLOCAL OPTINL\
 	OPTLOOP OPTRDEP=4 OPTDEP=4 OPTCOMP=4 INCLUDEDIR=$(ZLIB) \
-	DEFINE=PNG_INTERNAL
+	DEFINE=CI_INTERNAL
 #linker flags
 LDFLAGS= SD ND BATCH
 #link libs
-LDLIBS= libpng.lib libgz.lib LIB:scm.lib LIB:sc.lib Lib:amiga.lib
+LDLIBS= libci.lib libgz.lib LIB:scm.lib LIB:sc.lib Lib:amiga.lib
 # linker
 LN= slink
 # file deletion command
@@ -28,29 +28,29 @@ RM= delete quiet
 AR= oml
 
 # Pre-built configuration
-# See scripts/pnglibconf.mak for more options
-PNGLIBCONF_H_PREBUILT = scripts/pnglibconf.h.prebuilt
+# See scripts/cilibconf.mak for more options
+CILIBCONF_H_PREBUILT = scripts/cilibconf.h.prebuilt
 
-OBJS = png.o pngerror.o pngget.o pngmem.o pngpread.o \
-       pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o \
-       pngtrans.o pngwio.o pngwrite.o pngwtran.o pngwutil.o
+OBJS = ci.o cierror.o ciget.o cimem.o cipread.o \
+       ciread.o cirio.o cirtran.o cirutil.o ciset.o \
+       citrans.o ciwio.o ciwrite.o ciwtran.o ciwutil.o
 
-all: libpng.lib pngtest
+all: libci.lib citest
 
-libpng.lib: $(OBJS)
--$(RM) libpng.lib
-$(AR) libpng.lib r $(OBJS)
+libci.lib: $(OBJS)
+-$(RM) libci.lib
+$(AR) libci.lib r $(OBJS)
 
-$(OBJS): pngpriv.h png.h pngconf.h pnglibconf.h pnginfo.h pngstruct.h pngdebug.h
+$(OBJS): cipriv.h ci.h ciconf.h cilibconf.h ciinfo.h cistruct.h cidebug.h
 
-pnglibconf.h: $(PNGLIBCONF_H_PREBUILT)
-COPY $(PNGLIBCONF_H_PREBUILT) TO pnglibconf.h
+cilibconf.h: $(CILIBCONF_H_PREBUILT)
+COPY $(CILIBCONF_H_PREBUILT) TO cilibconf.h
 
-pngtest: pngtest.o libpng.lib
+citest: citest.o libci.lib
 $(LN) <WITH <
 $(LDFLAGS)
-TO pngtest
-FROM LIB:c.o pngtest.o
+TO citest
+FROM LIB:c.o citest.o
 LIB $(LDLIBS)
 <
 

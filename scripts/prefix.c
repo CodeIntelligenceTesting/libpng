@@ -2,21 +2,21 @@
  *
  * Copyright (c) 2013-2014 Glenn Randers-Pehrson
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#define PNG_EXPORTA(ordinal, type, name, args, attributes)\
-        PNG_DFN "@" name "@"
+#define CI_EXPORTA(ordinal, type, name, args, attributes)\
+        CI_DFN "@" name "@"
 
 /* The configuration information *before* the additional of symbol renames,
  * the list is the C name list; no symbol prefix.
  */
-#include "pnglibconf.out"
+#include "cilibconf.out"
 
-PNG_DFN_START_SORT 1
+CI_DFN_START_SORT 1
 
-#include "../png.h"
+#include "../ci.h"
 
-PNG_DFN_END_SORT
+CI_DFN_END_SORT

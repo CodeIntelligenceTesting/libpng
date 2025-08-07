@@ -1,7 +1,7 @@
-PNG REFERENCE LIBRARY AUTHORS
+CI REFERENCE LIBRARY AUTHORS
 =============================
 
-This is the list of PNG Reference Library ("libpng") Contributing
+This is the list of CI Reference Library ("libci") Contributing
 Authors, for copyright and licensing purposes.
 
  * Adam Richter
@@ -58,9 +58,9 @@ Authors, for copyright and licensing purposes.
 
 The build projects, the build scripts, the test scripts, and other
 files in the "projects", "scripts" and "tests" directories, have
-other copyright owners, but are released under the libpng license.
+other copyright owners, but are released under the libci license.
 
 Some files in the "ci" and "contrib" directories, as well as some
-of the tools-generated files that are distributed with libpng, have
+of the tools-generated files that are distributed with libci, have
 other copyright owners, and are released under other open source
 licenses.

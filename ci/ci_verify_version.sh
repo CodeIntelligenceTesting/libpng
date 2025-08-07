@@ -13,10 +13,10 @@ source "$(dirname "$0")/lib/ci.lib.sh"
 cd "$CI_TOPLEVEL_DIR"
 
 # Declare the global environments collected from various sources.
-declare CI_ENV_LIBPNG_VER        # collected from png.h
+declare CI_ENV_LIBCI_VER        # collected from ci.h
 declare CI_ENV_AUTOCONF_VER      # collected from configure.ac
 declare CI_ENV_CMAKE_VER         # collected from CMakeLists.txt
-declare CI_ENV_LIBPNGCONFIG_VER  # collected from scripts/libpng-config-head.in
+declare CI_ENV_LIBCICONFIG_VER  # collected from scripts/libci-config-head.in
 
 function ci_run_shellify {
     local my_script my_result
@@ -33,123 +33,123 @@ function ci_run_shellify {
 
 function ci_init_version_verification {
     ci_info "## START OF VERIFICATION ##"
-    CI_ENV_LIBPNG_VER="$(ci_run_shellify --c png.h)"
-    echo "$CI_ENV_LIBPNG_VER"
+    CI_ENV_LIBCI_VER="$(ci_run_shellify --c ci.h)"
+    echo "$CI_ENV_LIBCI_VER"
     CI_ENV_AUTOCONF_VER="$(ci_run_shellify --autoconf configure.ac)"
     echo "$CI_ENV_AUTOCONF_VER"
     CI_ENV_CMAKE_VER="$(ci_run_shellify --cmake CMakeLists.txt)"
     echo "$CI_ENV_CMAKE_VER"
-    CI_ENV_LIBPNGCONFIG_VER="$(ci_run_shellify --shell scripts/libpng-config-head.in)"
-    echo "$CI_ENV_LIBPNGCONFIG_VER"
+    CI_ENV_LIBCICONFIG_VER="$(ci_run_shellify --shell scripts/libci-config-head.in)"
+    echo "$CI_ENV_LIBCICONFIG_VER"
 }
 
 # shellcheck disable=SC2154
 function ci_do_version_verification {
     local my_expect
-    ci_info "## VERIFYING: version definitions in 'png.h' ##"
-    eval "$CI_ENV_LIBPNG_VER"
-    my_expect="${PNG_LIBPNG_VER_MAJOR}.${PNG_LIBPNG_VER_MINOR}.${PNG_LIBPNG_VER_RELEASE}"
-    if [[ "$PNG_LIBPNG_VER_STRING" == "$my_expect"* ]]
+    ci_info "## VERIFYING: version definitions in 'ci.h' ##"
+    eval "$CI_ENV_LIBCI_VER"
+    my_expect="${CI_LIBCI_VER_MAJOR}.${CI_LIBCI_VER_MINOR}.${CI_LIBCI_VER_RELEASE}"
+    if [[ "$CI_LIBCI_VER_STRING" == "$my_expect"* ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER_STRING == $my_expect*"
+        ci_info "matched: \$CI_LIBCI_VER_STRING == $my_expect*"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER_STRING != $my_expect*"
+        ci_err "mismatched: \$CI_LIBCI_VER_STRING != $my_expect*"
     fi
-    my_expect=$((PNG_LIBPNG_VER_MAJOR*10000 + PNG_LIBPNG_VER_MINOR*100 + PNG_LIBPNG_VER_RELEASE))
-    if [[ "$PNG_LIBPNG_VER" == "$my_expect" ]]
+    my_expect=$((CI_LIBCI_VER_MAJOR*10000 + CI_LIBCI_VER_MINOR*100 + CI_LIBCI_VER_RELEASE))
+    if [[ "$CI_LIBCI_VER" == "$my_expect" ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER == $my_expect"
+        ci_info "matched: \$CI_LIBCI_VER == $my_expect"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER != $my_expect"
+        ci_err "mismatched: \$CI_LIBCI_VER != $my_expect"
     fi
-    my_expect=$((PNG_LIBPNG_VER_MAJOR*10 + PNG_LIBPNG_VER_MINOR))
-    if [[ "$PNG_LIBPNG_VER_SHAREDLIB" == "$my_expect" ]]
+    my_expect=$((CI_LIBCI_VER_MAJOR*10 + CI_LIBCI_VER_MINOR))
+    if [[ "$CI_LIBCI_VER_SHAREDLIB" == "$my_expect" ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER_SHAREDLIB == $my_expect"
+        ci_info "matched: \$CI_LIBCI_VER_SHAREDLIB == $my_expect"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER_SHAREDLIB != $my_expect"
+        ci_err "mismatched: \$CI_LIBCI_VER_SHAREDLIB != $my_expect"
     fi
-    if [[ "$PNG_LIBPNG_VER_SONUM" == "$my_expect" ]]
+    if [[ "$CI_LIBCI_VER_SONUM" == "$my_expect" ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER_SONUM == $my_expect"
+        ci_info "matched: \$CI_LIBCI_VER_SONUM == $my_expect"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER_SONUM != $my_expect"
+        ci_err "mismatched: \$CI_LIBCI_VER_SONUM != $my_expect"
     fi
-    if [[ "$PNG_LIBPNG_VER_DLLNUM" == "$my_expect" ]]
+    if [[ "$CI_LIBCI_VER_DLLNUM" == "$my_expect" ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER_DLLNUM == $my_expect"
+        ci_info "matched: \$CI_LIBCI_VER_DLLNUM == $my_expect"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER_DLLNUM != $my_expect"
+        ci_err "mismatched: \$CI_LIBCI_VER_DLLNUM != $my_expect"
     fi
-    if [[ "$PNG_LIBPNG_VER_BUILD" == [01] ]]
+    if [[ "$CI_LIBCI_VER_BUILD" == [01] ]]
     then
-        ci_info "matched: \$PNG_LIBPNG_VER_BUILD == [01]"
+        ci_info "matched: \$CI_LIBCI_VER_BUILD == [01]"
     else
-        ci_err "mismatched: \$PNG_LIBPNG_VER_BUILD != [01]"
+        ci_err "mismatched: \$CI_LIBCI_VER_BUILD != [01]"
     fi
-    ci_info "## VERIFYING: build definitions in 'png.h' ##"
-    my_expect="${PNG_LIBPNG_VER_MAJOR}.${PNG_LIBPNG_VER_MINOR}.${PNG_LIBPNG_VER_RELEASE}"
-    if [[ "$PNG_LIBPNG_VER_STRING" == "$my_expect" ]]
+    ci_info "## VERIFYING: build definitions in 'ci.h' ##"
+    my_expect="${CI_LIBCI_VER_MAJOR}.${CI_LIBCI_VER_MINOR}.${CI_LIBCI_VER_RELEASE}"
+    if [[ "$CI_LIBCI_VER_STRING" == "$my_expect" ]]
     then
-        if [[ $PNG_LIBPNG_VER_BUILD -eq 0 ]]
+        if [[ $CI_LIBCI_VER_BUILD -eq 0 ]]
         then
-            ci_info "matched: \$PNG_LIBPNG_VER_BUILD -eq 0"
+            ci_info "matched: \$CI_LIBCI_VER_BUILD -eq 0"
         else
-            ci_err "mismatched: \$PNG_LIBPNG_VER_BUILD -ne 0"
+            ci_err "mismatched: \$CI_LIBCI_VER_BUILD -ne 0"
         fi
-        if [[ $PNG_LIBPNG_BUILD_BASE_TYPE -eq $PNG_LIBPNG_BUILD_STABLE ]]
+        if [[ $CI_LIBCI_BUILD_BASE_TYPE -eq $CI_LIBCI_BUILD_STABLE ]]
         then
-            ci_info "matched: \$PNG_LIBPNG_BUILD_BASE_TYPE -eq \$PNG_LIBPNG_BUILD_STABLE"
+            ci_info "matched: \$CI_LIBCI_BUILD_BASE_TYPE -eq \$CI_LIBCI_BUILD_STABLE"
         else
-            ci_err "mismatched: \$PNG_LIBPNG_BUILD_BASE_TYPE -ne \$PNG_LIBPNG_BUILD_STABLE"
+            ci_err "mismatched: \$CI_LIBCI_BUILD_BASE_TYPE -ne \$CI_LIBCI_BUILD_STABLE"
         fi
-    elif [[ "$PNG_LIBPNG_VER_STRING" == "$my_expect".git ]]
+    elif [[ "$CI_LIBCI_VER_STRING" == "$my_expect".git ]]
     then
-        if [[ $PNG_LIBPNG_VER_BUILD -ne 0 ]]
+        if [[ $CI_LIBCI_VER_BUILD -ne 0 ]]
         then
-            ci_info "matched: \$PNG_LIBPNG_VER_BUILD -ne 0"
+            ci_info "matched: \$CI_LIBCI_VER_BUILD -ne 0"
         else
-            ci_err "mismatched: \$PNG_LIBPNG_VER_BUILD -eq 0"
+            ci_err "mismatched: \$CI_LIBCI_VER_BUILD -eq 0"
         fi
-        if [[ $PNG_LIBPNG_BUILD_BASE_TYPE -ne $PNG_LIBPNG_BUILD_STABLE ]]
+        if [[ $CI_LIBCI_BUILD_BASE_TYPE -ne $CI_LIBCI_BUILD_STABLE ]]
         then
-            ci_info "matched: \$PNG_LIBPNG_BUILD_BASE_TYPE -ne \$PNG_LIBPNG_BUILD_STABLE"
+            ci_info "matched: \$CI_LIBCI_BUILD_BASE_TYPE -ne \$CI_LIBCI_BUILD_STABLE"
         else
-            ci_err "mismatched: \$PNG_LIBPNG_BUILD_BASE_TYPE -eq \$PNG_LIBPNG_BUILD_STABLE"
+            ci_err "mismatched: \$CI_LIBCI_BUILD_BASE_TYPE -eq \$CI_LIBCI_BUILD_STABLE"
         fi
     else
-        ci_err "unexpected: \$PNG_LIBPNG_VER_STRING == '$PNG_LIBPNG_VER_STRING'"
+        ci_err "unexpected: \$CI_LIBCI_VER_STRING == '$CI_LIBCI_VER_STRING'"
     fi
-    ci_info "## VERIFYING: type definitions in 'png.h' ##"
-    my_expect="$(echo "png_libpng_version_${PNG_LIBPNG_VER_STRING}" | tr . _)"
-    ci_spawn grep -w -e "$my_expect" png.h
+    ci_info "## VERIFYING: type definitions in 'ci.h' ##"
+    my_expect="$(echo "ci_libci_version_${CI_LIBCI_VER_STRING}" | tr . _)"
+    ci_spawn grep -w -e "$my_expect" ci.h
     ci_info "## VERIFYING: version definitions in 'configure.ac' ##"
     eval "$CI_ENV_AUTOCONF_VER"
-    if [[ "$PNGLIB_VERSION" == "$PNG_LIBPNG_VER_STRING" ]]
+    if [[ "$CILIB_VERSION" == "$CI_LIBCI_VER_STRING" ]]
     then
-        ci_info "matched: \$PNGLIB_VERSION == \$PNG_LIBPNG_VER_STRING"
+        ci_info "matched: \$CILIB_VERSION == \$CI_LIBCI_VER_STRING"
     else
-        ci_err "mismatched: \$PNGLIB_VERSION != \$PNG_LIBPNG_VER_STRING"
+        ci_err "mismatched: \$CILIB_VERSION != \$CI_LIBCI_VER_STRING"
     fi
     ci_info "## VERIFYING: version definitions in 'CMakeLists.txt' ##"
     eval "$CI_ENV_CMAKE_VER"
-    if [[ "$PNGLIB_VERSION" == "$PNG_LIBPNG_VER_STRING" && "$PNGLIB_SUBREVISION" == 0 ]]
+    if [[ "$CILIB_VERSION" == "$CI_LIBCI_VER_STRING" && "$CILIB_SUBREVISION" == 0 ]]
     then
-        ci_info "matched: \$PNGLIB_VERSION == \$PNG_LIBPNG_VER_STRING"
-        ci_info "matched: \$PNGLIB_SUBREVISION == 0"
-    elif [[ "$PNGLIB_VERSION.$PNGLIB_SUBREVISION" == "$PNG_LIBPNG_VER_STRING" ]]
+        ci_info "matched: \$CILIB_VERSION == \$CI_LIBCI_VER_STRING"
+        ci_info "matched: \$CILIB_SUBREVISION == 0"
+    elif [[ "$CILIB_VERSION.$CILIB_SUBREVISION" == "$CI_LIBCI_VER_STRING" ]]
     then
-        ci_info "matched: \$PNGLIB_VERSION.\$PNGLIB_SUBREVISION == \$PNG_LIBPNG_VER_STRING"
+        ci_info "matched: \$CILIB_VERSION.\$CILIB_SUBREVISION == \$CI_LIBCI_VER_STRING"
     else
-        ci_err "mismatched: \$PNGLIB_VERSION != \$PNG_LIBPNG_VER_STRING"
+        ci_err "mismatched: \$CILIB_VERSION != \$CI_LIBCI_VER_STRING"
     fi
-    ci_info "## VERIFYING: version definitions in 'scripts/libpng-config-head.in' ##"
-    eval "$CI_ENV_LIBPNGCONFIG_VER"
-    if [[ "$version" == "$PNG_LIBPNG_VER_STRING" ]]
+    ci_info "## VERIFYING: version definitions in 'scripts/libci-config-head.in' ##"
+    eval "$CI_ENV_LIBCICONFIG_VER"
+    if [[ "$version" == "$CI_LIBCI_VER_STRING" ]]
     then
-        ci_info "matched: \$version == \$PNG_LIBPNG_VER_STRING"
+        ci_info "matched: \$version == \$CI_LIBCI_VER_STRING"
     else
-        ci_err "mismatched: \$version != \$PNG_LIBPNG_VER_STRING"
+        ci_err "mismatched: \$version != \$CI_LIBCI_VER_STRING"
     fi
 }
 

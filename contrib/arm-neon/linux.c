@@ -3,16 +3,16 @@
  * Copyright (c) 2014, 2017 Glenn Randers-Pehrson
  * Written by John Bowler, 2014, 2017.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
  * SEE contrib/arm-neon/README before reporting bugs
  *
  * STATUS: SUPPORTED
- * BUG REPORTS: png-mng-implement@sourceforge.net
+ * BUG REPORTS: ci-mng-implement@sourceforge.net
  *
- * png_have_neon implemented for Linux by reading the widely available
+ * ci_have_neon implemented for Linux by reading the widely available
  * pseudo-file /proc/cpuinfo.
  *
  * This code is strict ANSI-C and is probably moderately portable; it does
@@ -22,7 +22,7 @@
 #include <stdio.h>
 
 static int
-png_have_neon(png_structp png_ptr)
+ci_have_neon(ci_structp ci_ptr)
 {
    FILE *f = fopen("/proc/cpuinfo", "rb");
 
@@ -147,14 +147,14 @@ png_have_neon(png_structp png_ptr)
                break;
 
             default:
-               png_error(png_ptr, "png_have_neon: internal error (bug)");
+               ci_error(ci_ptr, "ci_have_neon: internal error (bug)");
          }
       }
    }
 
-#ifdef PNG_WARNINGS_SUPPORTED
+#ifdef CI_WARNINGS_SUPPORTED
    else
-      png_warning(png_ptr, "/proc/cpuinfo open failed");
+      ci_warning(ci_ptr, "/proc/cpuinfo open failed");
 #endif
 
    return 0;

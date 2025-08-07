@@ -1,4 +1,4 @@
-# Makefile for libpng
+# Makefile for libci
 # 32-bit Borland C++ (Note: All modules are compiled in C mode)
 # To build the library, do:
 #       "make -fmakefile.bc32"
@@ -51,47 +51,47 @@ CFLAGS=-O2 -d -k- -w $(TARGET_CPU) $(CDEBUG)
 LDFLAGS=-L$(ZLIB_DIR) -M $(LDEBUG)
 
 ## Pre-built configuration
-# See scripts\pnglibconf.mak for more options
-!ifndef PNGLIBCONF_H_PREBUILT
-PNGLIBCONF_H_PREBUILT = scripts\pnglibconf.h.prebuilt
+# See scripts\cilibconf.mak for more options
+!ifndef CILIBCONF_H_PREBUILT
+CILIBCONF_H_PREBUILT = scripts\cilibconf.h.prebuilt
 !endif
 
 ## File lists
 OBJS = \
-	png.obj \
-	pngerror.obj \
-	pngget.obj \
-	pngmem.obj \
-	pngpread.obj \
-	pngread.obj \
-	pngrio.obj \
-	pngrtran.obj \
-	pngrutil.obj \
-	pngset.obj \
-	pngtrans.obj \
-	pngwio.obj \
-	pngwrite.obj \
-	pngwtran.obj \
-	pngwutil.obj
+	ci.obj \
+	cierror.obj \
+	ciget.obj \
+	cimem.obj \
+	cipread.obj \
+	ciread.obj \
+	cirio.obj \
+	cirtran.obj \
+	cirutil.obj \
+	ciset.obj \
+	citrans.obj \
+	ciwio.obj \
+	ciwrite.obj \
+	ciwtran.obj \
+	ciwutil.obj
 
 LIBOBJS = \
-	+png.obj \
-	+pngerror.obj \
-	+pngget.obj \
-	+pngmem.obj \
-	+pngpread.obj \
-	+pngread.obj \
-	+pngrio.obj \
-	+pngrtran.obj \
-	+pngrutil.obj \
-	+pngset.obj \
-	+pngtrans.obj \
-	+pngwio.obj \
-	+pngwrite.obj \
-	+pngwtran.obj \
-	+pngwutil.obj
+	+ci.obj \
+	+cierror.obj \
+	+ciget.obj \
+	+cimem.obj \
+	+cipread.obj \
+	+ciread.obj \
+	+cirio.obj \
+	+cirtran.obj \
+	+cirutil.obj \
+	+ciset.obj \
+	+citrans.obj \
+	+ciwio.obj \
+	+ciwrite.obj \
+	+ciwtran.obj \
+	+ciwutil.obj
 
-LIBNAME=libpng.lib
+LIBNAME=libci.lib
 
 ## Implicit rules
 # Braces let make "batch" calls to the compiler,
@@ -107,52 +107,52 @@ LIBNAME=libpng.lib
 	$(LD) $(LDFLAGS) $*.obj $(LIBNAME) zlib.lib $(NOEHLIB)
 
 ## Major targets
-all: libpng pngtest
+all: libci citest
 
-libpng: $(LIBNAME)
+libci: $(LIBNAME)
 
-pngtest: pngtest.exe
+citest: citest.exe
 
-test: pngtest.exe
-	pngtest
+test: citest.exe
+	citest
 
 ## Minor Targets
 
-pnglibconf.h: $(PNGLIBCONF_H_PREBUILT)
-	$(CP) $(PNGLIBCONF_H_PREBUILT) $@
+cilibconf.h: $(CILIBCONF_H_PREBUILT)
+	$(CP) $(CILIBCONF_H_PREBUILT) $@
 
-png.obj:      png.c      png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngerror.obj: pngerror.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngget.obj:   pngget.c   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngmem.obj:   pngmem.c   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngpread.obj: pngpread.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngread.obj:  pngread.c  png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrio.obj:   pngrio.c   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrtran.obj: pngrtran.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngrutil.obj: pngrutil.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngset.obj:   pngset.c   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngtrans.obj: pngtrans.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwio.obj:   pngwio.c   png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwrite.obj: pngwrite.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwtran.obj: pngwtran.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngwutil.obj: pngwutil.c png.h pngconf.h pnglibconf.h pngpriv.h pngstruct.h pnginfo.h pngdebug.h
-pngtest.obj:  pngtest.c  png.h pngconf.h pnglibconf.h
+ci.obj:      ci.c      ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cierror.obj: cierror.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciget.obj:   ciget.c   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cimem.obj:   cimem.c   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cipread.obj: cipread.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciread.obj:  ciread.c  ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirio.obj:   cirio.c   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirtran.obj: cirtran.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+cirutil.obj: cirutil.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciset.obj:   ciset.c   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+citrans.obj: citrans.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwio.obj:   ciwio.c   ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwrite.obj: ciwrite.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwtran.obj: ciwtran.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+ciwutil.obj: ciwutil.c ci.h ciconf.h cilibconf.h cipriv.h cistruct.h ciinfo.h cidebug.h
+citest.obj:  citest.c  ci.h ciconf.h cilibconf.h
 
 $(LIBNAME): $(OBJS)
 	-del $(LIBNAME)
 	$(LIB) $(LIBNAME) @&&|
-$(LIBOBJS), libpng
+$(LIBOBJS), libci
 |
 
 # Cleanup
 clean:
-	-del pnglibconf.h
+	-del cilibconf.h
 	-del *.obj
 	-del $(LIBNAME)
-	-del pngtest.exe
+	-del citest.exe
 	-del *.lst
 	-del *.map
 	-del *.tds
-	-del pngout.png
+	-del ciout.ci
 
-# End of makefile for libpng
+# End of makefile for libci

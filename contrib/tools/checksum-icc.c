@@ -2,12 +2,12 @@
  *
  * Copyright (c) 2013 John Cunningham Bowler
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
  * Generate crc32 and adler32 checksums of the given input files, used to
- * generate check-codes for use when matching ICC profiles within libpng.
+ * generate check-codes for use when matching ICC profiles within libci.
  */
 
 #include <stdio.h>
@@ -42,7 +42,7 @@ read_one_file(FILE *ip, const char *name)
       return 0;
 
    /* Success */
-   printf("PNG_ICC_CHECKSUM(0x%8.8lx, 0x%8.8lx,\n   PNG_MD5("
+   printf("CI_ICC_CHECKSUM(0x%8.8lx, 0x%8.8lx,\n   CI_MD5("
       "0x%2.2x%2.2x%2.2x%2.2x, 0x%2.2x%2.2x%2.2x%2.2x, 0x%2.2x%2.2x%2.2x%2.2x,"
       " 0x%2.2x%2.2x%2.2x%2.2x), %d,\n"
       "   \"%4.4d/%2.2d/%2.2d %2.2d:%2.2d:%2.2d\", %lu, \"%s\")\n",

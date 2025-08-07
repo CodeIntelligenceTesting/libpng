@@ -3,16 +3,16 @@
  * Copyright (c) 2024 Cosmin Truta
  * Written by zhanglixia and guxiwei, 2023
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  */
 
-#include "../pngpriv.h"
+#include "../cipriv.h"
 
-#ifdef PNG_READ_SUPPORTED
+#ifdef CI_READ_SUPPORTED
 
-#if PNG_MIPS_MMI_IMPLEMENTATION == 2 /* Inline Assembly */
+#if CI_MIPS_MMI_IMPLEMENTATION == 2 /* Inline Assembly */
 
 /* Functions in this file look at most 3 pixels (a,b,c) to predict the 4th (d).
  * They're positioned like this:
@@ -22,8 +22,8 @@
  * whichever of a, b, or c is closest to p=a+b-c.
  */
 
-void png_read_filter_row_up_mmi(png_row_infop row_info, png_bytep row,
-                                png_const_bytep prev_row)
+void ci_read_filter_row_up_mmi(ci_row_infop row_info, ci_bytep row,
+                                ci_const_bytep prev_row)
 {
    int istop = row_info->rowbytes;
    double rp,pp;
@@ -45,8 +45,8 @@ void png_read_filter_row_up_mmi(png_row_infop row_info, png_bytep row,
    );
 }
 
-void png_read_filter_row_sub3_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_sub3_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    int istop = row_info->rowbytes;
    double rp, pp, dest;
@@ -101,11 +101,11 @@ void png_read_filter_row_sub3_mmi(png_row_infop row_info, png_bytep row,
         : "memory"
    );
 
-   PNG_UNUSED(prev)
+   CI_UNUSED(prev)
 }
 
-void png_read_filter_row_sub4_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_sub4_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    /* The Sub filter predicts each pixel as the previous pixel, a.
     * There is no pixel to the left of the first pixel.  It's encoded directly.
@@ -129,11 +129,11 @@ void png_read_filter_row_sub4_mmi(png_row_infop row_info, png_bytep row,
         : "memory"
    );
 
-   PNG_UNUSED(prev)
+   CI_UNUSED(prev)
 }
 
-void png_read_filter_row_avg3_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_avg3_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    int istop = row_info->rowbytes;
    double rp, pp, rp1, pp1;
@@ -224,8 +224,8 @@ void png_read_filter_row_avg3_mmi(png_row_infop row_info, png_bytep row,
    );
 }
 
-void png_read_filter_row_avg4_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_avg4_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    int istop = row_info->rowbytes;
    double rp,pp;
@@ -260,8 +260,8 @@ void png_read_filter_row_avg4_mmi(png_row_infop row_info, png_bytep row,
    );
 }
 
-void png_read_filter_row_paeth3_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_paeth3_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    /* Paeth tries to predict pixel d using the pixel to the left of it, a,
     * and two pixels from the previous row, b and c:
@@ -448,8 +448,8 @@ void png_read_filter_row_paeth3_mmi(png_row_infop row_info, png_bytep row,
    );
 }
 
-void png_read_filter_row_paeth4_mmi(png_row_infop row_info, png_bytep row,
-   png_const_bytep prev)
+void ci_read_filter_row_paeth4_mmi(ci_row_infop row_info, ci_bytep row,
+   ci_const_bytep prev)
 {
    /* Paeth tries to predict pixel d using the pixel to the left of it, a,
     * and two pixels from the previous row, b and c:
@@ -521,5 +521,5 @@ void png_read_filter_row_paeth4_mmi(png_row_infop row_info, png_bytep row,
    );
 }
 
-#endif /* PNG_MIPS_MMI_IMPLEMENTATION > 0 */
+#endif /* CI_MIPS_MMI_IMPLEMENTATION > 0 */
 #endif /* READ */

@@ -1,5 +1,5 @@
 # nolimits.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2025
@@ -9,11 +9,11 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng without any limits.  With these settigs run-time limits are still
+# Build libci without any limits.  With these settigs run-time limits are still
 # possible.
 #
-@# define PNG_USER_WIDTH_MAX PNG_UINT_31_MAX
-@# define PNG_USER_HEIGHT_MAX PNG_UINT_31_MAX
-@# define PNG_USER_CHUNK_CACHE_MAX 0
-@# define PNG_USER_CHUNK_MALLOC_MAX 0
+@# define CI_USER_WIDTH_MAX CI_UINT_31_MAX
+@# define CI_USER_HEIGHT_MAX CI_UINT_31_MAX
+@# define CI_USER_CHUNK_CACHE_MAX 0
+@# define CI_USER_CHUNK_MALLOC_MAX 0
 

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciunknown --strict default=if-safe "${srcdir}/citest.ci"

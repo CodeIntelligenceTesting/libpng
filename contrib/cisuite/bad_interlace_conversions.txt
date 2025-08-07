@@ -1,0 +1,9 @@
+basn0g01.ci
+basn0g02.ci
+basn0g04.ci
+basn3p01.ci
+basn3p02.ci
+basn3p04.ci
+ftbbn0g01.ci
+ftbbn0g02.ci
+ftbbn0g04.ci

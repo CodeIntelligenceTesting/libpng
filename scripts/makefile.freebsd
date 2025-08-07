@@ -1,13 +1,13 @@
-# makefile for libpng under FreeBSD
+# makefile for libci under FreeBSD
 # Copyright (C) 2018-2025 Cosmin Truta
 # Copyright (C) 2014 Glenn Randers-Pehrson and Andrey A. Chernov
 # Copyright (C) 2002, 2007, 2009 Glenn Randers-Pehrson and Andrey A. Chernov
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 
-LIB=		png
+LIB=		ci
 SHLIB_VER=	16
 SHLIB_MAJOR=	${SHLIB_VER}
 SHLIB_MINOR=	0
@@ -24,27 +24,27 @@ CPPFLAGS+=	-I. -I${ZLIBINC}
 CFLAGS+=	-Wall -Wextra -Wundef
 LDFLAGS+=	-L. -L${ZLIBLIB}
 
-CLEANFILES+=	pngtest pngtest.o pngout.png
+CLEANFILES+=	citest citest.o ciout.ci
 
 # Pre-built configuration
-# See scripts/pnglibconf.mak for more options
-PNGLIBCONF_H_PREBUILT= scripts/pnglibconf.h.prebuilt
+# See scripts/cilibconf.mak for more options
+CILIBCONF_H_PREBUILT= scripts/cilibconf.h.prebuilt
 
-SRCS=	png.c pngerror.c pngget.c pngmem.c pngpread.c \
-	pngread.c pngrio.c pngrtran.c pngrutil.c pngset.c \
-	pngtrans.c pngwio.c pngwrite.c pngwtran.c pngwutil.c
+SRCS=	ci.c cierror.c ciget.c cimem.c cipread.c \
+	ciread.c cirio.c cirtran.c cirutil.c ciset.c \
+	citrans.c ciwio.c ciwrite.c ciwtran.c ciwutil.c
 
 .c.o:
 	${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $*.c
 
-pnglibconf.h:	${PNGLIBCONF_H_PREBUILT}
-	cp ${PNGLIBCONF_H_PREBUILT} $@
+cilibconf.h:	${CILIBCONF_H_PREBUILT}
+	cp ${CILIBCONF_H_PREBUILT} $@
 
-pngtest:	pngtest.o libpng.a
-	${CC} ${LDFLAGS} -static -o pngtest pngtest.o -lpng ${LDADD}
+citest:	citest.o libci.a
+	${CC} ${LDFLAGS} -static -o citest citest.o -lci ${LDADD}
 
-test:	pngtest
-	./pngtest
+test:	citest
+	./citest
 
 install:
 	@echo "The $@ target is no longer supported by this makefile."

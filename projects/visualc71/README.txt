@@ -1,15 +1,15 @@
-Microsoft Developer Studio Project File, Format Version 7.10 for libpng.
+Microsoft Developer Studio Project File, Format Version 7.10 for libci.
 
 Copyright (C) 2004 Simon-Pierre Cadieux.
 
-This code is released under the libpng license.
-For conditions of distribution and use, see copyright notice in png.h
+This code is released under the libci license.
+For conditions of distribution and use, see copyright notice in ci.h
 
-NOTE: This project will be removed from libpng-1.5.0.  It has
+NOTE: This project will be removed from libci-1.5.0.  It has
 been replaced with the "vstudio" project.
 
 Assumptions:
-* The libpng source files are in ..\..
+* The libci source files are in ..\..
 * The zlib source files are in ..\..\..\zlib
 * The zlib project file is in . /* Warning: This is until the zlib project
   files get integrated into the next zlib release. The final zlib project
@@ -18,14 +18,14 @@ Assumptions:
 To use:
 
 1) On the main menu, select "File | Open Solution".
-   Open "libpng.sln".
+   Open "libci.sln".
 
 2) Display the Solution Explorer view (Ctrl+Alt+L)
 
 3) Set one of the project as the StartUp project. If you just want to build the
-   binaries set "libpng" as the startup project (Select "libpng" tree view
+   binaries set "libci" as the startup project (Select "libci" tree view
    item + Project | Set as StartUp project). If you want to build and test the
-   binaries set it to "pngtest" (Select "pngtest" tree view item +
+   binaries set it to "citest" (Select "citest" tree view item +
    Project | Set as StartUp project)
 
 4) Select "Build | Configuration Manager...".
@@ -35,21 +35,21 @@ To use:
 
 6) Select "Build | Build Solution (Ctrl-Shift-B)"
 
-This project builds the libpng binaries as follows:
+This project builds the libci binaries as follows:
 
-* Win32_DLL_Release\libpng16.dll      DLL build
-* Win32_DLL_Debug\libpng16d.dll       DLL build (debug version)
-* Win32_DLL_VB\libpng16vb.dll         DLL build for Visual Basic, using stdcall
-* Win32_LIB_Release\libpng.lib        static build
-* Win32_LIB_Debug\libpngd.lib         static build (debug version)
+* Win32_DLL_Release\libci16.dll      DLL build
+* Win32_DLL_Debug\libci16d.dll       DLL build (debug version)
+* Win32_DLL_VB\libci16vb.dll         DLL build for Visual Basic, using stdcall
+* Win32_LIB_Release\libci.lib        static build
+* Win32_LIB_Debug\libcid.lib         static build (debug version)
 
 Notes:
 
 If you change anything in the source files, or select different compiler
 settings, please change the DLL name to something different than any of
-the above names. Also, make sure that in your "pngusr.h" you define
-PNG_USER_PRIVATEBUILD and PNG_USER_DLLFNAME_POSTFIX according to the
-instructions provided in "pngconf.h".
+the above names. Also, make sure that in your "ciusr.h" you define
+CI_USER_PRIVATEBUILD and CI_USER_DLLFNAME_POSTFIX according to the
+instructions provided in "ciconf.h".
 
 All DLLs built by this project use the Microsoft dynamic C runtime library
 MSVCR71.DLL (MSVCR71D.DLL for debug versions).  If you distribute any of the

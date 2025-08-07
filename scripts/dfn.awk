@@ -4,9 +4,9 @@
 #
 # Copyright (c) 2013-2014 Glenn Randers-Pehrson
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 
 # The output of this script is written to the file given by
 # the variable 'out', which should be set on the command line.
@@ -29,12 +29,12 @@ NR==1 && out == "/dev/null" {
 }
 
 # Output can be sorted; two lines are recognized
-$1 == "PNG_DFN_START_SORT"{
+$1 == "CI_DFN_START_SORT"{
    sort=0+$2
    next
 }
 
-$1 ~ /^PNG_DFN_END_SORT/{
+$1 ~ /^CI_DFN_END_SORT/{
    # Do a very simple, slow, sort; notice that blank lines won't be
    # output by this
    for (entry in array) {
@@ -59,13 +59,13 @@ $1 ~ /^PNG_DFN_END_SORT/{
    next
 }
 
-/^[^"]*PNG_DFN *".*"[^"]*$/{
+/^[^"]*CI_DFN *".*"[^"]*$/{
    # A definition line, apparently correctly formatted; extract the
    # definition then replace any doubled "" that remain with a single
    # double quote.  Notice that the original doubled double quotes
    # may have been split by tokenization
    #
-   # Sometimes GCC splits the PNG_DFN lines; we know this has happened
+   # Sometimes GCC splits the CI_DFN lines; we know this has happened
    # if the quotes aren't closed and must read another line.  In this
    # case it is essential to reject lines that start with '#' because those
    # are introduced #line directives.
@@ -74,7 +74,7 @@ $1 ~ /^PNG_DFN_END_SORT/{
    lineno=FNR
    if (lineno == "") lineno=NR
 
-   if (sub(/^[^"]*PNG_DFN *"/,"",line) != 1) {
+   if (sub(/^[^"]*CI_DFN *"/,"",line) != 1) {
       print "line", lineno ": processing failed:"
       print orig
       err=1
@@ -94,11 +94,11 @@ $1 ~ /^PNG_DFN_END_SORT/{
    #   #define first_name John
    #   #define last_name Smith
    #
-   #   PNG_DFN"#define name @'@" first_name "@ @" last_name "@@'"
+   #   CI_DFN"#define name @'@" first_name "@ @" last_name "@@'"
    #
    # Might get C preprocessed to:
    #
-   #   PNG_DFN "#define foo @'@" John "@ @" Smith "@@'"
+   #   CI_DFN "#define foo @'@" John "@ @" Smith "@@'"
    #
    # Which this script reduces to:
    #
@@ -156,7 +156,7 @@ $1 ~ /^PNG_DFN_END_SORT/{
                break
             }
          } else {
-            print "line", lineno ": unterminated PNG_DFN string"
+            print "line", lineno ": unterminated CI_DFN string"
             err=1
             next
          }
@@ -187,8 +187,8 @@ $1 ~ /^PNG_DFN_END_SORT/{
    next
 }
 
-/PNG_DFN/{
-   print "line", NR, "incorrectly formatted PNG_DFN line:"
+/CI_DFN/{
+   print "line", NR, "incorrectly formatted CI_DFN line:"
    print $0
    err = 1
 }

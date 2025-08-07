@@ -4,9 +4,9 @@
 #
 # Copyright (c) 1998-2014 Glenn Randers-Pehrson
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 
 # The output of this script is written to the file given by
 # the variable 'out'.  The script is run twice, once with
@@ -31,7 +31,7 @@
 BEGIN{
    out=""                       # intermediate, preprocessed, file
    pre=-1                       # preprocess (first line)
-   version="libpng version unknown" # version information
+   version="libci version unknown" # version information
    version_file=""              # where to find the version
    err=0                        # in-line exit sets this
    # The following definitions prevent the C preprocessor noticing the lines
@@ -39,21 +39,21 @@ BEGIN{
    # the lines, for example by inserting spaces around operators, and all
    # C preprocessors notice lines that start with '#', most remove comments.
    # The technique adopted here is to make the final output lines into
-   # C strings (enclosed in double quotes), preceded by PNG_DFN.  As a
+   # C strings (enclosed in double quotes), preceded by CI_DFN.  As a
    # consequence the output cannot contain a 'raw' double quote - instead put
    # @' in, this will be replaced by a single " afterward.  See the parser
    # script dfn.awk for more capabilities (not required here).  Note that if
-   # you need a " in a 'setting' in pnglibconf.dfa it must also be @'!
+   # you need a " in a 'setting' in cilibconf.dfa it must also be @'!
    dq="@'"                      # For a single double quote
-   start=" PNG_DFN \""          # Start stuff to output (can't contain a "!)
+   start=" CI_DFN \""          # Start stuff to output (can't contain a "!)
    end="\" "                    # End stuff to output
    subs="@\" "                  # Substitute start (substitute a C macro)
    sube=" \"@"                  # Substitute end
    comment=start "/*"           # Comment start
    cend="*/" end                # Comment end
-   def=start "#define PNG_"     # Arbitrary define
+   def=start "#define CI_"     # Arbitrary define
    sup="_SUPPORTED" end         # end supported option
-   und=comment "#undef PNG_"    # Unsupported option
+   und=comment "#undef CI_"    # Unsupported option
    une="_SUPPORTED" cend        # end unsupported option
    error=start "ERROR:"         # error message, terminate with 'end'
 
@@ -114,7 +114,7 @@ pre && version == "search" && version_file != FILENAME{
    exit 1
 }
 
-pre && version == "search" && $0 ~ /^ \* libpng version/{
+pre && version == "search" && $0 ~ /^ \* libci version/{
    version = substr($0, 4)
    print "version =", version >out
    next
@@ -172,9 +172,9 @@ pre && $1 != "chunk"{
 # keywords are the names of options.  An option 'name' is
 # controlled by the definition of the corresponding macros:
 #
-#   PNG_name_SUPPORTED    The option is turned on
-#   PNG_NO_name
-#   PNG_NO_name_SUPPORTED If the first macro is not defined
+#   CI_name_SUPPORTED    The option is turned on
+#   CI_NO_name
+#   CI_NO_name_SUPPORTED If the first macro is not defined
 #                         either of these will turn the option off
 #
 # If none of these macros are defined the option is turned on, unless
@@ -183,14 +183,14 @@ pre && $1 != "chunk"{
 # the default.)
 #
 # In the syntax below a 'name' is indicated by "NAME", other macro
-# values are indicated by "MACRO", as with "NAME" the leading "PNG_"
+# values are indicated by "MACRO", as with "NAME" the leading "CI_"
 # is omitted, but in this case the "NO_" prefix and the "_SUPPORTED"
 # suffix are never used.
 #
 # Each line is introduced by a keyword - the first non-space characters
 # on the line.  A line starting with a '#' is a comment - it is totally
 # ignored.  Keywords are as follows, a NAME, is simply a macro name
-# without the leading PNG_, PNG_NO_ or the trailing _SUPPORTED.
+# without the leading CI_, CI_NO_ or the trailing _SUPPORTED.
 
 $1 ~ /^#/ || $0 ~ /^[ 	]*$/{
    next
@@ -335,7 +335,7 @@ $1 == "option" && NF >= 2{
 
 # chunk NAME [requires OPT] [enables LIST] [on|off|disabled]
 #   Expands to the 'option' settings appropriate to the reading and
-#   writing of an ancillary PNG chunk 'NAME':
+#   writing of an ancillary CI chunk 'NAME':
 #
 #   option READ_NAME requires READ_ANCILLARY_CHUNKS [READ_OPT]
 #   option READ_NAME enables NAME LIST
@@ -447,13 +447,13 @@ $1 == "setting" && (NF == 2 || NF >= 3 && ($3 == "requires" || $3 == "default"))
 
 # The order of the dependency lines (option, chunk, setting) is irrelevant
 # - the 'enables', 'requires' and 'if' settings will be used to determine
-# the correct order in the output and the final values in pnglibconf.h are
+# the correct order in the output and the final values in cilibconf.h are
 # not order dependent.  'requires' and 'if' entries take precedence over
 # 'enables' from other options; if an option requires another option it
 # won't be set regardless of any options that enable it unless the other
 # option is also enabled.
 #
-# Similarly 'enables' trumps a NO_ definition in CFLAGS or pngusr.h
+# Similarly 'enables' trumps a NO_ definition in CFLAGS or ciusr.h
 #
 # For simplicity cycles in the definitions are regarded as errors,
 # even if they are not ambiguous.
@@ -463,7 +463,7 @@ $1 == "setting" && (NF == 2 || NF >= 3 && ($3 == "requires" || $3 == "default"))
 # For backwards compatibility equivalent macros may be listed thus:
 #
 # = [NO_]NAME MACRO
-#   Makes -DMACRO equivalent to -DPNG_NO_NAME or -DPNG_NAME_SUPPORTED
+#   Makes -DMACRO equivalent to -DCI_NO_NAME or -DCI_NAME_SUPPORTED
 #   as appropriate.
 #
 # The definition is injected into the C compiler input when encountered
@@ -474,11 +474,11 @@ $1 == "setting" && (NF == 2 || NF >= 3 && ($3 == "requires" || $3 == "default"))
 # old, deprecated, macro.
 
 $1 == "=" && NF == 3{
-   print "#ifdef PNG_" $3 >out
+   print "#ifdef CI_" $3 >out
    if ($2 ~ /^NO_/)
-      print "#   define PNG_" $2 >out
+      print "#   define CI_" $2 >out
    else
-      print "#   define PNG_" $2 "_SUPPORTED" >out
+      print "#   define CI_" $2 "_SUPPORTED" >out
    print "#endif" >out
    next
 }
@@ -504,7 +504,7 @@ $1 ~ /^@/{
 }
 
 # For checking purposes names that start with "ok_" or "fail_" are
-# not output to pnglibconf.h and must be either enabled or disabled
+# not output to cilibconf.h and must be either enabled or disabled
 # respectively for the build to succeed.  This allows interdependencies
 # between options of the form "at least one of" or "at most one of"
 # to be checked.  For example:
@@ -628,7 +628,7 @@ END{
    if (err) exit 1
 
    # Sort options:
-   print "PNG_DFN_START_SORT 2" >out
+   print "CI_DFN_START_SORT 2" >out
 
    # option[i] is now the complete list of all the tokens we may
    # need to output, go through it as above, depth first.
@@ -670,14 +670,14 @@ END{
          print " *   if:        " iffs[i] >out
          print " *   enabled-by:" enabledby[i] >out
          print " *   sets:      " sets[i], "*/" >out
-         print "#undef PNG_on" >out
-         print "#define PNG_on 1" >out
+         print "#undef CI_on" >out
+         print "#define CI_on 1" >out
 
          # requires
          nreqs = split(requires[i], r)
          for (j=1; j<=nreqs; ++j) {
-            print "#ifndef PNG_" r[j] "_SUPPORTED" >out
-            print "#   undef PNG_on /*!" r[j] "*/" >out
+            print "#ifndef CI_" r[j] "_SUPPORTED" >out
+            print "#   undef CI_on /*!" r[j] "*/" >out
             # This error appears in the final output if something
             # was switched 'on' but the processing above to force
             # the requires did not work
@@ -690,18 +690,18 @@ END{
          # if
          have_ifs = 0
          nreqs = split(iffs[i], r)
-         print "#undef PNG_no_if" >out
+         print "#undef CI_no_if" >out
          if (nreqs > 0) {
             have_ifs = 1
             print "/* if" iffs[i], "*/" >out
-            print "#define PNG_no_if 1" >out
+            print "#define CI_no_if 1" >out
             for (j=1; j<=nreqs; ++j) {
-               print "#ifdef PNG_" r[j] "_SUPPORTED" >out
-               print "#   undef PNG_no_if /*" r[j] "*/" >out
+               print "#ifdef CI_" r[j] "_SUPPORTED" >out
+               print "#   undef CI_no_if /*" r[j] "*/" >out
                print "#endif" >out
             }
-            print "#ifdef PNG_no_if /*missing if*/" >out
-            print "#   undef PNG_on" >out
+            print "#ifdef CI_no_if /*missing if*/" >out
+            print "#   undef CI_on" >out
             # There is no checking above for this, because we
             # don't know which 'if' to choose, so whine about
             # it here:
@@ -711,15 +711,15 @@ END{
             print "#endif" >out
          }
 
-         print "#ifdef PNG_on /*requires, if*/" >out
+         print "#ifdef CI_on /*requires, if*/" >out
          # enables
-         print "#   undef PNG_not_enabled" >out
-         print "#   define PNG_not_enabled 1" >out
+         print "#   undef CI_not_enabled" >out
+         print "#   define CI_not_enabled 1" >out
          print "   /* enabled by" enabledby[i], "*/" >out
          nreqs = split(enabledby[i], r)
          for (j=1; j<=nreqs; ++j) {
-            print "#ifdef PNG_" r[j] "_SUPPORTED" >out
-            print "#   undef PNG_not_enabled /*" r[j] "*/" >out
+            print "#ifdef CI_" r[j] "_SUPPORTED" >out
+            print "#   undef CI_not_enabled /*" r[j] "*/" >out
             # Oops, probably not intended (should be factored
             # out by the checks above).
             if (option[i] == "off") {
@@ -728,33 +728,33 @@ END{
             print "#endif" >out
          }
 
-         print "#   ifndef PNG_" i "_SUPPORTED /*!command line*/" >out
-         print "#    ifdef PNG_not_enabled /*!enabled*/" >out
+         print "#   ifndef CI_" i "_SUPPORTED /*!command line*/" >out
+         print "#    ifdef CI_not_enabled /*!enabled*/" >out
          # 'have_ifs' here means that everything = "off" still allows an 'if' on
          # an otherwise enabled option to turn it on; otherwise the 'if'
          # handling is effectively disabled by 'everything = off'
          if ((option[i] == "off") ||
              (option[i] == "disabled" && everything != "on") ||
              (option[i] == "enabled" && everything == "off" && !have_ifs)) {
-            print "#      undef PNG_on /*default off*/" >out
+            print "#      undef CI_on /*default off*/" >out
          } else {
-            print "#      ifdef PNG_NO_" i >out
-            print "#       undef PNG_on /*turned off*/" >out
+            print "#      ifdef CI_NO_" i >out
+            print "#       undef CI_on /*turned off*/" >out
             print "#      endif" >out
-            print "#      ifdef PNG_NO_" i "_SUPPORTED" >out
-            print "#       undef PNG_on /*turned off*/" >out
+            print "#      ifdef CI_NO_" i "_SUPPORTED" >out
+            print "#       undef CI_on /*turned off*/" >out
             print "#      endif" >out
          }
          print "#    endif /*!enabled*/" >out
-         print "#    ifdef PNG_on" >out
+         print "#    ifdef CI_on" >out
          # The _SUPPORTED macro must be defined so that dependent
          # options output later work.
-         print "#      define PNG_" i "_SUPPORTED" >out
+         print "#      define CI_" i "_SUPPORTED" >out
          print "#    endif" >out
          print "#   endif /*!command line*/" >out
-         # If PNG_on is still set the option should be defined in
-         # pnglibconf.h
-         print "#   ifdef PNG_on" >out
+         # If CI_on is still set the option should be defined in
+         # cilibconf.h
+         print "#   ifdef CI_on" >out
          if (i ~ /^fail_/) {
             print error, i, "is on:",
                   "enabled by:" iffs[i] enabledby[i] ", requires" requires[i] end >out
@@ -763,23 +763,23 @@ END{
             # Supported option, set required settings
             nreqs = split(sets[i], r)
             for (j=1; j<=nreqs; ++j) {
-               print "#    ifdef PNG_set_" r[j] >out
+               print "#    ifdef CI_set_" r[j] >out
                # Some other option has already set a value:
                print error, i, "sets", r[j] ": duplicate setting" end >out
-               print error, "   previous value: " end "PNG_set_" r[j] >out
+               print error, "   previous value: " end "CI_set_" r[j] >out
                print "#    else" >out
                # Else set the default: note that this won't accept arbitrary
                # values, the setval string must be acceptable to all the C
                # compilers we use.  That means it must be VERY simple; a number,
                # a name or a string.
-               print "#     define PNG_set_" r[j], setval[i " " r[j]] >out
+               print "#     define CI_set_" r[j], setval[i " " r[j]] >out
                print "#    endif" >out
             }
          }
          print "#   endif /* definition */" >out
          print "#endif /*requires, if*/" >out
          if (logunsupported || i ~ /^ok_/) {
-            print "#ifndef  PNG_on" >out
+            print "#ifndef  CI_on" >out
             if (logunsupported) {
                print und i une >out
             }
@@ -806,7 +806,7 @@ END{
          exit 1
       }
    }
-   print "PNG_DFN_END_SORT" >out
+   print "CI_DFN_END_SORT" >out
    print comment, "end of options", cend >out
 
    # Do the 'setting' values second, the algorithm the standard
@@ -817,7 +817,7 @@ END{
    print "/* SETTINGS */" >out
    print comment, "settings", cend >out
    # Sort (in dfn.awk) on field 2, the setting name
-   print "PNG_DFN_START_SORT 2" >out
+   print "CI_DFN_START_SORT 2" >out
    finished = 0
    while (!finished) {
       finished = 1
@@ -852,9 +852,9 @@ END{
          print " *   default: ", defaults[i] deflt, "*/" >out
          for (j=1; j<=nreqs; ++j) {
             if (option[r[j]] != "")
-               print "#ifndef PNG_" r[j] "_SUPPORTED" >out
+               print "#ifndef CI_" r[j] "_SUPPORTED" >out
             else
-               print "#ifndef PNG_" r[j] >out
+               print "#ifndef CI_" r[j] >out
             print error, i, "requires", r[j] end >out
             print "# endif" >out
          }
@@ -864,19 +864,19 @@ END{
          #  2) Option 'sets' value; trumps:
          #  3) Setting 'default'
          #
-         print "#ifdef PNG_" i >out
-         # PNG_<i> is defined, so substitute the value:
-         print def i, subs "PNG_" i sube end >out
+         print "#ifdef CI_" i >out
+         # CI_<i> is defined, so substitute the value:
+         print def i, subs "CI_" i sube end >out
          print "#else /* use default */" >out
-         print "# ifdef PNG_set_" i >out
+         print "# ifdef CI_set_" i >out
          # Value from an option 'sets' argument
-         print def i, subs "PNG_set_" i sube end >out
+         print def i, subs "CI_set_" i sube end >out
          # This is so that subsequent tests on the setting work:
-         print "#  define PNG_" i, "1" >out
+         print "#  define CI_" i, "1" >out
          if (defaults[i] != "") {
             print "# else /*default*/" >out
             print def i deflt end >out
-            print "#  define PNG_" i, "1" >out
+            print "#  define CI_" i, "1" >out
          }
          print "# endif /* defaults */" >out
          print "#endif /* setting", i, "*/" >out
@@ -893,7 +893,7 @@ END{
          exit 1
       }
    }
-   print "PNG_DFN_END_SORT" >out
+   print "CI_DFN_END_SORT" >out
    print comment, "end of settings", cend >out
 
    # Regular end - everything looks ok

@@ -3,16 +3,16 @@
  * Copyright (c) 2014 Glenn Randers-Pehrson
  * Written by Mans Rullgard, 2011.
  *
- * This code is released under the libpng license.
+ * This code is released under the libci license.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in ci.h
  *
  * SEE contrib/arm-neon/README before reporting bugs
  *
  * STATUS: COMPILED, TESTED
- * BUG REPORTS: png-mng-implement@sourceforge.net
+ * BUG REPORTS: ci-mng-implement@sourceforge.net
  *
- * png_have_neon implemented for Linux versions which allow access to
+ * ci_have_neon implemented for Linux versions which allow access to
  * /proc/self/auxv.  This is probably faster, cleaner and safer than the code to
  * read /proc/cpuinfo in contrib/arm-neon/linux, however it is yet another piece
  * of potentially untested code and has more complex dependencies than the code
@@ -36,10 +36,10 @@
  * may result.
  */
 static size_t
-safe_read(png_structp png_ptr, int fd, void *buffer_in, size_t nbytes)
+safe_read(ci_structp ci_ptr, int fd, void *buffer_in, size_t nbytes)
 {
    size_t ntotal = 0;
-   char *buffer = png_voidcast(char*, buffer_in);
+   char *buffer = ci_voidcast(char*, buffer_in);
 
    while (nbytes > 0)
    {
@@ -66,7 +66,7 @@ safe_read(png_structp png_ptr, int fd, void *buffer_in, size_t nbytes)
           */
          if (errno != EINTR)
          {
-            png_warning(png_ptr, "/proc read failed");
+            ci_warning(ci_ptr, "/proc read failed");
             return 0; /* I.e., a permanent failure */
          }
       }
@@ -74,7 +74,7 @@ safe_read(png_structp png_ptr, int fd, void *buffer_in, size_t nbytes)
       else if (iread < 0)
       {
          /* Not a valid 'read' result: */
-         png_warning(png_ptr, "OS /proc read bug");
+         ci_warning(ci_ptr, "OS /proc read bug");
          return 0;
       }
 
@@ -94,7 +94,7 @@ safe_read(png_structp png_ptr, int fd, void *buffer_in, size_t nbytes)
 }
 
 static int
-png_have_neon(png_structp png_ptr)
+ci_have_neon(ci_structp ci_ptr)
 {
    int fd = open("/proc/self/auxv", O_RDONLY);
    Elf32_auxv_t aux;
@@ -102,11 +102,11 @@ png_have_neon(png_structp png_ptr)
    /* Failsafe: failure to open means no NEON */
    if (fd == -1)
    {
-      png_warning(png_ptr, "/proc/self/auxv open failed");
+      ci_warning(ci_ptr, "/proc/self/auxv open failed");
       return 0;
    }
 
-   while (safe_read(png_ptr, fd, &aux, sizeof aux) == sizeof aux)
+   while (safe_read(ci_ptr, fd, &aux, sizeof aux) == sizeof aux)
    {
       if (aux.a_type == AT_HWCAP && (aux.a_un.a_val & HWCAP_NEON) != 0)
       {

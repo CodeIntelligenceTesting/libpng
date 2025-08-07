@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ./ciunknown --strict default=discard IDAT=save "${srcdir}/citest.ci"

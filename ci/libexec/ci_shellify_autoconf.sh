@@ -14,9 +14,9 @@ source "$(dirname "$0")/../lib/ci.lib.sh"
 function ci_shellify_autoconf {
     # Convert autoconf (M4) text, specifically originating
     # from configure.ac, to shell scripting text.
-    # Select only the easy-to-parse definitions of PNGLIB_*.
-    sed -n -e '/^ *PNGLIB_[^ ]*=[$"0-9A-Za-z_]/ p' |
-        sed -e 's/^ *PNG\([0-9A-Za-z_]*\)=\([^# ]*\).*$/PNG\1=\2/' \
+    # Select only the easy-to-parse definitions of CILIB_*.
+    sed -n -e '/^ *CILIB_[^ ]*=[$"0-9A-Za-z_]/ p' |
+        sed -e 's/^ *CI\([0-9A-Za-z_]*\)=\([^# ]*\).*$/CI\1=\2/' \
             -e 's/^\([^ ]*=[^ ]*\).*$/export \1;/'
 }
 

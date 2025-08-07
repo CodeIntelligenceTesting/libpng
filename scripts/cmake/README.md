@@ -1,4 +1,4 @@
-CMake Files, Lists and Scripts for the PNG Reference Library
+CMake Files, Lists and Scripts for the CI Reference Library
 ============================================================
 
 Copyright Notice
@@ -9,10 +9,10 @@ Copyright Notice
  * Originally written by Christian Ehrlicher, 2007.
 
 Use, modification and distribution of the CMake
-files in the libpng distribution are subject to
-the same licensing terms and conditions as libpng.
-Please see the copyright notice in `png.h` or visit
-http://libpng.org/pub/png/src/libpng-LICENSE.txt
+files in the libci distribution are subject to
+the same licensing terms and conditions as libci.
+Please see the copyright notice in `ci.h` or visit
+http://libci.org/pub/ci/src/libci-LICENSE.txt
 
 File List
 ---------
@@ -20,7 +20,7 @@ File List
     CMakeLists.txt                 ==>  The main CMake lists file
     scripts/cmake/AUTHORS.md       ==>  The Authors file
     scripts/cmake/README.md        ==>  This file
-    scripts/cmake/PNGConfig.cmake  ==>  Config file for FindPNG
+    scripts/cmake/CIConfig.cmake  ==>  Config file for FindCI
     scripts/cmake/genchk.cmake.in  ==>  Template for genchk.cmake
     scripts/cmake/genout.cmake.in  ==>  Template for genout.cmake
     scripts/cmake/gensrc.cmake.in  ==>  Template for gensrc.cmake

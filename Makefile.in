@@ -19,9 +19,9 @@
 # Copyright (c) 2018-2025 Cosmin Truta
 # Copyright (c) 2004-2016 Glenn Randers-Pehrson
 #
-# This code is released under the libpng license.
+# This code is released under the libci license.
 # For conditions of distribution and use, see the disclaimer
-# and license in png.h
+# and license in ci.h
 
 
 
@@ -102,37 +102,37 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@ENABLE_TESTS_TRUE@check_PROGRAMS = pngtest$(EXEEXT) \
-@ENABLE_TESTS_TRUE@	pngunknown$(EXEEXT) pngstest$(EXEEXT) \
-@ENABLE_TESTS_TRUE@	pngvalid$(EXEEXT) pngimage$(EXEEXT) \
-@ENABLE_TESTS_TRUE@	pngcp$(EXEEXT) $(am__EXEEXT_1)
-@ENABLE_TESTS_TRUE@@HAVE_CLOCK_GETTIME_TRUE@am__append_1 = timepng
-@ENABLE_TOOLS_TRUE@bin_PROGRAMS = pngfix$(EXEEXT) \
-@ENABLE_TOOLS_TRUE@	png-fix-itxt$(EXEEXT)
-@PNG_ARM_NEON_TRUE@am__append_2 = arm/arm_init.c\
-@PNG_ARM_NEON_TRUE@	arm/filter_neon_intrinsics.c \
-@PNG_ARM_NEON_TRUE@	arm/palette_neon_intrinsics.c
+@ENABLE_TESTS_TRUE@check_PROGRAMS = citest$(EXEEXT) \
+@ENABLE_TESTS_TRUE@	ciunknown$(EXEEXT) cistest$(EXEEXT) \
+@ENABLE_TESTS_TRUE@	civalid$(EXEEXT) ciimage$(EXEEXT) \
+@ENABLE_TESTS_TRUE@	cicp$(EXEEXT) $(am__EXEEXT_1)
+@ENABLE_TESTS_TRUE@@HAVE_CLOCK_GETTIME_TRUE@am__append_1 = timeci
+@ENABLE_TOOLS_TRUE@bin_PROGRAMS = cifix$(EXEEXT) \
+@ENABLE_TOOLS_TRUE@	ci-fix-itxt$(EXEEXT)
+@CI_ARM_NEON_TRUE@am__append_2 = arm/arm_init.c\
+@CI_ARM_NEON_TRUE@	arm/filter_neon_intrinsics.c \
+@CI_ARM_NEON_TRUE@	arm/palette_neon_intrinsics.c
 
-@PNG_MIPS_MSA_TRUE@am__append_3 = mips/mips_init.c\
-@PNG_MIPS_MSA_TRUE@	mips/filter_msa_intrinsics.c
+@CI_MIPS_MSA_TRUE@am__append_3 = mips/mips_init.c\
+@CI_MIPS_MSA_TRUE@	mips/filter_msa_intrinsics.c
 
-@PNG_MIPS_MMI_TRUE@@PNG_MIPS_MSA_FALSE@am__append_4 = mips/mips_init.c
-@PNG_MIPS_MMI_TRUE@am__append_5 = mips/filter_mmi_inline_assembly.c
-@PNG_INTEL_SSE_TRUE@am__append_6 = intel/intel_init.c\
-@PNG_INTEL_SSE_TRUE@	intel/filter_sse2_intrinsics.c
+@CI_MIPS_MMI_TRUE@@CI_MIPS_MSA_FALSE@am__append_4 = mips/mips_init.c
+@CI_MIPS_MMI_TRUE@am__append_5 = mips/filter_mmi_inline_assembly.c
+@CI_INTEL_SSE_TRUE@am__append_6 = intel/intel_init.c\
+@CI_INTEL_SSE_TRUE@	intel/filter_sse2_intrinsics.c
 
-@PNG_POWERPC_VSX_TRUE@am__append_7 = powerpc/powerpc_init.c\
-@PNG_POWERPC_VSX_TRUE@        powerpc/filter_vsx_intrinsics.c
+@CI_POWERPC_VSX_TRUE@am__append_7 = powerpc/powerpc_init.c\
+@CI_POWERPC_VSX_TRUE@        powerpc/filter_vsx_intrinsics.c
 
 
 #   Versioned symbols and restricted exports
-@HAVE_LD_VERSION_SCRIPT_TRUE@@HAVE_SOLARIS_LD_TRUE@am__append_8 = -Wl,-M -Wl,libpng.vers
-@HAVE_LD_VERSION_SCRIPT_TRUE@@HAVE_SOLARIS_LD_FALSE@am__append_9 = -Wl,--version-script=libpng.vers
+@HAVE_LD_VERSION_SCRIPT_TRUE@@HAVE_SOLARIS_LD_TRUE@am__append_8 = -Wl,-M -Wl,libci.vers
+@HAVE_LD_VERSION_SCRIPT_TRUE@@HAVE_SOLARIS_LD_FALSE@am__append_9 = -Wl,--version-script=libci.vers
 #   Only restricted exports when possible
-@HAVE_LD_VERSION_SCRIPT_FALSE@am__append_10 = -export-symbols libpng.sym
-@PNG_RISCV_RVV_TRUE@am__append_11 = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv.la
-@PNG_LOONGARCH_LSX_TRUE@am__append_12 = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx.la
-@DO_PNG_PREFIX_TRUE@am__append_13 = -DPNG_PREFIX='@PNG_PREFIX@'
+@HAVE_LD_VERSION_SCRIPT_FALSE@am__append_10 = -export-symbols libci.sym
+@CI_RISCV_RVV_TRUE@am__append_11 = libci@CILIB_MAJOR@@CILIB_MINOR@rvv.la
+@CI_LOONGARCH_LSX_TRUE@am__append_12 = libci@CILIB_MAJOR@@CILIB_MINOR@lsx.la
+@DO_CI_PREFIX_TRUE@am__append_13 = -DCI_PREFIX='@CI_PREFIX@'
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/scripts/autoconf/libtool.m4 \
@@ -149,14 +149,14 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = libpng.pc libpng-config
+CONFIG_CLEAN_FILES = libci.pc libci-config
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(bindir)" "$(DESTDIR)$(man3dir)" \
 	"$(DESTDIR)$(man5dir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(pkgincludedir)" "$(DESTDIR)$(pkgincludedir)"
 @ENABLE_TESTS_TRUE@@HAVE_CLOCK_GETTIME_TRUE@am__EXEEXT_1 =  \
-@ENABLE_TESTS_TRUE@@HAVE_CLOCK_GETTIME_TRUE@	timepng$(EXEEXT)
+@ENABLE_TESTS_TRUE@@HAVE_CLOCK_GETTIME_TRUE@	timeci$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -185,123 +185,123 @@ am__uninstall_files_from_dir = { \
        $(am__cd) "$$dir" && echo $$files | $(am__xargs_n) 40 $(am__rm_f); }; \
   }
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
-am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES_DIST = png.c \
-	pngerror.c pngget.c pngmem.c pngpread.c pngread.c pngrio.c \
-	pngrtran.c pngrutil.c pngset.c pngtrans.c pngwio.c pngwrite.c \
-	pngwtran.c pngwutil.c png.h pngconf.h pngdebug.h pnginfo.h \
-	pngpriv.h pngstruct.h pngusr.dfa arm/arm_init.c \
+am__libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES_DIST = ci.c \
+	cierror.c ciget.c cimem.c cipread.c ciread.c cirio.c \
+	cirtran.c cirutil.c ciset.c citrans.c ciwio.c ciwrite.c \
+	ciwtran.c ciwutil.c ci.h ciconf.h cidebug.h ciinfo.h \
+	cipriv.h cistruct.h ciusr.dfa arm/arm_init.c \
 	arm/filter_neon_intrinsics.c arm/palette_neon_intrinsics.c \
 	mips/mips_init.c mips/filter_msa_intrinsics.c \
 	mips/filter_mmi_inline_assembly.c intel/intel_init.c \
 	intel/filter_sse2_intrinsics.c powerpc/powerpc_init.c \
 	powerpc/filter_vsx_intrinsics.c
 am__dirstamp = $(am__leading_dot)dirstamp
-@PNG_ARM_NEON_TRUE@am__objects_1 = arm/arm_init.lo \
-@PNG_ARM_NEON_TRUE@	arm/filter_neon_intrinsics.lo \
-@PNG_ARM_NEON_TRUE@	arm/palette_neon_intrinsics.lo
-@PNG_MIPS_MSA_TRUE@am__objects_2 = mips/mips_init.lo \
-@PNG_MIPS_MSA_TRUE@	mips/filter_msa_intrinsics.lo
-@PNG_MIPS_MMI_TRUE@@PNG_MIPS_MSA_FALSE@am__objects_3 =  \
-@PNG_MIPS_MMI_TRUE@@PNG_MIPS_MSA_FALSE@	mips/mips_init.lo
-@PNG_MIPS_MMI_TRUE@am__objects_4 = mips/filter_mmi_inline_assembly.lo
-@PNG_INTEL_SSE_TRUE@am__objects_5 = intel/intel_init.lo \
-@PNG_INTEL_SSE_TRUE@	intel/filter_sse2_intrinsics.lo
-@PNG_POWERPC_VSX_TRUE@am__objects_6 = powerpc/powerpc_init.lo \
-@PNG_POWERPC_VSX_TRUE@	powerpc/filter_vsx_intrinsics.lo
-am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS = png.lo pngerror.lo \
-	pngget.lo pngmem.lo pngpread.lo pngread.lo pngrio.lo \
-	pngrtran.lo pngrutil.lo pngset.lo pngtrans.lo pngwio.lo \
-	pngwrite.lo pngwtran.lo pngwutil.lo $(am__objects_1) \
+@CI_ARM_NEON_TRUE@am__objects_1 = arm/arm_init.lo \
+@CI_ARM_NEON_TRUE@	arm/filter_neon_intrinsics.lo \
+@CI_ARM_NEON_TRUE@	arm/palette_neon_intrinsics.lo
+@CI_MIPS_MSA_TRUE@am__objects_2 = mips/mips_init.lo \
+@CI_MIPS_MSA_TRUE@	mips/filter_msa_intrinsics.lo
+@CI_MIPS_MMI_TRUE@@CI_MIPS_MSA_FALSE@am__objects_3 =  \
+@CI_MIPS_MMI_TRUE@@CI_MIPS_MSA_FALSE@	mips/mips_init.lo
+@CI_MIPS_MMI_TRUE@am__objects_4 = mips/filter_mmi_inline_assembly.lo
+@CI_INTEL_SSE_TRUE@am__objects_5 = intel/intel_init.lo \
+@CI_INTEL_SSE_TRUE@	intel/filter_sse2_intrinsics.lo
+@CI_POWERPC_VSX_TRUE@am__objects_6 = powerpc/powerpc_init.lo \
+@CI_POWERPC_VSX_TRUE@	powerpc/filter_vsx_intrinsics.lo
+am_libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS = ci.lo cierror.lo \
+	ciget.lo cimem.lo cipread.lo ciread.lo cirio.lo \
+	cirtran.lo cirutil.lo ciset.lo citrans.lo ciwio.lo \
+	ciwrite.lo ciwtran.lo ciwutil.lo $(am__objects_1) \
 	$(am__objects_2) $(am__objects_3) $(am__objects_4) \
 	$(am__objects_5) $(am__objects_6)
-nodist_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS =
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS =  \
-	$(am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS) \
-	$(nodist_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS)
+nodist_libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS =
+libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS =  \
+	$(am_libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS) \
+	$(nodist_libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+libci@CILIB_MAJOR@@CILIB_MINOR@_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LDFLAGS) $(LDFLAGS) -o \
+	$(libci@CILIB_MAJOR@@CILIB_MINOR@_la_LDFLAGS) $(LDFLAGS) -o \
 	$@
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_LIBADD =
-am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_SOURCES_DIST =  \
+libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_LIBADD =
+am__libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_SOURCES_DIST =  \
 	loongarch/loongarch_lsx_init.c \
 	loongarch/filter_lsx_intrinsics.c
-@PNG_LOONGARCH_LSX_TRUE@am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_OBJECTS = loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo \
-@PNG_LOONGARCH_LSX_TRUE@	loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_OBJECTS =  \
-	$(am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_OBJECTS)
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+@CI_LOONGARCH_LSX_TRUE@am_libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_OBJECTS = loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo \
+@CI_LOONGARCH_LSX_TRUE@	loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo
+libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_OBJECTS =  \
+	$(am_libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_OBJECTS)
+libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
-	$(CCLD) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS) \
+	$(CCLD) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-@PNG_LOONGARCH_LSX_TRUE@am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_rpath =
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_LIBADD =
-am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_SOURCES_DIST =  \
+@CI_LOONGARCH_LSX_TRUE@am_libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_rpath =
+libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_LIBADD =
+am__libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_SOURCES_DIST =  \
 	riscv/riscv_init.c riscv/filter_rvv_intrinsics.c
-@PNG_RISCV_RVV_TRUE@am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_OBJECTS = riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo \
-@PNG_RISCV_RVV_TRUE@	riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_OBJECTS =  \
-	$(am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_OBJECTS)
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+@CI_RISCV_RVV_TRUE@am_libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_OBJECTS = riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo \
+@CI_RISCV_RVV_TRUE@	riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo
+libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_OBJECTS =  \
+	$(am_libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_OBJECTS)
+libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
-	$(CCLD) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS) \
+	$(CCLD) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-@PNG_RISCV_RVV_TRUE@am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_rpath =
-am__png_fix_itxt_SOURCES_DIST = contrib/tools/png-fix-itxt.c
-@ENABLE_TOOLS_TRUE@am_png_fix_itxt_OBJECTS =  \
-@ENABLE_TOOLS_TRUE@	contrib/tools/png-fix-itxt.$(OBJEXT)
-png_fix_itxt_OBJECTS = $(am_png_fix_itxt_OBJECTS)
-png_fix_itxt_LDADD = $(LDADD)
-am__pngcp_SOURCES_DIST = contrib/tools/pngcp.c
-@ENABLE_TESTS_TRUE@am_pngcp_OBJECTS = contrib/tools/pngcp.$(OBJEXT)
-pngcp_OBJECTS = $(am_pngcp_OBJECTS)
-@ENABLE_TESTS_TRUE@pngcp_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngfix_SOURCES_DIST = contrib/tools/pngfix.c
-@ENABLE_TOOLS_TRUE@am_pngfix_OBJECTS = contrib/tools/pngfix.$(OBJEXT)
-pngfix_OBJECTS = $(am_pngfix_OBJECTS)
-@ENABLE_TOOLS_TRUE@pngfix_DEPENDENCIES =  \
-@ENABLE_TOOLS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngimage_SOURCES_DIST = contrib/libtests/pngimage.c
-@ENABLE_TESTS_TRUE@am_pngimage_OBJECTS =  \
-@ENABLE_TESTS_TRUE@	contrib/libtests/pngimage.$(OBJEXT)
-pngimage_OBJECTS = $(am_pngimage_OBJECTS)
-@ENABLE_TESTS_TRUE@pngimage_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngstest_SOURCES_DIST = contrib/libtests/pngstest.c
-@ENABLE_TESTS_TRUE@am_pngstest_OBJECTS =  \
-@ENABLE_TESTS_TRUE@	contrib/libtests/pngstest.$(OBJEXT)
-pngstest_OBJECTS = $(am_pngstest_OBJECTS)
-@ENABLE_TESTS_TRUE@pngstest_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngtest_SOURCES_DIST = pngtest.c
-@ENABLE_TESTS_TRUE@am_pngtest_OBJECTS = pngtest.$(OBJEXT)
-pngtest_OBJECTS = $(am_pngtest_OBJECTS)
-@ENABLE_TESTS_TRUE@pngtest_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngunknown_SOURCES_DIST = contrib/libtests/pngunknown.c
-@ENABLE_TESTS_TRUE@am_pngunknown_OBJECTS =  \
-@ENABLE_TESTS_TRUE@	contrib/libtests/pngunknown.$(OBJEXT)
-pngunknown_OBJECTS = $(am_pngunknown_OBJECTS)
-@ENABLE_TESTS_TRUE@pngunknown_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__pngvalid_SOURCES_DIST = contrib/libtests/pngvalid.c
-@ENABLE_TESTS_TRUE@am_pngvalid_OBJECTS =  \
-@ENABLE_TESTS_TRUE@	contrib/libtests/pngvalid.$(OBJEXT)
-pngvalid_OBJECTS = $(am_pngvalid_OBJECTS)
-@ENABLE_TESTS_TRUE@pngvalid_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-am__timepng_SOURCES_DIST = contrib/libtests/timepng.c
-@ENABLE_TESTS_TRUE@am_timepng_OBJECTS =  \
-@ENABLE_TESTS_TRUE@	contrib/libtests/timepng.$(OBJEXT)
-timepng_OBJECTS = $(am_timepng_OBJECTS)
-@ENABLE_TESTS_TRUE@timepng_DEPENDENCIES =  \
-@ENABLE_TESTS_TRUE@	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
+@CI_RISCV_RVV_TRUE@am_libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_rpath =
+am__ci_fix_itxt_SOURCES_DIST = contrib/tools/ci-fix-itxt.c
+@ENABLE_TOOLS_TRUE@am_ci_fix_itxt_OBJECTS =  \
+@ENABLE_TOOLS_TRUE@	contrib/tools/ci-fix-itxt.$(OBJEXT)
+ci_fix_itxt_OBJECTS = $(am_ci_fix_itxt_OBJECTS)
+ci_fix_itxt_LDADD = $(LDADD)
+am__cicp_SOURCES_DIST = contrib/tools/cicp.c
+@ENABLE_TESTS_TRUE@am_cicp_OBJECTS = contrib/tools/cicp.$(OBJEXT)
+cicp_OBJECTS = $(am_cicp_OBJECTS)
+@ENABLE_TESTS_TRUE@cicp_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__cifix_SOURCES_DIST = contrib/tools/cifix.c
+@ENABLE_TOOLS_TRUE@am_cifix_OBJECTS = contrib/tools/cifix.$(OBJEXT)
+cifix_OBJECTS = $(am_cifix_OBJECTS)
+@ENABLE_TOOLS_TRUE@cifix_DEPENDENCIES =  \
+@ENABLE_TOOLS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__ciimage_SOURCES_DIST = contrib/libtests/ciimage.c
+@ENABLE_TESTS_TRUE@am_ciimage_OBJECTS =  \
+@ENABLE_TESTS_TRUE@	contrib/libtests/ciimage.$(OBJEXT)
+ciimage_OBJECTS = $(am_ciimage_OBJECTS)
+@ENABLE_TESTS_TRUE@ciimage_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__cistest_SOURCES_DIST = contrib/libtests/cistest.c
+@ENABLE_TESTS_TRUE@am_cistest_OBJECTS =  \
+@ENABLE_TESTS_TRUE@	contrib/libtests/cistest.$(OBJEXT)
+cistest_OBJECTS = $(am_cistest_OBJECTS)
+@ENABLE_TESTS_TRUE@cistest_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__citest_SOURCES_DIST = citest.c
+@ENABLE_TESTS_TRUE@am_citest_OBJECTS = citest.$(OBJEXT)
+citest_OBJECTS = $(am_citest_OBJECTS)
+@ENABLE_TESTS_TRUE@citest_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__ciunknown_SOURCES_DIST = contrib/libtests/ciunknown.c
+@ENABLE_TESTS_TRUE@am_ciunknown_OBJECTS =  \
+@ENABLE_TESTS_TRUE@	contrib/libtests/ciunknown.$(OBJEXT)
+ciunknown_OBJECTS = $(am_ciunknown_OBJECTS)
+@ENABLE_TESTS_TRUE@ciunknown_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__civalid_SOURCES_DIST = contrib/libtests/civalid.c
+@ENABLE_TESTS_TRUE@am_civalid_OBJECTS =  \
+@ENABLE_TESTS_TRUE@	contrib/libtests/civalid.$(OBJEXT)
+civalid_OBJECTS = $(am_civalid_OBJECTS)
+@ENABLE_TESTS_TRUE@civalid_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
+am__timeci_SOURCES_DIST = contrib/libtests/timeci.c
+@ENABLE_TESTS_TRUE@am_timeci_OBJECTS =  \
+@ENABLE_TESTS_TRUE@	contrib/libtests/timeci.$(OBJEXT)
+timeci_OBJECTS = $(am_timeci_OBJECTS)
+@ENABLE_TESTS_TRUE@timeci_DEPENDENCIES =  \
+@ENABLE_TESTS_TRUE@	libci@CILIB_MAJOR@@CILIB_MINOR@.la
 SCRIPTS = $(bin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -318,36 +318,36 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/png.Plo ./$(DEPDIR)/pngerror.Plo \
-	./$(DEPDIR)/pngget.Plo ./$(DEPDIR)/pngmem.Plo \
-	./$(DEPDIR)/pngpread.Plo ./$(DEPDIR)/pngread.Plo \
-	./$(DEPDIR)/pngrio.Plo ./$(DEPDIR)/pngrtran.Plo \
-	./$(DEPDIR)/pngrutil.Plo ./$(DEPDIR)/pngset.Plo \
-	./$(DEPDIR)/pngtest.Po ./$(DEPDIR)/pngtrans.Plo \
-	./$(DEPDIR)/pngwio.Plo ./$(DEPDIR)/pngwrite.Plo \
-	./$(DEPDIR)/pngwtran.Plo ./$(DEPDIR)/pngwutil.Plo \
+am__depfiles_remade = ./$(DEPDIR)/ci.Plo ./$(DEPDIR)/cierror.Plo \
+	./$(DEPDIR)/ciget.Plo ./$(DEPDIR)/cimem.Plo \
+	./$(DEPDIR)/cipread.Plo ./$(DEPDIR)/ciread.Plo \
+	./$(DEPDIR)/cirio.Plo ./$(DEPDIR)/cirtran.Plo \
+	./$(DEPDIR)/cirutil.Plo ./$(DEPDIR)/ciset.Plo \
+	./$(DEPDIR)/citest.Po ./$(DEPDIR)/citrans.Plo \
+	./$(DEPDIR)/ciwio.Plo ./$(DEPDIR)/ciwrite.Plo \
+	./$(DEPDIR)/ciwtran.Plo ./$(DEPDIR)/ciwutil.Plo \
 	arm/$(DEPDIR)/arm_init.Plo \
 	arm/$(DEPDIR)/filter_neon_intrinsics.Plo \
 	arm/$(DEPDIR)/palette_neon_intrinsics.Plo \
-	contrib/libtests/$(DEPDIR)/pngimage.Po \
-	contrib/libtests/$(DEPDIR)/pngstest.Po \
-	contrib/libtests/$(DEPDIR)/pngunknown.Po \
-	contrib/libtests/$(DEPDIR)/pngvalid.Po \
-	contrib/libtests/$(DEPDIR)/timepng.Po \
-	contrib/tools/$(DEPDIR)/png-fix-itxt.Po \
-	contrib/tools/$(DEPDIR)/pngcp.Po \
-	contrib/tools/$(DEPDIR)/pngfix.Po \
+	contrib/libtests/$(DEPDIR)/ciimage.Po \
+	contrib/libtests/$(DEPDIR)/cistest.Po \
+	contrib/libtests/$(DEPDIR)/ciunknown.Po \
+	contrib/libtests/$(DEPDIR)/civalid.Po \
+	contrib/libtests/$(DEPDIR)/timeci.Po \
+	contrib/tools/$(DEPDIR)/ci-fix-itxt.Po \
+	contrib/tools/$(DEPDIR)/cicp.Po \
+	contrib/tools/$(DEPDIR)/cifix.Po \
 	intel/$(DEPDIR)/filter_sse2_intrinsics.Plo \
 	intel/$(DEPDIR)/intel_init.Plo \
-	loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo \
-	loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Plo \
+	loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo \
+	loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Plo \
 	mips/$(DEPDIR)/filter_mmi_inline_assembly.Plo \
 	mips/$(DEPDIR)/filter_msa_intrinsics.Plo \
 	mips/$(DEPDIR)/mips_init.Plo \
 	powerpc/$(DEPDIR)/filter_vsx_intrinsics.Plo \
 	powerpc/$(DEPDIR)/powerpc_init.Plo \
-	riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo \
-	riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Plo
+	riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo \
+	riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -367,22 +367,22 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES) \
-	$(nodist_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES) \
-	$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_SOURCES) \
-	$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_SOURCES) \
-	$(png_fix_itxt_SOURCES) $(pngcp_SOURCES) $(pngfix_SOURCES) \
-	$(pngimage_SOURCES) $(pngstest_SOURCES) $(pngtest_SOURCES) \
-	$(pngunknown_SOURCES) $(pngvalid_SOURCES) $(timepng_SOURCES)
+SOURCES = $(libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES) \
+	$(nodist_libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES) \
+	$(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_SOURCES) \
+	$(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_SOURCES) \
+	$(ci_fix_itxt_SOURCES) $(cicp_SOURCES) $(cifix_SOURCES) \
+	$(ciimage_SOURCES) $(cistest_SOURCES) $(citest_SOURCES) \
+	$(ciunknown_SOURCES) $(civalid_SOURCES) $(timeci_SOURCES)
 DIST_SOURCES =  \
-	$(am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES_DIST) \
-	$(am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_SOURCES_DIST) \
-	$(am__libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_SOURCES_DIST) \
-	$(am__png_fix_itxt_SOURCES_DIST) $(am__pngcp_SOURCES_DIST) \
-	$(am__pngfix_SOURCES_DIST) $(am__pngimage_SOURCES_DIST) \
-	$(am__pngstest_SOURCES_DIST) $(am__pngtest_SOURCES_DIST) \
-	$(am__pngunknown_SOURCES_DIST) $(am__pngvalid_SOURCES_DIST) \
-	$(am__timepng_SOURCES_DIST)
+	$(am__libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES_DIST) \
+	$(am__libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_SOURCES_DIST) \
+	$(am__libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_SOURCES_DIST) \
+	$(am__ci_fix_itxt_SOURCES_DIST) $(am__cicp_SOURCES_DIST) \
+	$(am__cifix_SOURCES_DIST) $(am__ciimage_SOURCES_DIST) \
+	$(am__cistest_SOURCES_DIST) $(am__citest_SOURCES_DIST) \
+	$(am__ciunknown_SOURCES_DIST) $(am__civalid_SOURCES_DIST) \
+	$(am__timeci_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -597,8 +597,8 @@ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 am__DIST_COMMON = $(dist_man_MANS) $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in $(srcdir)/libpng-config.in \
-	$(srcdir)/libpng.pc.in AUTHORS INSTALL README TODO compile \
+	$(srcdir)/config.h.in $(srcdir)/libci-config.in \
+	$(srcdir)/libci.pc.in AUTHORS INSTALL README TODO compile \
 	config.guess config.sub depcomp install-sh ltmain.sh missing \
 	test-driver
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -623,8 +623,8 @@ distcleancheck_listfiles = \
   find . \( -type f -a \! \
             \( -name .nfs* -o -name .smb* -o -name .__afs* \) \) -print
 
-#distribute headers in /usr/include/libpng/*
-pkgincludedir = $(includedir)/$(PNGLIB_BASENAME)
+#distribute headers in /usr/include/libci/*
+pkgincludedir = $(includedir)/$(CILIB_BASENAME)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
@@ -698,16 +698,16 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PNGLIB_MAJOR = @PNGLIB_MAJOR@
-PNGLIB_MINOR = @PNGLIB_MINOR@
-PNGLIB_RELEASE = @PNGLIB_RELEASE@
-PNGLIB_VERSION = @PNGLIB_VERSION@
+CILIB_MAJOR = @CILIB_MAJOR@
+CILIB_MINOR = @CILIB_MINOR@
+CILIB_RELEASE = @CILIB_RELEASE@
+CILIB_VERSION = @CILIB_VERSION@
 
-# PNG_COPTS give extra options for the C compiler to be used on all compilation
+# CI_COPTS give extra options for the C compiler to be used on all compilation
 # steps (unless target_CFLAGS is specified; that will take precedence over
 # AM_CFLAGS)
-PNG_COPTS = @PNG_COPTS@
-PNG_PREFIX = @PNG_PREFIX@
+CI_COPTS = @CI_COPTS@
+CI_PREFIX = @CI_PREFIX@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -731,7 +731,7 @@ am__untar = @am__untar@
 am__xargs_n = @am__xargs_n@
 
 # generate the -config scripts if required
-binconfigs = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@-config
+binconfigs = libci@CILIB_MAJOR@@CILIB_MINOR@-config
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -762,7 +762,7 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
 
-# pkg-config stuff, note that libpng.pc is always required in order
+# pkg-config stuff, note that libci.pc is always required in order
 # to get the correct library
 pkgconfigdir = @pkgconfigdir@
 prefix = @prefix@
@@ -777,135 +777,135 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-PNGLIB_BASENAME = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@
+CILIB_BASENAME = libci@CILIB_MAJOR@@CILIB_MINOR@
 ACLOCAL_AMFLAGS = -I scripts/autoconf
 
-# This ensures that pnglibconf.h gets built at the start of 'make all' or
+# This ensures that cilibconf.h gets built at the start of 'make all' or
 # 'make check', but it does not add dependencies to the individual programs,
 # this is done below.
 #
 # IMPORTANT: always add the object modules of new programs to the list below
 # because otherwise the sequence 'configure; make new-program' will *sometimes*
-# result in the installed (system) pnglibconf.h being used and the result is
+# result in the installed (system) cilibconf.h being used and the result is
 # always wrong and always very confusing.
-BUILT_SOURCES = pnglibconf.h
-@ENABLE_TESTS_TRUE@pngtest_SOURCES = pngtest.c
-@ENABLE_TESTS_TRUE@pngtest_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@pngvalid_SOURCES = contrib/libtests/pngvalid.c
-@ENABLE_TESTS_TRUE@pngvalid_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@pngstest_SOURCES = contrib/libtests/pngstest.c
-@ENABLE_TESTS_TRUE@pngstest_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@pngunknown_SOURCES = contrib/libtests/pngunknown.c
-@ENABLE_TESTS_TRUE@pngunknown_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@pngimage_SOURCES = contrib/libtests/pngimage.c
-@ENABLE_TESTS_TRUE@pngimage_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@timepng_SOURCES = contrib/libtests/timepng.c
-@ENABLE_TESTS_TRUE@timepng_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TESTS_TRUE@pngcp_SOURCES = contrib/tools/pngcp.c
-@ENABLE_TESTS_TRUE@pngcp_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TOOLS_TRUE@pngfix_SOURCES = contrib/tools/pngfix.c
-@ENABLE_TOOLS_TRUE@pngfix_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-@ENABLE_TOOLS_TRUE@png_fix_itxt_SOURCES = contrib/tools/png-fix-itxt.c
+BUILT_SOURCES = cilibconf.h
+@ENABLE_TESTS_TRUE@citest_SOURCES = citest.c
+@ENABLE_TESTS_TRUE@citest_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@civalid_SOURCES = contrib/libtests/civalid.c
+@ENABLE_TESTS_TRUE@civalid_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@cistest_SOURCES = contrib/libtests/cistest.c
+@ENABLE_TESTS_TRUE@cistest_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@ciunknown_SOURCES = contrib/libtests/ciunknown.c
+@ENABLE_TESTS_TRUE@ciunknown_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@ciimage_SOURCES = contrib/libtests/ciimage.c
+@ENABLE_TESTS_TRUE@ciimage_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@timeci_SOURCES = contrib/libtests/timeci.c
+@ENABLE_TESTS_TRUE@timeci_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TESTS_TRUE@cicp_SOURCES = contrib/tools/cicp.c
+@ENABLE_TESTS_TRUE@cicp_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TOOLS_TRUE@cifix_SOURCES = contrib/tools/cifix.c
+@ENABLE_TOOLS_TRUE@cifix_LDADD = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+@ENABLE_TOOLS_TRUE@ci_fix_itxt_SOURCES = contrib/tools/ci-fix-itxt.c
 
 # Generally these are single line shell scripts to run a test with a particular
 # set of parameters:
 @ENABLE_TESTS_TRUE@TESTS = \
-@ENABLE_TESTS_TRUE@   tests/pngtest-all\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-gamma-16-to-8 tests/pngvalid-gamma-alpha-mode\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-gamma-background tests/pngvalid-gamma-expand16-alpha-mode\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-gamma-expand16-background\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-gamma-expand16-transform tests/pngvalid-gamma-sbit\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-gamma-threshold tests/pngvalid-gamma-transform\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-progressive-size\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-progressive-interlace-standard\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-transform\
-@ENABLE_TESTS_TRUE@   tests/pngvalid-progressive-standard tests/pngvalid-standard\
-@ENABLE_TESTS_TRUE@   tests/pngstest-1.8 tests/pngstest-1.8-alpha tests/pngstest-linear\
-@ENABLE_TESTS_TRUE@   tests/pngstest-linear-alpha tests/pngstest-none tests/pngstest-none-alpha\
-@ENABLE_TESTS_TRUE@   tests/pngstest-sRGB tests/pngstest-sRGB-alpha tests/pngunknown-IDAT\
-@ENABLE_TESTS_TRUE@   tests/pngunknown-discard tests/pngunknown-if-safe tests/pngunknown-sAPI\
-@ENABLE_TESTS_TRUE@   tests/pngunknown-sTER tests/pngunknown-save tests/pngunknown-vpAg\
-@ENABLE_TESTS_TRUE@   tests/pngimage-quick tests/pngimage-full
+@ENABLE_TESTS_TRUE@   tests/citest-all\
+@ENABLE_TESTS_TRUE@   tests/civalid-gamma-16-to-8 tests/civalid-gamma-alpha-mode\
+@ENABLE_TESTS_TRUE@   tests/civalid-gamma-background tests/civalid-gamma-expand16-alpha-mode\
+@ENABLE_TESTS_TRUE@   tests/civalid-gamma-expand16-background\
+@ENABLE_TESTS_TRUE@   tests/civalid-gamma-expand16-transform tests/civalid-gamma-sbit\
+@ENABLE_TESTS_TRUE@   tests/civalid-gamma-threshold tests/civalid-gamma-transform\
+@ENABLE_TESTS_TRUE@   tests/civalid-progressive-size\
+@ENABLE_TESTS_TRUE@   tests/civalid-progressive-interlace-standard\
+@ENABLE_TESTS_TRUE@   tests/civalid-transform\
+@ENABLE_TESTS_TRUE@   tests/civalid-progressive-standard tests/civalid-standard\
+@ENABLE_TESTS_TRUE@   tests/cistest-1.8 tests/cistest-1.8-alpha tests/cistest-linear\
+@ENABLE_TESTS_TRUE@   tests/cistest-linear-alpha tests/cistest-none tests/cistest-none-alpha\
+@ENABLE_TESTS_TRUE@   tests/cistest-sRGB tests/cistest-sRGB-alpha tests/ciunknown-IDAT\
+@ENABLE_TESTS_TRUE@   tests/ciunknown-discard tests/ciunknown-if-safe tests/ciunknown-sAPI\
+@ENABLE_TESTS_TRUE@   tests/ciunknown-sTER tests/ciunknown-save tests/ciunknown-vpAg\
+@ENABLE_TESTS_TRUE@   tests/ciimage-quick tests/ciimage-full
 
 
 # man pages
-dist_man_MANS = libpng.3 libpngpf.3 png.5
-EXTRA_SCRIPTS = libpng-config libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@-config
+dist_man_MANS = libci.3 libcipf.3 ci.5
+EXTRA_SCRIPTS = libci-config libci@CILIB_MAJOR@@CILIB_MINOR@-config
 bin_SCRIPTS = @binconfigs@
 
-# rules to build libpng, only build the old library on request
-lib_LTLIBRARIES = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
-# EXTRA_LTLIBRARIES= libpng.la
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES = png.c pngerror.c \
-	pngget.c pngmem.c pngpread.c pngread.c pngrio.c pngrtran.c \
-	pngrutil.c pngset.c pngtrans.c pngwio.c pngwrite.c pngwtran.c \
-	pngwutil.c png.h pngconf.h pngdebug.h pnginfo.h pngpriv.h \
-	pngstruct.h pngusr.dfa $(am__append_2) $(am__append_3) \
+# rules to build libci, only build the old library on request
+lib_LTLIBRARIES = libci@CILIB_MAJOR@@CILIB_MINOR@.la
+# EXTRA_LTLIBRARIES= libci.la
+libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES = ci.c cierror.c \
+	ciget.c cimem.c cipread.c ciread.c cirio.c cirtran.c \
+	cirutil.c ciset.c citrans.c ciwio.c ciwrite.c ciwtran.c \
+	ciwutil.c ci.h ciconf.h cidebug.h ciinfo.h cipriv.h \
+	cistruct.h ciusr.dfa $(am__append_2) $(am__append_3) \
 	$(am__append_4) $(am__append_5) $(am__append_6) \
 	$(am__append_7)
-@PNG_LOONGARCH_LSX_TRUE@noinst_LTLIBRARIES = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx.la
-@PNG_RISCV_RVV_TRUE@noinst_LTLIBRARIES = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv.la
-@PNG_RISCV_RVV_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_SOURCES = riscv/riscv_init.c\
-@PNG_RISCV_RVV_TRUE@        riscv/filter_rvv_intrinsics.c
+@CI_LOONGARCH_LSX_TRUE@noinst_LTLIBRARIES = libci@CILIB_MAJOR@@CILIB_MINOR@lsx.la
+@CI_RISCV_RVV_TRUE@noinst_LTLIBRARIES = libci@CILIB_MAJOR@@CILIB_MINOR@rvv.la
+@CI_RISCV_RVV_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_SOURCES = riscv/riscv_init.c\
+@CI_RISCV_RVV_TRUE@        riscv/filter_rvv_intrinsics.c
 
-@PNG_RISCV_RVV_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS = -march=rv64gv
-@PNG_LOONGARCH_LSX_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LIBADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx.la
-@PNG_RISCV_RVV_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LIBADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv.la
-@PNG_LOONGARCH_LSX_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_SOURCES = loongarch/loongarch_lsx_init.c\
-@PNG_LOONGARCH_LSX_TRUE@	loongarch/filter_lsx_intrinsics.c
+@CI_RISCV_RVV_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS = -march=rv64gv
+@CI_LOONGARCH_LSX_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@_la_LIBADD = libci@CILIB_MAJOR@@CILIB_MINOR@lsx.la
+@CI_RISCV_RVV_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@_la_LIBADD = libci@CILIB_MAJOR@@CILIB_MINOR@rvv.la
+@CI_LOONGARCH_LSX_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_SOURCES = loongarch/loongarch_lsx_init.c\
+@CI_LOONGARCH_LSX_TRUE@	loongarch/filter_lsx_intrinsics.c
 
-@PNG_LOONGARCH_LSX_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS = -mlsx
-nodist_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES = pnglibconf.h
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LDFLAGS = -no-undefined \
+@CI_LOONGARCH_LSX_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS = -mlsx
+nodist_libci@CILIB_MAJOR@@CILIB_MINOR@_la_SOURCES = cilibconf.h
+libci@CILIB_MAJOR@@CILIB_MINOR@_la_LDFLAGS = -no-undefined \
 	-export-dynamic -version-number \
-	@PNGLIB_MAJOR@@PNGLIB_MINOR@:@PNGLIB_RELEASE@:0 \
+	@CILIB_MAJOR@@CILIB_MINOR@:@CILIB_RELEASE@:0 \
 	$(am__append_8) $(am__append_9) $(am__append_10)
-@HAVE_LD_VERSION_SCRIPT_FALSE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_DEPENDENCIES =  \
-@HAVE_LD_VERSION_SCRIPT_FALSE@	libpng.sym $(am__append_11) \
+@HAVE_LD_VERSION_SCRIPT_FALSE@libci@CILIB_MAJOR@@CILIB_MINOR@_la_DEPENDENCIES =  \
+@HAVE_LD_VERSION_SCRIPT_FALSE@	libci.sym $(am__append_11) \
 @HAVE_LD_VERSION_SCRIPT_FALSE@	$(am__append_12)
-@HAVE_LD_VERSION_SCRIPT_TRUE@libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_DEPENDENCIES =  \
-@HAVE_LD_VERSION_SCRIPT_TRUE@	libpng.vers $(am__append_11) \
+@HAVE_LD_VERSION_SCRIPT_TRUE@libci@CILIB_MAJOR@@CILIB_MINOR@_la_DEPENDENCIES =  \
+@HAVE_LD_VERSION_SCRIPT_TRUE@	libci.vers $(am__append_11) \
 @HAVE_LD_VERSION_SCRIPT_TRUE@	$(am__append_12)
-pkginclude_HEADERS = png.h pngconf.h
-nodist_pkginclude_HEADERS = pnglibconf.h
-pkgconfig_DATA = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.pc
+pkginclude_HEADERS = ci.h ciconf.h
+nodist_pkginclude_HEADERS = cilibconf.h
+pkgconfig_DATA = libci@CILIB_MAJOR@@CILIB_MINOR@.pc
 
 # Extra source distribution files, '${srcdir}' is used below to stop build files
 # from those directories being included.  This only works if the configure is
 # not done in the source directory!
 EXTRA_DIST = \
 	ANNOUNCE AUTHORS CHANGES INSTALL LICENSE README TODO TRADEMARK \
-	pngtest.png pngbar.png pngnow.png pngbar.jpg autogen.sh \
+	citest.ci cibar.ci cinow.ci cibar.jpg autogen.sh \
 	${srcdir}/ci ${srcdir}/contrib ${srcdir}/projects ${srcdir}/scripts \
-	$(TESTS) $(XFAIL_TESTS) tests/pngstest \
-	CMakeLists.txt example.c libpng-manual.txt
+	$(TESTS) $(XFAIL_TESTS) tests/cistest \
+	CMakeLists.txt example.c libci-manual.txt
 
 SCRIPT_CLEANFILES = scripts/*.out scripts/*.chk
-CLEANFILES = *.tf? pngout.png libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.pc \
-	libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@-config libpng.vers libpng.sym \
-	check.new pnglibconf.h pngprefix.h symbols.new pngtest-log.txt \
-	pnglibconf.out pnglibconf.c pnglibconf.pre pnglibconf.dfn \
+CLEANFILES = *.tf? ciout.ci libci@CILIB_MAJOR@@CILIB_MINOR@.pc \
+	libci@CILIB_MAJOR@@CILIB_MINOR@-config libci.vers libci.sym \
+	check.new cilibconf.h ciprefix.h symbols.new citest-log.txt \
+	cilibconf.out cilibconf.c cilibconf.pre cilibconf.dfn \
 	$(SCRIPT_CLEANFILES)
 
 MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess config.h.in \
 config.sub configure depcomp install-sh ltmain.sh missing
 
-AM_CFLAGS = ${PNG_COPTS}
+AM_CFLAGS = ${CI_COPTS}
 SUFFIXES = .chk .out
 
-# We must use -DPNG_NO_USE_READ_MACROS here even when the library may actually
-# be built with PNG_USE_READ_MACROS; this prevents the read macros from
+# We must use -DCI_NO_USE_READ_MACROS here even when the library may actually
+# be built with CI_USE_READ_MACROS; this prevents the read macros from
 # interfering with the symbol file format.
-SYMBOL_CFLAGS = -DPNGLIB_LIBNAME='PNG@PNGLIB_MAJOR@@PNGLIB_MINOR@_0' \
-	-DPNGLIB_VERSION='@PNGLIB_VERSION@' \
-	-DSYMBOL_PREFIX='$(SYMBOL_PREFIX)' -DPNG_NO_USE_READ_MACROS \
-	-DPNG_BUILDING_SYMBOL_TABLE $(am__append_13)
+SYMBOL_CFLAGS = -DCILIB_LIBNAME='CI@CILIB_MAJOR@@CILIB_MINOR@_0' \
+	-DCILIB_VERSION='@CILIB_VERSION@' \
+	-DSYMBOL_PREFIX='$(SYMBOL_PREFIX)' -DCI_NO_USE_READ_MACROS \
+	-DCI_BUILDING_SYMBOL_TABLE $(am__append_13)
 
 # EXT_LIST is a list of the possibly library directory extensions, this exists
 # because we can't find a good way of discovering the file extensions that are
 # actually installed on a given system, so instead we check for every extension
 # we have seen.
-EXT_LIST = a dll.a so so.@PNGLIB_MAJOR@@PNGLIB_MINOR@.@PNGLIB_RELEASE@ la sl dylib
+EXT_LIST = a dll.a so so.@CILIB_MAJOR@@CILIB_MINOR@.@CILIB_RELEASE@ la sl dylib
 all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -959,9 +959,9 @@ $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-libpng.pc: $(top_builddir)/config.status $(srcdir)/libpng.pc.in
+libci.pc: $(top_builddir)/config.status $(srcdir)/libci.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
-libpng-config: $(top_builddir)/config.status $(srcdir)/libpng-config.in
+libci-config: $(top_builddir)/config.status $(srcdir)/libci-config.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -1096,99 +1096,99 @@ powerpc/powerpc_init.lo: powerpc/$(am__dirstamp) \
 powerpc/filter_vsx_intrinsics.lo: powerpc/$(am__dirstamp) \
 	powerpc/$(DEPDIR)/$(am__dirstamp)
 
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la: $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_DEPENDENCIES) $(EXTRA_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LINK) -rpath $(libdir) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_LIBADD) $(LIBS)
+libci@CILIB_MAJOR@@CILIB_MINOR@.la: $(libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@_la_DEPENDENCIES) $(EXTRA_libci@CILIB_MAJOR@@CILIB_MINOR@_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libci@CILIB_MAJOR@@CILIB_MINOR@_la_LINK) -rpath $(libdir) $(libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@_la_LIBADD) $(LIBS)
 loongarch/$(am__dirstamp):
 	@$(MKDIR_P) loongarch
 	@: >>loongarch/$(am__dirstamp)
 loongarch/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) loongarch/$(DEPDIR)
 	@: >>loongarch/$(DEPDIR)/$(am__dirstamp)
-loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo:  \
+loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo:  \
 	loongarch/$(am__dirstamp) loongarch/$(DEPDIR)/$(am__dirstamp)
-loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo:  \
+loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo:  \
 	loongarch/$(am__dirstamp) loongarch/$(DEPDIR)/$(am__dirstamp)
 
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx.la: $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_DEPENDENCIES) $(EXTRA_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_LINK) $(am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_rpath) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_LIBADD) $(LIBS)
+libci@CILIB_MAJOR@@CILIB_MINOR@lsx.la: $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_DEPENDENCIES) $(EXTRA_libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_LINK) $(am_libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_rpath) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_LIBADD) $(LIBS)
 riscv/$(am__dirstamp):
 	@$(MKDIR_P) riscv
 	@: >>riscv/$(am__dirstamp)
 riscv/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) riscv/$(DEPDIR)
 	@: >>riscv/$(DEPDIR)/$(am__dirstamp)
-riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo:  \
+riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo:  \
 	riscv/$(am__dirstamp) riscv/$(DEPDIR)/$(am__dirstamp)
-riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo:  \
+riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo:  \
 	riscv/$(am__dirstamp) riscv/$(DEPDIR)/$(am__dirstamp)
 
-libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv.la: $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_DEPENDENCIES) $(EXTRA_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_LINK) $(am_libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_rpath) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_OBJECTS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_LIBADD) $(LIBS)
+libci@CILIB_MAJOR@@CILIB_MINOR@rvv.la: $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_DEPENDENCIES) $(EXTRA_libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_LINK) $(am_libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_rpath) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_OBJECTS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_LIBADD) $(LIBS)
 contrib/tools/$(am__dirstamp):
 	@$(MKDIR_P) contrib/tools
 	@: >>contrib/tools/$(am__dirstamp)
 contrib/tools/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) contrib/tools/$(DEPDIR)
 	@: >>contrib/tools/$(DEPDIR)/$(am__dirstamp)
-contrib/tools/png-fix-itxt.$(OBJEXT): contrib/tools/$(am__dirstamp) \
+contrib/tools/ci-fix-itxt.$(OBJEXT): contrib/tools/$(am__dirstamp) \
 	contrib/tools/$(DEPDIR)/$(am__dirstamp)
 
-png-fix-itxt$(EXEEXT): $(png_fix_itxt_OBJECTS) $(png_fix_itxt_DEPENDENCIES) $(EXTRA_png_fix_itxt_DEPENDENCIES) 
-	@rm -f png-fix-itxt$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(png_fix_itxt_OBJECTS) $(png_fix_itxt_LDADD) $(LIBS)
-contrib/tools/pngcp.$(OBJEXT): contrib/tools/$(am__dirstamp) \
+ci-fix-itxt$(EXEEXT): $(ci_fix_itxt_OBJECTS) $(ci_fix_itxt_DEPENDENCIES) $(EXTRA_ci_fix_itxt_DEPENDENCIES) 
+	@rm -f ci-fix-itxt$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(ci_fix_itxt_OBJECTS) $(ci_fix_itxt_LDADD) $(LIBS)
+contrib/tools/cicp.$(OBJEXT): contrib/tools/$(am__dirstamp) \
 	contrib/tools/$(DEPDIR)/$(am__dirstamp)
 
-pngcp$(EXEEXT): $(pngcp_OBJECTS) $(pngcp_DEPENDENCIES) $(EXTRA_pngcp_DEPENDENCIES) 
-	@rm -f pngcp$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngcp_OBJECTS) $(pngcp_LDADD) $(LIBS)
-contrib/tools/pngfix.$(OBJEXT): contrib/tools/$(am__dirstamp) \
+cicp$(EXEEXT): $(cicp_OBJECTS) $(cicp_DEPENDENCIES) $(EXTRA_cicp_DEPENDENCIES) 
+	@rm -f cicp$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(cicp_OBJECTS) $(cicp_LDADD) $(LIBS)
+contrib/tools/cifix.$(OBJEXT): contrib/tools/$(am__dirstamp) \
 	contrib/tools/$(DEPDIR)/$(am__dirstamp)
 
-pngfix$(EXEEXT): $(pngfix_OBJECTS) $(pngfix_DEPENDENCIES) $(EXTRA_pngfix_DEPENDENCIES) 
-	@rm -f pngfix$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngfix_OBJECTS) $(pngfix_LDADD) $(LIBS)
+cifix$(EXEEXT): $(cifix_OBJECTS) $(cifix_DEPENDENCIES) $(EXTRA_cifix_DEPENDENCIES) 
+	@rm -f cifix$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(cifix_OBJECTS) $(cifix_LDADD) $(LIBS)
 contrib/libtests/$(am__dirstamp):
 	@$(MKDIR_P) contrib/libtests
 	@: >>contrib/libtests/$(am__dirstamp)
 contrib/libtests/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) contrib/libtests/$(DEPDIR)
 	@: >>contrib/libtests/$(DEPDIR)/$(am__dirstamp)
-contrib/libtests/pngimage.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
+contrib/libtests/ciimage.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
 	contrib/libtests/$(DEPDIR)/$(am__dirstamp)
 
-pngimage$(EXEEXT): $(pngimage_OBJECTS) $(pngimage_DEPENDENCIES) $(EXTRA_pngimage_DEPENDENCIES) 
-	@rm -f pngimage$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngimage_OBJECTS) $(pngimage_LDADD) $(LIBS)
-contrib/libtests/pngstest.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
+ciimage$(EXEEXT): $(ciimage_OBJECTS) $(ciimage_DEPENDENCIES) $(EXTRA_ciimage_DEPENDENCIES) 
+	@rm -f ciimage$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(ciimage_OBJECTS) $(ciimage_LDADD) $(LIBS)
+contrib/libtests/cistest.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
 	contrib/libtests/$(DEPDIR)/$(am__dirstamp)
 
-pngstest$(EXEEXT): $(pngstest_OBJECTS) $(pngstest_DEPENDENCIES) $(EXTRA_pngstest_DEPENDENCIES) 
-	@rm -f pngstest$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngstest_OBJECTS) $(pngstest_LDADD) $(LIBS)
+cistest$(EXEEXT): $(cistest_OBJECTS) $(cistest_DEPENDENCIES) $(EXTRA_cistest_DEPENDENCIES) 
+	@rm -f cistest$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(cistest_OBJECTS) $(cistest_LDADD) $(LIBS)
 
-pngtest$(EXEEXT): $(pngtest_OBJECTS) $(pngtest_DEPENDENCIES) $(EXTRA_pngtest_DEPENDENCIES) 
-	@rm -f pngtest$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngtest_OBJECTS) $(pngtest_LDADD) $(LIBS)
-contrib/libtests/pngunknown.$(OBJEXT):  \
+citest$(EXEEXT): $(citest_OBJECTS) $(citest_DEPENDENCIES) $(EXTRA_citest_DEPENDENCIES) 
+	@rm -f citest$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(citest_OBJECTS) $(citest_LDADD) $(LIBS)
+contrib/libtests/ciunknown.$(OBJEXT):  \
 	contrib/libtests/$(am__dirstamp) \
 	contrib/libtests/$(DEPDIR)/$(am__dirstamp)
 
-pngunknown$(EXEEXT): $(pngunknown_OBJECTS) $(pngunknown_DEPENDENCIES) $(EXTRA_pngunknown_DEPENDENCIES) 
-	@rm -f pngunknown$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngunknown_OBJECTS) $(pngunknown_LDADD) $(LIBS)
-contrib/libtests/pngvalid.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
+ciunknown$(EXEEXT): $(ciunknown_OBJECTS) $(ciunknown_DEPENDENCIES) $(EXTRA_ciunknown_DEPENDENCIES) 
+	@rm -f ciunknown$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(ciunknown_OBJECTS) $(ciunknown_LDADD) $(LIBS)
+contrib/libtests/civalid.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
 	contrib/libtests/$(DEPDIR)/$(am__dirstamp)
 
-pngvalid$(EXEEXT): $(pngvalid_OBJECTS) $(pngvalid_DEPENDENCIES) $(EXTRA_pngvalid_DEPENDENCIES) 
-	@rm -f pngvalid$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pngvalid_OBJECTS) $(pngvalid_LDADD) $(LIBS)
-contrib/libtests/timepng.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
+civalid$(EXEEXT): $(civalid_OBJECTS) $(civalid_DEPENDENCIES) $(EXTRA_civalid_DEPENDENCIES) 
+	@rm -f civalid$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(civalid_OBJECTS) $(civalid_LDADD) $(LIBS)
+contrib/libtests/timeci.$(OBJEXT): contrib/libtests/$(am__dirstamp) \
 	contrib/libtests/$(DEPDIR)/$(am__dirstamp)
 
-timepng$(EXEEXT): $(timepng_OBJECTS) $(timepng_DEPENDENCIES) $(EXTRA_timepng_DEPENDENCIES) 
-	@rm -f timepng$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(timepng_OBJECTS) $(timepng_LDADD) $(LIBS)
+timeci$(EXEEXT): $(timeci_OBJECTS) $(timeci_DEPENDENCIES) $(EXTRA_timeci_DEPENDENCIES) 
+	@rm -f timeci$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(timeci_OBJECTS) $(timeci_LDADD) $(LIBS)
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_SCRIPTS)'; test -n "$(bindir)" || list=; \
@@ -1245,44 +1245,44 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/png.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngerror.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngget.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngmem.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngpread.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngread.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngrio.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngrtran.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngrutil.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngset.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngtest.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngtrans.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngwio.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngwrite.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngwtran.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pngwutil.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ci.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cierror.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciget.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cimem.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cipread.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciread.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cirio.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cirtran.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cirutil.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciset.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/citest.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/citrans.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciwio.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciwrite.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciwtran.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ciwutil.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@arm/$(DEPDIR)/arm_init.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@arm/$(DEPDIR)/filter_neon_intrinsics.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@arm/$(DEPDIR)/palette_neon_intrinsics.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/pngimage.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/pngstest.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/pngunknown.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/pngvalid.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/timepng.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/png-fix-itxt.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/pngcp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/pngfix.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/ciimage.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/cistest.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/ciunknown.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/civalid.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/libtests/$(DEPDIR)/timeci.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/ci-fix-itxt.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/cicp.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@contrib/tools/$(DEPDIR)/cifix.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@intel/$(DEPDIR)/filter_sse2_intrinsics.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@intel/$(DEPDIR)/intel_init.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@mips/$(DEPDIR)/filter_mmi_inline_assembly.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@mips/$(DEPDIR)/filter_msa_intrinsics.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@mips/$(DEPDIR)/mips_init.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@powerpc/$(DEPDIR)/filter_vsx_intrinsics.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@powerpc/$(DEPDIR)/powerpc_init.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -1314,33 +1314,33 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo: loongarch/loongarch_lsx_init.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -MT loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo -MD -MP -MF loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Tpo -c -o loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo `test -f 'loongarch/loongarch_lsx_init.c' || echo '$(srcdir)/'`loongarch/loongarch_lsx_init.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Tpo loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='loongarch/loongarch_lsx_init.c' object='loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo' libtool=yes @AMDEPBACKSLASH@
+loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo: loongarch/loongarch_lsx_init.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -MT loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo -MD -MP -MF loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Tpo -c -o loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo `test -f 'loongarch/loongarch_lsx_init.c' || echo '$(srcdir)/'`loongarch/loongarch_lsx_init.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Tpo loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='loongarch/loongarch_lsx_init.c' object='loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -c -o loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.lo `test -f 'loongarch/loongarch_lsx_init.c' || echo '$(srcdir)/'`loongarch/loongarch_lsx_init.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -c -o loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.lo `test -f 'loongarch/loongarch_lsx_init.c' || echo '$(srcdir)/'`loongarch/loongarch_lsx_init.c
 
-loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo: loongarch/filter_lsx_intrinsics.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -MT loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo -MD -MP -MF loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Tpo -c -o loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo `test -f 'loongarch/filter_lsx_intrinsics.c' || echo '$(srcdir)/'`loongarch/filter_lsx_intrinsics.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Tpo loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='loongarch/filter_lsx_intrinsics.c' object='loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo' libtool=yes @AMDEPBACKSLASH@
+loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo: loongarch/filter_lsx_intrinsics.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -MT loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo -MD -MP -MF loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Tpo -c -o loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo `test -f 'loongarch/filter_lsx_intrinsics.c' || echo '$(srcdir)/'`loongarch/filter_lsx_intrinsics.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Tpo loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='loongarch/filter_lsx_intrinsics.c' object='loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -c -o loongarch/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.lo `test -f 'loongarch/filter_lsx_intrinsics.c' || echo '$(srcdir)/'`loongarch/filter_lsx_intrinsics.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la_CFLAGS) $(CFLAGS) -c -o loongarch/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.lo `test -f 'loongarch/filter_lsx_intrinsics.c' || echo '$(srcdir)/'`loongarch/filter_lsx_intrinsics.c
 
-riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo: riscv/riscv_init.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -MT riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo -MD -MP -MF riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Tpo -c -o riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo `test -f 'riscv/riscv_init.c' || echo '$(srcdir)/'`riscv/riscv_init.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Tpo riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='riscv/riscv_init.c' object='riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo' libtool=yes @AMDEPBACKSLASH@
+riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo: riscv/riscv_init.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -MT riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo -MD -MP -MF riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Tpo -c -o riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo `test -f 'riscv/riscv_init.c' || echo '$(srcdir)/'`riscv/riscv_init.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Tpo riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='riscv/riscv_init.c' object='riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -c -o riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.lo `test -f 'riscv/riscv_init.c' || echo '$(srcdir)/'`riscv/riscv_init.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -c -o riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.lo `test -f 'riscv/riscv_init.c' || echo '$(srcdir)/'`riscv/riscv_init.c
 
-riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo: riscv/filter_rvv_intrinsics.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -MT riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo -MD -MP -MF riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Tpo -c -o riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo `test -f 'riscv/filter_rvv_intrinsics.c' || echo '$(srcdir)/'`riscv/filter_rvv_intrinsics.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Tpo riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='riscv/filter_rvv_intrinsics.c' object='riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo' libtool=yes @AMDEPBACKSLASH@
+riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo: riscv/filter_rvv_intrinsics.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -MT riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo -MD -MP -MF riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Tpo -c -o riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo `test -f 'riscv/filter_rvv_intrinsics.c' || echo '$(srcdir)/'`riscv/filter_rvv_intrinsics.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Tpo riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='riscv/filter_rvv_intrinsics.c' object='riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -c -o riscv/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.lo `test -f 'riscv/filter_rvv_intrinsics.c' || echo '$(srcdir)/'`riscv/filter_rvv_intrinsics.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la_CFLAGS) $(CFLAGS) -c -o riscv/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.lo `test -f 'riscv/filter_rvv_intrinsics.c' || echo '$(srcdir)/'`riscv/filter_rvv_intrinsics.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1731,226 +1731,226 @@ recheck: all $(check_PROGRAMS)
 	        am__force_recheck=am--force-recheck \
 	        TEST_LOGS="$$log_list"; \
 	exit $$?
-tests/pngtest-all.log: tests/pngtest-all
-	@p='tests/pngtest-all'; \
-	b='tests/pngtest-all'; \
+tests/citest-all.log: tests/citest-all
+	@p='tests/citest-all'; \
+	b='tests/citest-all'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-16-to-8.log: tests/pngvalid-gamma-16-to-8
-	@p='tests/pngvalid-gamma-16-to-8'; \
-	b='tests/pngvalid-gamma-16-to-8'; \
+tests/civalid-gamma-16-to-8.log: tests/civalid-gamma-16-to-8
+	@p='tests/civalid-gamma-16-to-8'; \
+	b='tests/civalid-gamma-16-to-8'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-alpha-mode.log: tests/pngvalid-gamma-alpha-mode
-	@p='tests/pngvalid-gamma-alpha-mode'; \
-	b='tests/pngvalid-gamma-alpha-mode'; \
+tests/civalid-gamma-alpha-mode.log: tests/civalid-gamma-alpha-mode
+	@p='tests/civalid-gamma-alpha-mode'; \
+	b='tests/civalid-gamma-alpha-mode'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-background.log: tests/pngvalid-gamma-background
-	@p='tests/pngvalid-gamma-background'; \
-	b='tests/pngvalid-gamma-background'; \
+tests/civalid-gamma-background.log: tests/civalid-gamma-background
+	@p='tests/civalid-gamma-background'; \
+	b='tests/civalid-gamma-background'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-expand16-alpha-mode.log: tests/pngvalid-gamma-expand16-alpha-mode
-	@p='tests/pngvalid-gamma-expand16-alpha-mode'; \
-	b='tests/pngvalid-gamma-expand16-alpha-mode'; \
+tests/civalid-gamma-expand16-alpha-mode.log: tests/civalid-gamma-expand16-alpha-mode
+	@p='tests/civalid-gamma-expand16-alpha-mode'; \
+	b='tests/civalid-gamma-expand16-alpha-mode'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-expand16-background.log: tests/pngvalid-gamma-expand16-background
-	@p='tests/pngvalid-gamma-expand16-background'; \
-	b='tests/pngvalid-gamma-expand16-background'; \
+tests/civalid-gamma-expand16-background.log: tests/civalid-gamma-expand16-background
+	@p='tests/civalid-gamma-expand16-background'; \
+	b='tests/civalid-gamma-expand16-background'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-expand16-transform.log: tests/pngvalid-gamma-expand16-transform
-	@p='tests/pngvalid-gamma-expand16-transform'; \
-	b='tests/pngvalid-gamma-expand16-transform'; \
+tests/civalid-gamma-expand16-transform.log: tests/civalid-gamma-expand16-transform
+	@p='tests/civalid-gamma-expand16-transform'; \
+	b='tests/civalid-gamma-expand16-transform'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-sbit.log: tests/pngvalid-gamma-sbit
-	@p='tests/pngvalid-gamma-sbit'; \
-	b='tests/pngvalid-gamma-sbit'; \
+tests/civalid-gamma-sbit.log: tests/civalid-gamma-sbit
+	@p='tests/civalid-gamma-sbit'; \
+	b='tests/civalid-gamma-sbit'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-threshold.log: tests/pngvalid-gamma-threshold
-	@p='tests/pngvalid-gamma-threshold'; \
-	b='tests/pngvalid-gamma-threshold'; \
+tests/civalid-gamma-threshold.log: tests/civalid-gamma-threshold
+	@p='tests/civalid-gamma-threshold'; \
+	b='tests/civalid-gamma-threshold'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-gamma-transform.log: tests/pngvalid-gamma-transform
-	@p='tests/pngvalid-gamma-transform'; \
-	b='tests/pngvalid-gamma-transform'; \
+tests/civalid-gamma-transform.log: tests/civalid-gamma-transform
+	@p='tests/civalid-gamma-transform'; \
+	b='tests/civalid-gamma-transform'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-progressive-size.log: tests/pngvalid-progressive-size
-	@p='tests/pngvalid-progressive-size'; \
-	b='tests/pngvalid-progressive-size'; \
+tests/civalid-progressive-size.log: tests/civalid-progressive-size
+	@p='tests/civalid-progressive-size'; \
+	b='tests/civalid-progressive-size'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-progressive-interlace-standard.log: tests/pngvalid-progressive-interlace-standard
-	@p='tests/pngvalid-progressive-interlace-standard'; \
-	b='tests/pngvalid-progressive-interlace-standard'; \
+tests/civalid-progressive-interlace-standard.log: tests/civalid-progressive-interlace-standard
+	@p='tests/civalid-progressive-interlace-standard'; \
+	b='tests/civalid-progressive-interlace-standard'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-transform.log: tests/pngvalid-transform
-	@p='tests/pngvalid-transform'; \
-	b='tests/pngvalid-transform'; \
+tests/civalid-transform.log: tests/civalid-transform
+	@p='tests/civalid-transform'; \
+	b='tests/civalid-transform'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-progressive-standard.log: tests/pngvalid-progressive-standard
-	@p='tests/pngvalid-progressive-standard'; \
-	b='tests/pngvalid-progressive-standard'; \
+tests/civalid-progressive-standard.log: tests/civalid-progressive-standard
+	@p='tests/civalid-progressive-standard'; \
+	b='tests/civalid-progressive-standard'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngvalid-standard.log: tests/pngvalid-standard
-	@p='tests/pngvalid-standard'; \
-	b='tests/pngvalid-standard'; \
+tests/civalid-standard.log: tests/civalid-standard
+	@p='tests/civalid-standard'; \
+	b='tests/civalid-standard'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-1.8.log: tests/pngstest-1.8
-	@p='tests/pngstest-1.8'; \
-	b='tests/pngstest-1.8'; \
+tests/cistest-1.8.log: tests/cistest-1.8
+	@p='tests/cistest-1.8'; \
+	b='tests/cistest-1.8'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-1.8-alpha.log: tests/pngstest-1.8-alpha
-	@p='tests/pngstest-1.8-alpha'; \
-	b='tests/pngstest-1.8-alpha'; \
+tests/cistest-1.8-alpha.log: tests/cistest-1.8-alpha
+	@p='tests/cistest-1.8-alpha'; \
+	b='tests/cistest-1.8-alpha'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-linear.log: tests/pngstest-linear
-	@p='tests/pngstest-linear'; \
-	b='tests/pngstest-linear'; \
+tests/cistest-linear.log: tests/cistest-linear
+	@p='tests/cistest-linear'; \
+	b='tests/cistest-linear'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-linear-alpha.log: tests/pngstest-linear-alpha
-	@p='tests/pngstest-linear-alpha'; \
-	b='tests/pngstest-linear-alpha'; \
+tests/cistest-linear-alpha.log: tests/cistest-linear-alpha
+	@p='tests/cistest-linear-alpha'; \
+	b='tests/cistest-linear-alpha'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-none.log: tests/pngstest-none
-	@p='tests/pngstest-none'; \
-	b='tests/pngstest-none'; \
+tests/cistest-none.log: tests/cistest-none
+	@p='tests/cistest-none'; \
+	b='tests/cistest-none'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-none-alpha.log: tests/pngstest-none-alpha
-	@p='tests/pngstest-none-alpha'; \
-	b='tests/pngstest-none-alpha'; \
+tests/cistest-none-alpha.log: tests/cistest-none-alpha
+	@p='tests/cistest-none-alpha'; \
+	b='tests/cistest-none-alpha'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-sRGB.log: tests/pngstest-sRGB
-	@p='tests/pngstest-sRGB'; \
-	b='tests/pngstest-sRGB'; \
+tests/cistest-sRGB.log: tests/cistest-sRGB
+	@p='tests/cistest-sRGB'; \
+	b='tests/cistest-sRGB'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngstest-sRGB-alpha.log: tests/pngstest-sRGB-alpha
-	@p='tests/pngstest-sRGB-alpha'; \
-	b='tests/pngstest-sRGB-alpha'; \
+tests/cistest-sRGB-alpha.log: tests/cistest-sRGB-alpha
+	@p='tests/cistest-sRGB-alpha'; \
+	b='tests/cistest-sRGB-alpha'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-IDAT.log: tests/pngunknown-IDAT
-	@p='tests/pngunknown-IDAT'; \
-	b='tests/pngunknown-IDAT'; \
+tests/ciunknown-IDAT.log: tests/ciunknown-IDAT
+	@p='tests/ciunknown-IDAT'; \
+	b='tests/ciunknown-IDAT'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-discard.log: tests/pngunknown-discard
-	@p='tests/pngunknown-discard'; \
-	b='tests/pngunknown-discard'; \
+tests/ciunknown-discard.log: tests/ciunknown-discard
+	@p='tests/ciunknown-discard'; \
+	b='tests/ciunknown-discard'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-if-safe.log: tests/pngunknown-if-safe
-	@p='tests/pngunknown-if-safe'; \
-	b='tests/pngunknown-if-safe'; \
+tests/ciunknown-if-safe.log: tests/ciunknown-if-safe
+	@p='tests/ciunknown-if-safe'; \
+	b='tests/ciunknown-if-safe'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-sAPI.log: tests/pngunknown-sAPI
-	@p='tests/pngunknown-sAPI'; \
-	b='tests/pngunknown-sAPI'; \
+tests/ciunknown-sAPI.log: tests/ciunknown-sAPI
+	@p='tests/ciunknown-sAPI'; \
+	b='tests/ciunknown-sAPI'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-sTER.log: tests/pngunknown-sTER
-	@p='tests/pngunknown-sTER'; \
-	b='tests/pngunknown-sTER'; \
+tests/ciunknown-sTER.log: tests/ciunknown-sTER
+	@p='tests/ciunknown-sTER'; \
+	b='tests/ciunknown-sTER'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-save.log: tests/pngunknown-save
-	@p='tests/pngunknown-save'; \
-	b='tests/pngunknown-save'; \
+tests/ciunknown-save.log: tests/ciunknown-save
+	@p='tests/ciunknown-save'; \
+	b='tests/ciunknown-save'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngunknown-vpAg.log: tests/pngunknown-vpAg
-	@p='tests/pngunknown-vpAg'; \
-	b='tests/pngunknown-vpAg'; \
+tests/ciunknown-vpAg.log: tests/ciunknown-vpAg
+	@p='tests/ciunknown-vpAg'; \
+	b='tests/ciunknown-vpAg'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngimage-quick.log: tests/pngimage-quick
-	@p='tests/pngimage-quick'; \
-	b='tests/pngimage-quick'; \
+tests/ciimage-quick.log: tests/ciimage-quick
+	@p='tests/ciimage-quick'; \
+	b='tests/ciimage-quick'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/pngimage-full.log: tests/pngimage-full
-	@p='tests/pngimage-full'; \
-	b='tests/pngimage-full'; \
+tests/ciimage-full.log: tests/ciimage-full
+	@p='tests/ciimage-full'; \
+	b='tests/ciimage-full'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -2219,9 +2219,9 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 	-$(am__rm_f) $(BUILT_SOURCES)
 	-$(am__rm_f) $(MAINTAINERCLEANFILES)
-@DO_INSTALL_LIBPNG_CONFIG_FALSE@@DO_INSTALL_LINKS_FALSE@install-exec-hook:
-@DO_INSTALL_LIBPNG_PC_FALSE@@DO_INSTALL_LINKS_FALSE@install-data-hook:
-@DO_INSTALL_LIBPNG_CONFIG_FALSE@@DO_INSTALL_LIBPNG_PC_FALSE@@DO_INSTALL_LINKS_FALSE@uninstall-hook:
+@DO_INSTALL_LIBCI_CONFIG_FALSE@@DO_INSTALL_LINKS_FALSE@install-exec-hook:
+@DO_INSTALL_LIBCI_PC_FALSE@@DO_INSTALL_LINKS_FALSE@install-data-hook:
+@DO_INSTALL_LIBCI_CONFIG_FALSE@@DO_INSTALL_LIBCI_PC_FALSE@@DO_INSTALL_LINKS_FALSE@uninstall-hook:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
@@ -2230,44 +2230,44 @@ clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -f ./$(DEPDIR)/png.Plo
-	-rm -f ./$(DEPDIR)/pngerror.Plo
-	-rm -f ./$(DEPDIR)/pngget.Plo
-	-rm -f ./$(DEPDIR)/pngmem.Plo
-	-rm -f ./$(DEPDIR)/pngpread.Plo
-	-rm -f ./$(DEPDIR)/pngread.Plo
-	-rm -f ./$(DEPDIR)/pngrio.Plo
-	-rm -f ./$(DEPDIR)/pngrtran.Plo
-	-rm -f ./$(DEPDIR)/pngrutil.Plo
-	-rm -f ./$(DEPDIR)/pngset.Plo
-	-rm -f ./$(DEPDIR)/pngtest.Po
-	-rm -f ./$(DEPDIR)/pngtrans.Plo
-	-rm -f ./$(DEPDIR)/pngwio.Plo
-	-rm -f ./$(DEPDIR)/pngwrite.Plo
-	-rm -f ./$(DEPDIR)/pngwtran.Plo
-	-rm -f ./$(DEPDIR)/pngwutil.Plo
+	-rm -f ./$(DEPDIR)/ci.Plo
+	-rm -f ./$(DEPDIR)/cierror.Plo
+	-rm -f ./$(DEPDIR)/ciget.Plo
+	-rm -f ./$(DEPDIR)/cimem.Plo
+	-rm -f ./$(DEPDIR)/cipread.Plo
+	-rm -f ./$(DEPDIR)/ciread.Plo
+	-rm -f ./$(DEPDIR)/cirio.Plo
+	-rm -f ./$(DEPDIR)/cirtran.Plo
+	-rm -f ./$(DEPDIR)/cirutil.Plo
+	-rm -f ./$(DEPDIR)/ciset.Plo
+	-rm -f ./$(DEPDIR)/citest.Po
+	-rm -f ./$(DEPDIR)/citrans.Plo
+	-rm -f ./$(DEPDIR)/ciwio.Plo
+	-rm -f ./$(DEPDIR)/ciwrite.Plo
+	-rm -f ./$(DEPDIR)/ciwtran.Plo
+	-rm -f ./$(DEPDIR)/ciwutil.Plo
 	-rm -f arm/$(DEPDIR)/arm_init.Plo
 	-rm -f arm/$(DEPDIR)/filter_neon_intrinsics.Plo
 	-rm -f arm/$(DEPDIR)/palette_neon_intrinsics.Plo
-	-rm -f contrib/libtests/$(DEPDIR)/pngimage.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngstest.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngunknown.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngvalid.Po
-	-rm -f contrib/libtests/$(DEPDIR)/timepng.Po
-	-rm -f contrib/tools/$(DEPDIR)/png-fix-itxt.Po
-	-rm -f contrib/tools/$(DEPDIR)/pngcp.Po
-	-rm -f contrib/tools/$(DEPDIR)/pngfix.Po
+	-rm -f contrib/libtests/$(DEPDIR)/ciimage.Po
+	-rm -f contrib/libtests/$(DEPDIR)/cistest.Po
+	-rm -f contrib/libtests/$(DEPDIR)/ciunknown.Po
+	-rm -f contrib/libtests/$(DEPDIR)/civalid.Po
+	-rm -f contrib/libtests/$(DEPDIR)/timeci.Po
+	-rm -f contrib/tools/$(DEPDIR)/ci-fix-itxt.Po
+	-rm -f contrib/tools/$(DEPDIR)/cicp.Po
+	-rm -f contrib/tools/$(DEPDIR)/cifix.Po
 	-rm -f intel/$(DEPDIR)/filter_sse2_intrinsics.Plo
 	-rm -f intel/$(DEPDIR)/intel_init.Plo
-	-rm -f loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
-	-rm -f loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Plo
+	-rm -f loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
+	-rm -f loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Plo
 	-rm -f mips/$(DEPDIR)/filter_mmi_inline_assembly.Plo
 	-rm -f mips/$(DEPDIR)/filter_msa_intrinsics.Plo
 	-rm -f mips/$(DEPDIR)/mips_init.Plo
 	-rm -f powerpc/$(DEPDIR)/filter_vsx_intrinsics.Plo
 	-rm -f powerpc/$(DEPDIR)/powerpc_init.Plo
-	-rm -f riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
-	-rm -f riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Plo
+	-rm -f riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
+	-rm -f riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -2319,44 +2319,44 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -f ./$(DEPDIR)/png.Plo
-	-rm -f ./$(DEPDIR)/pngerror.Plo
-	-rm -f ./$(DEPDIR)/pngget.Plo
-	-rm -f ./$(DEPDIR)/pngmem.Plo
-	-rm -f ./$(DEPDIR)/pngpread.Plo
-	-rm -f ./$(DEPDIR)/pngread.Plo
-	-rm -f ./$(DEPDIR)/pngrio.Plo
-	-rm -f ./$(DEPDIR)/pngrtran.Plo
-	-rm -f ./$(DEPDIR)/pngrutil.Plo
-	-rm -f ./$(DEPDIR)/pngset.Plo
-	-rm -f ./$(DEPDIR)/pngtest.Po
-	-rm -f ./$(DEPDIR)/pngtrans.Plo
-	-rm -f ./$(DEPDIR)/pngwio.Plo
-	-rm -f ./$(DEPDIR)/pngwrite.Plo
-	-rm -f ./$(DEPDIR)/pngwtran.Plo
-	-rm -f ./$(DEPDIR)/pngwutil.Plo
+	-rm -f ./$(DEPDIR)/ci.Plo
+	-rm -f ./$(DEPDIR)/cierror.Plo
+	-rm -f ./$(DEPDIR)/ciget.Plo
+	-rm -f ./$(DEPDIR)/cimem.Plo
+	-rm -f ./$(DEPDIR)/cipread.Plo
+	-rm -f ./$(DEPDIR)/ciread.Plo
+	-rm -f ./$(DEPDIR)/cirio.Plo
+	-rm -f ./$(DEPDIR)/cirtran.Plo
+	-rm -f ./$(DEPDIR)/cirutil.Plo
+	-rm -f ./$(DEPDIR)/ciset.Plo
+	-rm -f ./$(DEPDIR)/citest.Po
+	-rm -f ./$(DEPDIR)/citrans.Plo
+	-rm -f ./$(DEPDIR)/ciwio.Plo
+	-rm -f ./$(DEPDIR)/ciwrite.Plo
+	-rm -f ./$(DEPDIR)/ciwtran.Plo
+	-rm -f ./$(DEPDIR)/ciwutil.Plo
 	-rm -f arm/$(DEPDIR)/arm_init.Plo
 	-rm -f arm/$(DEPDIR)/filter_neon_intrinsics.Plo
 	-rm -f arm/$(DEPDIR)/palette_neon_intrinsics.Plo
-	-rm -f contrib/libtests/$(DEPDIR)/pngimage.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngstest.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngunknown.Po
-	-rm -f contrib/libtests/$(DEPDIR)/pngvalid.Po
-	-rm -f contrib/libtests/$(DEPDIR)/timepng.Po
-	-rm -f contrib/tools/$(DEPDIR)/png-fix-itxt.Po
-	-rm -f contrib/tools/$(DEPDIR)/pngcp.Po
-	-rm -f contrib/tools/$(DEPDIR)/pngfix.Po
+	-rm -f contrib/libtests/$(DEPDIR)/ciimage.Po
+	-rm -f contrib/libtests/$(DEPDIR)/cistest.Po
+	-rm -f contrib/libtests/$(DEPDIR)/ciunknown.Po
+	-rm -f contrib/libtests/$(DEPDIR)/civalid.Po
+	-rm -f contrib/libtests/$(DEPDIR)/timeci.Po
+	-rm -f contrib/tools/$(DEPDIR)/ci-fix-itxt.Po
+	-rm -f contrib/tools/$(DEPDIR)/cicp.Po
+	-rm -f contrib/tools/$(DEPDIR)/cifix.Po
 	-rm -f intel/$(DEPDIR)/filter_sse2_intrinsics.Plo
 	-rm -f intel/$(DEPDIR)/intel_init.Plo
-	-rm -f loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
-	-rm -f loongarch/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@lsx_la-loongarch_lsx_init.Plo
+	-rm -f loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-filter_lsx_intrinsics.Plo
+	-rm -f loongarch/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@lsx_la-loongarch_lsx_init.Plo
 	-rm -f mips/$(DEPDIR)/filter_mmi_inline_assembly.Plo
 	-rm -f mips/$(DEPDIR)/filter_msa_intrinsics.Plo
 	-rm -f mips/$(DEPDIR)/mips_init.Plo
 	-rm -f powerpc/$(DEPDIR)/filter_vsx_intrinsics.Plo
 	-rm -f powerpc/$(DEPDIR)/powerpc_init.Plo
-	-rm -f riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
-	-rm -f riscv/$(DEPDIR)/libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@rvv_la-riscv_init.Plo
+	-rm -f riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-filter_rvv_intrinsics.Plo
+	-rm -f riscv/$(DEPDIR)/libci@CILIB_MAJOR@@CILIB_MINOR@rvv_la-riscv_init.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -2414,74 +2414,74 @@ uninstall-man: uninstall-man3 uninstall-man5
 .PRECIOUS: Makefile
 
 
-$(PNGLIB_BASENAME).pc: libpng.pc
-	cp libpng.pc $@
+$(CILIB_BASENAME).pc: libci.pc
+	cp libci.pc $@
 
-$(PNGLIB_BASENAME)-config: libpng-config
-	cp libpng-config $@
+$(CILIB_BASENAME)-config: libci-config
+	cp libci-config $@
 
-scripts/sym.out scripts/vers.out: png.h pngconf.h pnglibconf.h
-scripts/prefix.out: png.h pngconf.h pnglibconf.out
-scripts/symbols.out: png.h pngconf.h $(srcdir)/scripts/pnglibconf.h.prebuilt
-scripts/intprefix.out: pnglibconf.h
+scripts/sym.out scripts/vers.out: ci.h ciconf.h cilibconf.h
+scripts/prefix.out: ci.h ciconf.h cilibconf.out
+scripts/symbols.out: ci.h ciconf.h $(srcdir)/scripts/cilibconf.h.prebuilt
+scripts/intprefix.out: cilibconf.h
 
-libpng.sym: scripts/sym.out
+libci.sym: scripts/sym.out
 	rm -f $@
 	cp $? $@
-libpng.vers: scripts/vers.out
+libci.vers: scripts/vers.out
 	rm -f $@
 	cp $? $@
 
-# Rename functions in scripts/prefix.out with a PNG_PREFIX prefix.
-# Rename macros in scripts/macro.lst from PNG_PREFIXpng_ to PNG_ (the actual
+# Rename functions in scripts/prefix.out with a CI_PREFIX prefix.
+# Rename macros in scripts/macro.lst from CI_PREFIXci_ to CI_ (the actual
 # implementation of the macro).
-@DO_PNG_PREFIX_TRUE@pnglibconf.h: pnglibconf.out scripts/prefix.out scripts/macro.lst
-@DO_PNG_PREFIX_TRUE@	rm -f $@
-@DO_PNG_PREFIX_TRUE@	$(AWK) 's==0 && NR>1{print prev}\
-@DO_PNG_PREFIX_TRUE@	   s==0{prev=$$0}\
-@DO_PNG_PREFIX_TRUE@	   s==1{print "#define", $$1, "@PNG_PREFIX@" $$1}\
-@DO_PNG_PREFIX_TRUE@	   s==2{print "#define @PNG_PREFIX@png_" $$1, "PNG_" $$1}\
-@DO_PNG_PREFIX_TRUE@	   END{print prev}' s=0 pnglibconf.out s=1 scripts/prefix.out\
-@DO_PNG_PREFIX_TRUE@	   s=2 ${srcdir}/scripts/macro.lst >pnglibconf.tf8
-@DO_PNG_PREFIX_TRUE@	mv pnglibconf.tf8 $@
+@DO_CI_PREFIX_TRUE@cilibconf.h: cilibconf.out scripts/prefix.out scripts/macro.lst
+@DO_CI_PREFIX_TRUE@	rm -f $@
+@DO_CI_PREFIX_TRUE@	$(AWK) 's==0 && NR>1{print prev}\
+@DO_CI_PREFIX_TRUE@	   s==0{prev=$$0}\
+@DO_CI_PREFIX_TRUE@	   s==1{print "#define", $$1, "@CI_PREFIX@" $$1}\
+@DO_CI_PREFIX_TRUE@	   s==2{print "#define @CI_PREFIX@ci_" $$1, "CI_" $$1}\
+@DO_CI_PREFIX_TRUE@	   END{print prev}' s=0 cilibconf.out s=1 scripts/prefix.out\
+@DO_CI_PREFIX_TRUE@	   s=2 ${srcdir}/scripts/macro.lst >cilibconf.tf8
+@DO_CI_PREFIX_TRUE@	mv cilibconf.tf8 $@
 
-@DO_PNG_PREFIX_TRUE@pngprefix.h: scripts/intprefix.out
-@DO_PNG_PREFIX_TRUE@	rm -f pngprefix.tf1
-@DO_PNG_PREFIX_TRUE@	$(AWK) '{print "#define", $$1, "@PNG_PREFIX@" $$1}' $? >pngprefix.tf1
-@DO_PNG_PREFIX_TRUE@	mv pngprefix.tf1 $@
-@DO_PNG_PREFIX_FALSE@pnglibconf.h: pnglibconf.out
-@DO_PNG_PREFIX_FALSE@	rm -f $@
-@DO_PNG_PREFIX_FALSE@	cp $? $@
+@DO_CI_PREFIX_TRUE@ciprefix.h: scripts/intprefix.out
+@DO_CI_PREFIX_TRUE@	rm -f ciprefix.tf1
+@DO_CI_PREFIX_TRUE@	$(AWK) '{print "#define", $$1, "@CI_PREFIX@" $$1}' $? >ciprefix.tf1
+@DO_CI_PREFIX_TRUE@	mv ciprefix.tf1 $@
+@DO_CI_PREFIX_FALSE@cilibconf.h: cilibconf.out
+@DO_CI_PREFIX_FALSE@	rm -f $@
+@DO_CI_PREFIX_FALSE@	cp $? $@
 
-@DO_PNG_PREFIX_FALSE@pngprefix.h: # is empty
-@DO_PNG_PREFIX_FALSE@	:>$@
+@DO_CI_PREFIX_FALSE@ciprefix.h: # is empty
+@DO_CI_PREFIX_FALSE@	:>$@
 
-$(srcdir)/scripts/pnglibconf.h.prebuilt:
+$(srcdir)/scripts/cilibconf.h.prebuilt:
 	@echo "Attempting to build $@" >&2
 	@echo "This is a machine generated file, but if you want to make" >&2
-	@echo "a new one simply make 'scripts/pnglibconf.out', copy that" >&2
-	@echo "AND set PNG_ZLIB_VERNUM to 0 (you MUST do this)" >&2
+	@echo "a new one simply make 'scripts/cilibconf.out', copy that" >&2
+	@echo "AND set CI_ZLIB_VERNUM to 0 (you MUST do this)" >&2
 	@exit 1
 
-# The following is necessary to ensure that the local pnglibconf.h is used, not
+# The following is necessary to ensure that the local cilibconf.h is used, not
 # an installed one (this can happen immediately after on a clean system if
 # 'make test' is the first thing the user does.)  Only files which include
-# one of the png source files (typically png.h or pngpriv.h) need to be listed
+# one of the ci source files (typically ci.h or cipriv.h) need to be listed
 # here:
-pngtest.o: pnglibconf.h
+citest.o: cilibconf.h
 
-contrib/libtests/makepng.o: pnglibconf.h
-contrib/libtests/pngstest.o: pnglibconf.h
-contrib/libtests/pngunknown.o: pnglibconf.h
-contrib/libtests/pngimage.o: pnglibconf.h
-contrib/libtests/pngvalid.o: pnglibconf.h
-contrib/libtests/readpng.o: pnglibconf.h
-contrib/libtests/tarith.o: pnglibconf.h
-contrib/libtests/timepng.o: pnglibconf.h
+contrib/libtests/makeci.o: cilibconf.h
+contrib/libtests/cistest.o: cilibconf.h
+contrib/libtests/ciunknown.o: cilibconf.h
+contrib/libtests/ciimage.o: cilibconf.h
+contrib/libtests/civalid.o: cilibconf.h
+contrib/libtests/readci.o: cilibconf.h
+contrib/libtests/tarith.o: cilibconf.h
+contrib/libtests/timeci.o: cilibconf.h
 
-contrib/tools/makesRGB.o: pnglibconf.h
-contrib/tools/pngfix.o: pnglibconf.h
-contrib/tools/pngcp.o: pnglibconf.h
+contrib/tools/makesRGB.o: cilibconf.h
+contrib/tools/cifix.o: cilibconf.h
+contrib/tools/cicp.o: cilibconf.h
 
 .c.out:
 	rm -f $@ $*.tf[12]
@@ -2492,12 +2492,12 @@ contrib/tools/pngcp.o: pnglibconf.h
 	rm -f $*.tf1
 	mv $*.tf2 $@
 
-# The .c file for pnglibconf.h is machine generated
-pnglibconf.c: scripts/pnglibconf.dfa scripts/options.awk pngconf.h pngusr.dfa $(DFA_XTRA)
+# The .c file for cilibconf.h is machine generated
+cilibconf.c: scripts/cilibconf.dfa scripts/options.awk ciconf.h ciusr.dfa $(DFA_XTRA)
 	rm -f $@ $*.tf[45]
 	$(AWK) -f ${srcdir}/scripts/options.awk out=$*.tf4 version=search\
-	    ${srcdir}/pngconf.h ${srcdir}/scripts/pnglibconf.dfa\
-	    ${srcdir}/pngusr.dfa $(DFA_XTRA) 1>&2
+	    ${srcdir}/ciconf.h ${srcdir}/scripts/cilibconf.dfa\
+	    ${srcdir}/ciusr.dfa $(DFA_XTRA) 1>&2
 	$(AWK) -f ${srcdir}/scripts/options.awk out=$*.tf5 $*.tf4 1>&2
 	rm $*.tf4
 	mv $*.tf5 $@
@@ -2513,20 +2513,20 @@ scripts/symbols.chk: scripts/checksym.awk scripts/symbols.def scripts/symbols.ou
 
 # used on demand to regenerate the standard header, CPPFLAGS should
 # be empty - no non-standard defines
-scripts/pnglibconf.c: scripts/pnglibconf.dfa scripts/options.awk pngconf.h
-	rm -f $@ pnglibconf.tf[67]
+scripts/cilibconf.c: scripts/cilibconf.dfa scripts/options.awk ciconf.h
+	rm -f $@ cilibconf.tf[67]
 	test -z "$(CPPFLAGS)"
-	echo "com @PNGLIB_VERSION@ STANDARD API DEFINITION" |\
-	$(AWK) -f ${srcdir}/scripts/options.awk out=pnglibconf.tf6\
-	    logunsupported=1 version=search ${srcdir}/pngconf.h -\
-	    ${srcdir}/scripts/pnglibconf.dfa 1>&2
-	$(AWK) -f ${srcdir}/scripts/options.awk out=pnglibconf.tf7\
-	    pnglibconf.tf6 1>&2
-	rm pnglibconf.tf6
-	mv pnglibconf.tf7 $@
+	echo "com @CILIB_VERSION@ STANDARD API DEFINITION" |\
+	$(AWK) -f ${srcdir}/scripts/options.awk out=cilibconf.tf6\
+	    logunsupported=1 version=search ${srcdir}/ciconf.h -\
+	    ${srcdir}/scripts/cilibconf.dfa 1>&2
+	$(AWK) -f ${srcdir}/scripts/options.awk out=cilibconf.tf7\
+	    cilibconf.tf6 1>&2
+	rm cilibconf.tf6
+	mv cilibconf.tf7 $@
 
-$(libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_OBJECTS): png.h pngconf.h \
-	pnglibconf.h pngpriv.h pngdebug.h pnginfo.h pngstruct.h pngprefix.h
+$(libci@CILIB_MAJOR@@CILIB_MINOR@_la_OBJECTS): ci.h ciconf.h \
+	cilibconf.h cipriv.h cidebug.h ciinfo.h cistruct.h ciprefix.h
 
 test: check-am
 
@@ -2543,37 +2543,37 @@ dist-hook:
 
 install-header-links:
 	@set -ex; cd '$(DESTDIR)$(includedir)'; for f in $(HEADERS); do \
-	   rm -f "$$f"; $(LN_S) "$(PNGLIB_BASENAME)/$$f" "$$f"; done
+	   rm -f "$$f"; $(LN_S) "$(CILIB_BASENAME)/$$f" "$$f"; done
 
 uninstall-header-links:
 	cd '$(DESTDIR)$(includedir)'; rm -f $(HEADERS)
 
-install-libpng-pc:
-	@set -ex; cd '$(DESTDIR)$(pkgconfigdir)'; rm -f libpng.pc; \
-	   $(LN_S) '$(PNGLIB_BASENAME).pc' libpng.pc
+install-libci-pc:
+	@set -ex; cd '$(DESTDIR)$(pkgconfigdir)'; rm -f libci.pc; \
+	   $(LN_S) '$(CILIB_BASENAME).pc' libci.pc
 
-uninstall-libpng-pc:
-	rm -f '$(DESTDIR)$(pkgconfigdir)/libpng.pc'
+uninstall-libci-pc:
+	rm -f '$(DESTDIR)$(pkgconfigdir)/libci.pc'
 
 install-library-links:
 	@set -x; cd '$(DESTDIR)$(libdir)';\
 	for ext in $(EXT_LIST); do\
-	   rm -f "libpng.$$ext";\
-           if test -f "$(PNGLIB_BASENAME).$$ext"; then\
-              $(LN_S) "$(PNGLIB_BASENAME).$$ext" "libpng.$$ext" || exit 1;\
+	   rm -f "libci.$$ext";\
+           if test -f "$(CILIB_BASENAME).$$ext"; then\
+              $(LN_S) "$(CILIB_BASENAME).$$ext" "libci.$$ext" || exit 1;\
            fi;\
 	done
 
 uninstall-library-links:
 	@set -x; cd '$(DESTDIR)$(libdir)'; for ext in $(EXT_LIST); do\
-	   rm -f "libpng.$$ext"; done
+	   rm -f "libci.$$ext"; done
 
-install-libpng-config:
-	@set -ex; cd '$(DESTDIR)$(bindir)'; rm -f libpng-config; \
-	   $(LN_S) '$(PNGLIB_BASENAME)-config' libpng-config
+install-libci-config:
+	@set -ex; cd '$(DESTDIR)$(bindir)'; rm -f libci-config; \
+	   $(LN_S) '$(CILIB_BASENAME)-config' libci-config
 
-uninstall-libpng-config:
-	rm -f '$(DESTDIR)$(bindir)/libpng-config'
+uninstall-libci-config:
+	rm -f '$(DESTDIR)$(bindir)/libci-config'
 
 # If --enable-unversioned-links is specified the header and lib file links
 # will be automatically made on a 'make install':
@@ -2583,18 +2583,18 @@ uninstall-libpng-config:
 @DO_INSTALL_LINKS_TRUE@install-exec-hook: install-library-links
 @DO_INSTALL_LINKS_TRUE@uninstall-hook: uninstall-library-links
 
-# Likewise, --install-pc causes libpng.pc to be constructed:
+# Likewise, --install-pc causes libci.pc to be constructed:
 
-@DO_INSTALL_LIBPNG_PC_TRUE@install-data-hook: install-libpng-pc
-@DO_INSTALL_LIBPNG_PC_TRUE@uninstall-hook: uninstall-libpng-pc
+@DO_INSTALL_LIBCI_PC_TRUE@install-data-hook: install-libci-pc
+@DO_INSTALL_LIBCI_PC_TRUE@uninstall-hook: uninstall-libci-pc
 
 # And --install-config:
 
-@DO_INSTALL_LIBPNG_CONFIG_TRUE@install-exec-hook: install-libpng-config
-@DO_INSTALL_LIBPNG_CONFIG_TRUE@uninstall-hook: uninstall-libpng-config
+@DO_INSTALL_LIBCI_CONFIG_TRUE@install-exec-hook: install-libci-config
+@DO_INSTALL_LIBCI_CONFIG_TRUE@uninstall-hook: uninstall-libci-config
 
 # The following addition ensures that 'make all' always builds the test programs
-# too.  It used to, but some change either in libpng or configure stopped this
+# too.  It used to, but some change either in libci or configure stopped this
 # working.
 all-am: $(check_PROGRAMS)
 

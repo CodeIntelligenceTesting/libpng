@@ -1,5 +1,5 @@
 # fixed-float.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2025
@@ -8,7 +8,7 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Test the standard libpng configuration with the fixed point internal
+# Test the standard libci configuration with the fixed point internal
 # implementation in place of the default floating point
 #
 option FLOATING_ARITHMETIC off

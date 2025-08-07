@@ -1,4 +1,4 @@
-This directory (contrib/examples) contains examples of libpng usage.
+This directory (contrib/examples) contains examples of libci usage.
 
 NO COPYRIGHT RIGHTS ARE CLAIMED TO ANY OF THE FILES IN THIS DIRECTORY.
 
@@ -7,7 +7,7 @@ related or neighboring rights to this work.  This work is published from:
 United States.
 
 The files may be used freely in any way.  The intention is that appropriate
-parts of the files be used in other libpng-using programs without any need for
+parts of the files be used in other libci-using programs without any need for
 the authors of the using code to seek copyright or license from the original
 authors.
 

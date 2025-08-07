@@ -1,5 +1,5 @@
 # basic.dfa
-#  Build time configuration of libpng
+#  Build time configuration of libci
 #
 # Author: John Bowler
 # Copyright: (c) John Bowler, 2024
@@ -8,8 +8,8 @@
 #  related or neighboring rights to this work.  This work is published from:
 #  United States.
 #
-# Build libpng with basic read and write support.  This enables the lowest
-# level libpng read and write APIs - the "row-by-row" ones.
+# Build libci with basic read and write support.  This enables the lowest
+# level libci read and write APIs - the "row-by-row" ones.
 #
 # Support is enabled only for those transformations that are observed to be
 # required by widely used apps or are in the v3 specification.
@@ -37,7 +37,7 @@ option BENIGN_READ_ERRORS on
 option PROGRESSIVE_READ on
 
 # Switch on the write code - this makes a minimalist encoder but with
-# interlace support turned on; otherwise png_read_png..png_write_png will
+# interlace support turned on; otherwise ci_read_ci..ci_write_ci will
 # fail on an interlaced image.
 option WRITE on
 option WRITE_INTERLACING on
@@ -83,7 +83,7 @@ chunk zTXt on
 # chunk sPLT
 
 # The rest of this is app dependent: none of these options are required for
-# read/write of the full range of PNG files and the normal chunk handling on
+# read/write of the full range of CI files and the normal chunk handling on
 # read.
 option WRITE_CUSTOMIZE_ZTXT_COMPRESSION on
 option WRITE_CUSTOMIZE_COMPRESSION on
@@ -102,16 +102,16 @@ option READ_SWAP on
 
 option CONVERT_tIME on
 
-# optipng
+# optici
 option IO_STATE on
 option STORE_UNKNOWN_CHUNKS on
 option HANDLE_AS_UNKNOWN on
 
-# pngcrush
+# cicrush
 option READ_USER_TRANSFORM on
 option WRITE_FLUSH on
 
-# pnmtopng
+# pnmtoci
 chunk hIST on
 
 # cairo
